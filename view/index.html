@@ -91,15 +91,15 @@
             fetch('/difficulte', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ difficulty: difficulty })
+                body: JSON.stringify({
+                    difficulty: difficulty, // Remplacez par la difficulté appropriée
+                }),
             })
-            .then(response => response.text())
-            .then(message => {
-                console.log(message);
-                // Redirigez l'utilisateur vers la page index.html après l'insertion des données
-                window.location.href = 'view/index.html';
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
             })
             .catch(error => console.error(error));
         }
