@@ -7,7 +7,7 @@ const port = 3000;
 // Création d'une base de données SQLite et d'une table simple
 const db = new sqlite3.Database('mydatabase.db');
 db.serialize(() => {
-  db.run("CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, content TEXT)");
+  db.run("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, pseudo TEXT, score INTEGER, difficulté INTEGER, vie INTEGER, etage INTEGER, mdp TEXT)");
 });
 
 app.get('/', (req, res) => {
