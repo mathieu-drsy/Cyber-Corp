@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker</title>
+    <link rel="stylesheet" href="transition.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Courier New', monospace; /* Police monospace */
+        }
+
+        .fond-numerique {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: black;
+            overflow: hidden;
+        }
+
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: green;
+            font-size: 50px;
+            z-index: 10;
+        }
+
+        .numero {
+            color: green;
+            font-family: monospace;
+            font-size: 20px;
+        }
+
+        .commencer-btn {
+            position: absolute;
+            top: 60%; /* Ajustez selon votre mise en page */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            background-color: green; /* Couleur du bouton */
+            color: white; /* Couleur du texte */
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .commencer-btn:hover {
+            background-color: darkgreen; /* Couleur au survol */
+        }
+    </style>
+</head>
+<body>
+    <div class="fond-numerique"></div>
+    <div class="message">Vous avez été piraté</div>
+    <button class="commencer-btn">Commencer les épreuves</button>
+
+    <script>
+        function generateNumber() {
+            const numero = document.createElement('div');
+            numero.className = 'numero';
+            numero.textContent = Math.round(Math.random()) ? '1' : '0';
+            numero.style.position = 'absolute';
+            numero.style.left = Math.random() * window.innerWidth + 'px';
+            numero.style.top = Math.random() * window.innerHeight + 'px';
+
+            document.querySelector('.fond-numerique').appendChild(numero);
+
+            setTimeout(() => {
+                numero.remove();
+            }, 5000); // Changez la durée ici si nécessaire
+        }
+
+        setInterval(generateNumber, 100);
+
+        document.querySelector('.commencer-btn').addEventListener('click', function() {
+            // Logique au clic du bouton, par exemple rediriger vers une autre page
+            window.location.href = 'url_de_la_prochaine_etape.html';
+        });
+    </script>
+</body>
+</html>
