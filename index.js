@@ -9,8 +9,6 @@ const db=initDb();
 
 setupRoutes(app, db);
 
-app.use(express.json());
-
 app.listen(port, () => {
   console.log(`Fonctionnel sur http://localhost:${port}`);
 });

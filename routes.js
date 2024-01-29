@@ -1,9 +1,4 @@
 const path = require('path');
-const express = require('express');
-const app = express();
-
-// Utilisation du middleware pour le traitement du corps de la requête
-app.use(express.json());
 
 function setupRoutes(app, db) {
     app.get('/', (req, res) => {
@@ -35,24 +30,40 @@ function setupRoutes(app, db) {
     });
     });
 
-    app.post('/difficulte', (req, res) => {
-        const { difficulty } = req.body;
-    
-        if (difficulty && typeof difficulty === 'number') {
-            // Utilisez la difficulté reçue pour insérer des données dans la base de données
-            db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
-                ["MODIF", 420, difficulty, 3, 0, "test"],
-                (err) => {
-                    if (err) {
-                        return res.status(500).send(err.message);
-                    }
-                    res.status(200).send(`Difficulté ${pseudo} sélectionnée`);
-                }
-            );
-        } else {
-            res.status(400).send('Invalid difficulty value');
-        }
-    });
+    app.post('/difficulteNovice', (req, res) => {
+        // Exemple : insérer des données dans la base de données avec difficulté 1
+        db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 1, 3, 0, "test"], (err) => {
+          if (err) {
+            return res.status(500).send(err.message);
+          }
+      
+          res.status(200).send("Difficulté Novice sélectionnée");
+        });
+      });
+      
+      // Ajoutez cette route après la création de la base de données dans votre fichier index.js
+      app.post('/difficulteIntermediaire', (req, res) => {
+        // Exemple : insérer des données dans la base de données avec difficulté 1
+        db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Intermediaire", 420, 2, 3, 0, "test"], (err) => {
+          if (err) {
+            return res.status(500).send(err.message);
+          }
+      
+          res.status(200).send("Difficulté Intermediaire sélectionnée");
+        });
+      });
+      
+      // Ajoutez cette route après la création de la base de données dans votre fichier index.js
+      app.post('/difficulteExpert', (req, res) => {
+        // Exemple : insérer des données dans la base de données avec difficulté 1
+        db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Expert", 420, 3, 3, 0, "test"], (err) => {
+          if (err) {
+            return res.status(500).send(err.message);
+          }
+      
+          res.status(200).send("Difficulté Expert sélectionnée");
+        });
+      });
 
     app.get('/view', (req, res) => {
     // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
