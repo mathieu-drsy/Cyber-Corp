@@ -24,6 +24,13 @@ app.get('/', (req, res) => {
   });
 });
 
+process.on('exit', () => {
+  const db = new sqlite3.Database('save.db');
+  db.run("DROP DATABASE data");
+  db.close();
+  console.log('Base de données nettoyée.');
+});
+
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Fonctionnel sur http://localhost:${port}`);
 });
