@@ -1,13 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
 
-// Création d'une base de données SQLite et d'une table simple
-const db = new sqlite3.Database('save.db');
-db.serialize(() => {
-  db.run("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, pseudo TEXT, score INTEGER, difficulte INTEGER, vie INTEGER, etage INTEGER, mdp TEXT)");
-  db.run("CREATE TABLE IF NOT EXISTS questions (id INTEGER PRIMARY KEY, difficulte INTEGER, texte TEXT, reponse TEXT)");
-});
-
 function initDb() {
+    // Création d'une base de données SQLite et d'une table simple
+    const db = new sqlite3.Database('save.db');
     db.serialize(() => {
         db.run("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, pseudo TEXT, score INTEGER, difficulte INTEGER, vie INTEGER, etage INTEGER, mdp TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS questions (id INTEGER PRIMARY KEY, difficulte INTEGER, texte TEXT, reponse TEXT)");
