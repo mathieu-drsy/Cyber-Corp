@@ -18,11 +18,25 @@ app.get('/terminal', (req, res) => {
 
 app.post('/execute-command', (req, res) => {
   const { command } = req.body;
-  
-  // Here you can execute the command
-  // For demonstration, let's just echo back the command
+  let output = '';
+
+  // Execute specific commands
+  switch (command.trim()) {
+    case 'help':
+      output = 'Available commands:\n- help: Display available commands\n- date: Show current date and time';
+      break;
+    case 'date':
+      const currentDate = new Date().toLocaleString();
+      output = `Current date and time: ${currentDate}`;
+      break;
+    default:
+      output = `Command not found: ${command}`;
+      break;
+  }
+
+  // Log the command and send back the output
   console.log('Command received:', command);
-  res.json({ message: `Command received: ${command}` });
+  res.json({ message: output });
 });
 
 app.listen(port, () => {
