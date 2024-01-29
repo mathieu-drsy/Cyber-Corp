@@ -1,124 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terminal</title>
-<style>
-body {
-    background-color: #000;
-    color: #fff;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 0;
-    padding: 20px;
-}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+        }
 
-.terminal {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-}
 
-.terminal-header {
-    background-color: #444;
-    padding: 5px 10px;
-}
+        .terminal {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
 
-.terminal-body {
-    padding: 10px;
-    min-height: 200px;
-}
 
-.terminal-input {
-    display: flex;
-}
 
-.terminal-prompt {
-    color: #0f0;
-    margin-right: 5px;
-}
+        .terminal-header {
+            background-color: #444;
+            padding: 5px 10px;
+        }
 
-.terminal-cursor {
-    animation: blink 1s infinite;
-}
+        .terminal-body {
+            padding: 10px;
+            min-height: 200px;
+        }
 
-@keyframes blink {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-</style>
+        .terminal-input input[type="text"] {
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+        }
+
+        .terminal-input button {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+
+
+        .terminal-prompt {
+            color: #0f0;
+            margin-right: 5px;
+        }
+
+        .terminal-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="terminal">
-    <div class="terminal-header">Terminal</div>
-    <div class="terminal-body" id="terminal-body">
-        <div>Welcome to Terminal</div>
-        <div>Type 'help' for commands</div>
+    <div class="terminal">
+        <div class="terminal-header">Terminal</div>
+        <div class="terminal-body" id="terminal-body">
+            <div>Welcome to Terminal</div>
+            <div>Type 'help' for commands</div>
+        </div>
+        <div class="terminal-input row">
+            <div class="terminal-prompt">$</div>
+            <input type="text" id="commandInput">
+            <button onclick="sendCommand()">Send</button>
+            <div class="terminal-cursor">_</div>
+        </div>
     </div>
-    <div class="terminal-input">
-        <div class="terminal-prompt">$</div>
-        <div class="terminal-cursor">_</div>
-    </div>
-</div>
 
-<script>
-document.addEventListener('keypress', function(event) {
-    const terminalBody = document.getElementById('terminal-body');
-    const terminalInput = document.querySelector('.terminal-input');
-    const terminalCursor = document.querySelector('.terminal-cursor');
-    
-    if (event.key === 'Enter') {
-        const command = terminalInput.textContent.trim().substring(1);
-        terminalInput.textContent = '';
-        terminalBody.innerHTML += `<div>$ ${command}</div>`;
-        executeCommand(command);
-        terminalBody.scrollTop = terminalBody.scrollHeight;
-    } else {
-        terminalCursor.classList.remove('terminal-cursor');
-        setTimeout(() => terminalCursor.classList.add('terminal-cursor'), 500);
-        if (event.key !== 'Backspace') {
-            terminalInput.textContent += event.key;
-        } else {
-            terminalInput.textContent = terminalInput.textContent.slice(0, -1);
+    <script>
+        async function sendCommand() {
+            const commandInput = document.getElementById('commandInput');
+            const terminalBody = document.getElementById('terminal-body');
+
+            const command = commandInput.value.trim();
+            if (!command) return;
+
+            terminalBody.innerHTML += `<div>$ ${command}</div>`;
+            commandInput.value = '';
+
+            try {
+                const response = await fetch('/execute-command', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ command })
+                });
+                const data = await response.json();
+                terminalBody.innerHTML += `<div>${data.message}</div>`;
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            } catch (error) {
+                console.error('Error sending command:', error);
+            }
         }
-    }
-});
-
-function executeCommand(command) {
-    const terminalBody = document.getElementById('terminal-body');
-    let output = '';
-
-    switch (command) {
-        case 'help':
-            output = `<div>Available commands:</div>
-                      <div>- help: Display available commands</div>
-                      <div>- date: Show current date and time</div>`;
-            break;
-        case 'date':
-            const currentDate = new Date();
-            output = `<div>${currentDate}</div>`;
-            break;
-        default:
-            output = `<div>Command not found: ${command}</div>`;
-            break;
-    }
-
-    terminalBody.innerHTML += output;
-}
-</script>
+    </script>
 
 </body>
+
 </html>
