@@ -7,7 +7,8 @@ const port = 3000;
 // Création d'une base de données SQLite et d'une table simple
 const db = new sqlite3.Database('save.db');
 db.serialize(() => {
-  db.run("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, pseudo TEXT, score INTEGER, difficulté INTEGER, vie INTEGER, etage INTEGER, mdp TEXT)");
+  db.run("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, pseudo TEXT, score INTEGER, difficulte INTEGER, vie INTEGER, etage INTEGER, mdp TEXT)");
+  db.run("CREATE TABLE IF NOT EXISTS questions (id INTERGER PRIMARY KEY, difficulte INTEGER, texte TEXT, reponse TEXT)");
 });
 
 app.get('/', (req, res) => {
@@ -22,6 +23,9 @@ app.get('/', (req, res) => {
     // Envoyer les données en réponse HTTP
     res.send(rows);
   });
+
+  //SELECTION QUESTIONS
+    //SELECT {3 questions} FROM questions WHERE questions.difficulte EQUALS data.difficulte
 });
 
 // process.on('exit', () => {
