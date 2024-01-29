@@ -1,3 +1,3 @@
-function ouvrirPorte(niveau) {
-    alert('Bienvenue au niveau ' + niveau + '!');
+function ouvrirPorte(étage) {
+    alert('Bienvenue à ' + étage + '!');
 }
