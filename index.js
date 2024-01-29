@@ -24,6 +24,18 @@ app.get('/', (req, res) => {
   });
 });
 
+// Ajoutez cette route après la création de la base de données dans votre fichier index.js
+app.post('/difficulteNovice', (req, res) => {
+  // Exemple : insérer des données dans la base de données avec difficulté 1
+  db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 1, 3, 0, "test"], (err) => {
+    if (err) {
+      return res.status(500).send(err.message);
+    }
+
+    res.status(200).send("Difficulté Novice sélectionnée");
+  });
+});
+
 process.on('exit', () => {
   const db = new sqlite3.Database('save.db');
   db.run("DROP DATABASE data");
