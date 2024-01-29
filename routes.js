@@ -75,6 +75,16 @@ function setupRoutes(app, db) {
     res.sendFile(path.join(__dirname, 'view', 'stop.html'));
     });
 
+    app.post('/get-questions', (req, res) => {
+        const difficulty = req.body.difficulty;
+        db.all("SELECT * FROM questions WHERE difficulte = ?", [difficulty], (err, rows) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            res.send(rows);
+        });
+    });
+
     // Route pour arrêter le serveur
     app.post('/arret-server', (req, res) => {
     console.log("Arrêt du serveur demandé.");
