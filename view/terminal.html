@@ -1,124 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terminal</title>
-<style>
-body {
-    background-color: #000;
-    color: #fff;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 0;
-    padding: 20px;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+        }
 
-.terminal {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-}
+        .terminal {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
 
-.terminal-header {
-    background-color: #444;
-    padding: 5px 10px;
-}
+        .terminal-header {
+            background-color: #444;
+            padding: 5px 10px;
+        }
 
-.terminal-body {
-    padding: 10px;
-    min-height: 200px;
-}
+        .terminal-body {
+            padding: 10px;
+            min-height: 650px;
+        }
 
-.terminal-input {
-    display: flex;
-}
+        .terminal-input {
+            display: flex;
+        }
 
-.terminal-prompt {
-    color: #0f0;
-    margin-right: 5px;
-}
+        .terminal-prompt {
+            color: #0f0;
+            margin-right: 5px;
+        }
 
-.terminal-cursor {
-    animation: blink 1s infinite;
-}
+        .terminal-cursor {
+            animation: blink 1s infinite;
+        }
 
-@keyframes blink {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-</style>
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="terminal">
-    <div class="terminal-header">Terminal</div>
-    <div class="terminal-body" id="terminal-body">
-        <div>Welcome to Terminal</div>
-        <div>Type 'help' for commands</div>
+    <div class="terminal">
+        <div class="terminal-header">Terminal</div>
+        <div class="terminal-body" id="terminal-body">
+            <div>Welcome to Terminal</div>
+            <div>Type 'help' for commands</div>
+        </div>
+        <div class="terminal-input">
+            <div class="terminal-prompt">$</div>
+            <div class="terminal-cursor">_</div>
+        </div>
     </div>
-    <div class="terminal-input">
-        <div class="terminal-prompt">$</div>
-        <div class="terminal-cursor">_</div>
-    </div>
-</div>
 
-<script>
-document.addEventListener('keypress', function(event) {
-    const terminalBody = document.getElementById('terminal-body');
-    const terminalInput = document.querySelector('.terminal-input');
-    const terminalCursor = document.querySelector('.terminal-cursor');
-    
-    if (event.key === 'Enter') {
-        const command = terminalInput.textContent.trim().substring(1);
-        terminalInput.textContent = '';
-        terminalBody.innerHTML += `<div>$ ${command}</div>`;
-        executeCommand(command);
-        terminalBody.scrollTop = terminalBody.scrollHeight;
-    } else {
-        terminalCursor.classList.remove('terminal-cursor');
-        setTimeout(() => terminalCursor.classList.add('terminal-cursor'), 500);
-        if (event.key !== 'Backspace') {
-            terminalInput.textContent += event.key;
-        } else {
-            terminalInput.textContent = terminalInput.textContent.slice(0, -1);
-        }
-    }
-});
+    <script>
+        document.addEventListener('keypress', function (event) {
+            const terminalBody = document.getElementById('terminal-body');
+            const terminalInput = document.querySelector('.terminal-input');
+            const terminalCursor = document.querySelector('.terminal-cursor');
 
-function executeCommand(command) {
-    const terminalBody = document.getElementById('terminal-body');
-    let output = '';
+            if (event.key === 'Enter') {
+                const command = terminalInput.textContent.trim().substring(1);
+                terminalInput.textContent = '';
+                terminalBody.innerHTML += `<div>$ ${command}</div>`;
+                executeCommand(command);
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            } else {
+                terminalCursor.classList.remove('terminal-cursor');
+                setTimeout(() => terminalCursor.classList.add('terminal-cursor'), 500);
+                if (event.key !== 'Backspace') {
+                    terminalInput.textContent += event.key;
+                } else if (event.key === 'Backspace' && terminalInput.textContent.length > 1) { // Modifier cette ligne
+                    terminalInput.textContent = terminalInput.textContent.slice(0, -1);
+                }
+            }
+        });
 
-    switch (command) {
-        case 'help':
-            output = `<div>Available commands:</div>
+
+        function executeCommand(command) {
+            const terminalBody = document.getElementById('terminal-body');
+            let output = '';
+
+            switch (command) {
+                case 'help':
+                    output = `<div>Available commands:</div>
                       <div>- help: Display available commands</div>
                       <div>- date: Show current date and time</div>`;
-            break;
-        case 'date':
-            const currentDate = new Date();
-            output = `<div>${currentDate}</div>`;
-            break;
-        default:
-            output = `<div>Command not found: ${command}</div>`;
-            break;
-    }
+                    break;
+                case 'date':
+                    const currentDate = new Date();
+                    output = `<div>${currentDate}</div>`;
+                    break;
+                default:
+                    output = `<div>Command not found: ${command}</div>`;
+                    break;
+            }
 
-    terminalBody.innerHTML += output;
-}
-</script>
+            terminalBody.innerHTML += output;
+        }
+    </script>
 
 </body>
+
 </html>
