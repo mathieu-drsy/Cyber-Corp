@@ -52,6 +52,17 @@ app.get('/', (req, res) => {
     //SELECT {3 questions} FROM questions WHERE questions.difficulte EQUALS data.difficulte
 });
 
+app.get('/questions_raw/', (req, res) => {
+  // Récupérer des données depuis la table 'questions'
+  db.all("SELECT * FROM questions", (err, rows) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    // Envoyer les données en réponse HTTP
+    res.send(rows);
+  });
+});
+
 // Ajoutez cette route après la création de la base de données dans votre fichier index.js
 app.post('/difficulteNovice', (req, res) => {
   // Exemple : insérer des données dans la base de données avec difficulté 1
