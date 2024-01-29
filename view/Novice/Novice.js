@@ -1,3 +1,3 @@
-function ouvrirPorte(etage) {
-    window.location.href = "terminal.html";
+function ouvrirPorte(étage) {
+    alert('Bienvenue à ' + étage + '!');
 }
