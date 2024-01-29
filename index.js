@@ -40,15 +40,13 @@ app.post('/difficulte', (req, res) => {
     const { difficulty } = req.body;
       // Utilisez la difficulté reçue pour insérer des données dans la base de données
       const pseudo = getDifficultyLabel(difficulty);  // Remplacez cela par la logique appropriée pour obtenir le pseudo
-      db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
-          ["MODIF", 420, difficulty, 3, 0, "test"],
-          (err) => {
-              if (err) {
-                  return res.status(500).send(err.message);
-              }
-              res.status(200).send(`Difficulté ${pseudo} sélectionnée`);
-          }
-      );
+      db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["MODIF", 420, difficulty, 3, 0, "test"], (err) => {
+        if (err) {
+          return res.status(500).send(err.message);
+        }
+  
+        res.status(200).send("Difficulté Novice sélectionnée");
+    });
 });
 
 app.get('/view', (req, res) => {
