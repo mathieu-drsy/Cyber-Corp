@@ -77,7 +77,7 @@ app.get('/view', (req, res) => {
 });
 
 // Nettoyer la table 'questions' à l'arrêt du serveur npm
-process.on('exit', () => {
+process.on('SIGINT', () => {
   db.run("DELETE FROM questions");
   console.log('Table "questions" vidée.');
 });
