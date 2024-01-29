@@ -53,10 +53,33 @@ app.get('/', (req, res) => {
     //SELECT {3 questions} FROM questions WHERE questions.difficulte EQUALS data.difficulte
 });
 
-// Ajoutez cette route après la création de la base de données dans votre fichier index.js
 app.post('/difficulteNovice', (req, res) => {
   // Exemple : insérer des données dans la base de données avec difficulté 1
   db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 1, 3, 0, "test"], (err) => {
+    if (err) {
+      return res.status(500).send(err.message);
+    }
+
+    res.status(200).send("Difficulté Novice sélectionnée");
+  });
+});
+
+// Ajoutez cette route après la création de la base de données dans votre fichier index.js
+app.post('/difficulteIntermediaire', (req, res) => {
+  // Exemple : insérer des données dans la base de données avec difficulté 1
+  db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 2, 3, 0, "test"], (err) => {
+    if (err) {
+      return res.status(500).send(err.message);
+    }
+
+    res.status(200).send("Difficulté Novice sélectionnée");
+  });
+});
+
+// Ajoutez cette route après la création de la base de données dans votre fichier index.js
+app.post('/difficulteExpert', (req, res) => {
+  // Exemple : insérer des données dans la base de données avec difficulté 1
+  db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 3, 3, 0, "test"], (err) => {
     if (err) {
       return res.status(500).send(err.message);
     }

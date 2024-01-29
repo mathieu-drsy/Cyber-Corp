@@ -86,9 +86,31 @@
         }
     </script>
 	<script>
-    function redirectToNovice() {
+    function setDifficultyToNovice() {
         // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
         fetch('/difficulteNovice', { method: 'POST' })
+            .then(response => response.text())
+            .then(message => {
+                console.log(message);
+                // Redirigez l'utilisateur vers la page Novice après l'insertion des données
+                window.location.href = 'view/index.html';
+            })
+            .catch(error => console.error(error));
+    }
+    function setDifficultyToIntermediaire() {
+        // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
+        fetch('/difficulteIntermediaire', { method: 'POST' })
+            .then(response => response.text())
+            .then(message => {
+                console.log(message);
+                // Redirigez l'utilisateur vers la page Novice après l'insertion des données
+                window.location.href = 'view/index.html';
+            })
+            .catch(error => console.error(error));
+    }
+    function setDifficultyToExpert() {
+        // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
+        fetch('/difficulteExpert', { method: 'POST' })
             .then(response => response.text())
             .then(message => {
                 console.log(message);
