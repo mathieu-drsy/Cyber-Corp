@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Récupérer 3 questions</title>
+    <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
+</head>
+<body>
+    <h1>Récupérer des questions</h1>
+    
+    <div>
+        <label for="difficulty">Niveau de difficulté :</label>
+        <select id="difficulty">
+            <option value="1">Novice</option>
+            <option value="2">Intermédiaire</option>
+            <option value="3">Avancée</option>
+        </select>
+    </div>
+
+    <button hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list">Obtenir des questions</button>
+
+    <div id="questions-list"></div>
+</body>
+</html>

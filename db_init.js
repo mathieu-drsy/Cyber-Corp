@@ -14,9 +14,12 @@ function initDb() {
                 const count = row.count;
                 if (count === 0) {
                     const questions = [
-                        { difficulte: 1, texte: "Question 1", reponse: "Réponse 1" },
-                        { difficulte: 2, texte: "Question 2", reponse: "Réponse 2" },
-                        { difficulte: 3, texte: "Question 3", reponse: "Réponse 3" }
+                        { difficulte: 1, texte: "Question 1 Novice", reponse: "Réponse 1 Novice" },
+                        { difficulte: 1, texte: "Question 2 Novice", reponse: "Réponse 2 Novice" },
+                        { difficulte: 2, texte: "Question 1 Intermédiaire", reponse: "Réponse 1 Intermédiaire" },
+                        { difficulte: 2, texte: "Question 2 Intermédiaire", reponse: "Réponse 2 Intermédiaire" },
+                        { difficulte: 3, texte: "Question 1 Avancée", reponse: "Réponse 1 Avancée" },
+                        { difficulte: 3, texte: "Question 2 Avancée", reponse: "Réponse 2 Avancée" }
                     ];
                     const stmt = db.prepare("INSERT INTO questions (difficulte, texte, reponse) VALUES (?, ?, ?)");
                     questions.forEach(question => {
