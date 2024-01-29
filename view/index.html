@@ -86,39 +86,23 @@
         }
     </script>
 	<script>
-    function setDifficultyToNovice() {
-        // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
-        fetch('/difficulteNovice', { method: 'POST' })
+        function setDifficulty(difficulty) {    
+            // Utilisez la méthode fetch pour envoyer une requête POST vers la route correspondante
+            fetch('/difficulte', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ difficulty: difficulty })
+            })
             .then(response => response.text())
             .then(message => {
                 console.log(message);
-                // Redirigez l'utilisateur vers la page Novice après l'insertion des données
+                // Redirigez l'utilisateur vers la page index.html après l'insertion des données
                 window.location.href = 'view/index.html';
             })
             .catch(error => console.error(error));
-    }
-    function setDifficultyToIntermediaire() {
-        // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
-        fetch('/difficulteIntermediaire', { method: 'POST' })
-            .then(response => response.text())
-            .then(message => {
-                console.log(message);
-                // Redirigez l'utilisateur vers la page Novice après l'insertion des données
-                window.location.href = 'view/index.html';
-            })
-            .catch(error => console.error(error));
-    }
-    function setDifficultyToExpert() {
-        // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
-        fetch('/difficulteExpert', { method: 'POST' })
-            .then(response => response.text())
-            .then(message => {
-                console.log(message);
-                // Redirigez l'utilisateur vers la page Novice après l'insertion des données
-                window.location.href = 'view/index.html';
-            })
-            .catch(error => console.error(error));
-    }
+        }
 	</script>
 </body>
 </html>
