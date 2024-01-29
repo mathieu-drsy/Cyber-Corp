@@ -92,7 +92,7 @@
                 terminalBody.scrollTop = terminalBody.scrollHeight;
             } else {
                 //terminalCursor.classList.remove('terminal-cursor');
-                setTimeout(() => terminalCursor.classList.add('terminal-cursor'), 500);
+                //setTimeout(() => terminalCursor.classList.add('terminal-cursor'), 500);
                 if (event.key !== 'Backspace') {
                     terminalInput.textContent += event.key;
                 } else if (event.key === 'Backspace' && terminalInput.textContent.length > 1) { // Modifier cette ligne
