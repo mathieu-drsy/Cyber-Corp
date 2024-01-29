@@ -1,5 +1,6 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -52,6 +53,8 @@ app.get('/', (req, res) => {
     //SELECT {3 questions} FROM questions WHERE questions.difficulte EQUALS data.difficulte
 });
 
+
+
 // Ajoutez cette route après la création de la base de données dans votre fichier index.js
 app.post('/difficulteNovice', (req, res) => {
   // Exemple : insérer des données dans la base de données avec difficulté 1
@@ -62,6 +65,11 @@ app.post('/difficulteNovice', (req, res) => {
 
     res.status(200).send("Difficulté Novice sélectionnée");
   });
+});
+
+app.get('/view', (req, res) => {
+  // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
+  res.sendFile(path.join(__dirname, 'view', 'index.html'));
 });
 
 // Nettoyer la table 'questions' à l'arrêt du serveur npm
