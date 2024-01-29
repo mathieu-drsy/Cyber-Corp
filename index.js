@@ -25,6 +25,17 @@ app.get('/', (req, res) => {
     //SELECT {3 questions} FROM questions WHERE questions.difficulte EQUALS data.difficulte
 });
 
+app.get('/q_raw', (req, res) => {
+  // Récupérer des données depuis la base de données
+  db.all("SELECT * FROM questions", (err, rows) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    // Envoyer les données en réponse HTTP
+    res.send(rows);
+  });
+});
+
 app.post('/difficulteNovice', (req, res) => {
   // Exemple : insérer des données dans la base de données avec difficulté 1
   db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 1, 3, 0, "test"], (err) => {
