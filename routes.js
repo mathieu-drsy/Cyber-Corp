@@ -30,7 +30,26 @@ function setupRoutes(app, db) {
     });
     });
 
-    app.post('/difficulteNovice', (req, res) => {
+    app.post('/difficulte', (req, res) => {
+        const { difficulty } = req.body;
+    
+        if (difficulty && typeof difficulty === 'number') {
+            // Utilisez la difficulté reçue pour insérer des données dans la base de données
+            db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
+                ["MODIF", 420, difficulty, 3, 0, "test"],
+                (err) => {
+                    if (err) {
+                        return res.status(500).send(err.message);
+                    }
+                    res.status(200).send(`Difficulté ${pseudo} sélectionnée`);
+                }
+            );
+        } else {
+            res.status(400).send('Invalid difficulty value');
+        }
+    });
+
+    /*app.post('/difficulteNovice', (req, res) => {
         // Exemple : insérer des données dans la base de données avec difficulté 1
         db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 1, 3, 0, "test"], (err) => {
           if (err) {
@@ -63,7 +82,7 @@ function setupRoutes(app, db) {
       
           res.status(200).send("Difficulté Expert sélectionnée");
         });
-      });
+      });*/
 
     app.get('/view', (req, res) => {
     // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
