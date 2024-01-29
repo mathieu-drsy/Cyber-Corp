@@ -53,7 +53,6 @@ app.get('/', (req, res) => {
     //SELECT {3 questions} FROM questions WHERE questions.difficulte EQUALS data.difficulte
 });
 
-
 // Ajoutez cette route après la création de la base de données dans votre fichier index.js
 app.post('/difficulteNovice', (req, res) => {
   // Exemple : insérer des données dans la base de données avec difficulté 1
