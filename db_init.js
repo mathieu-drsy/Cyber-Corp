@@ -8,7 +8,6 @@ db.serialize(() => {
 });
 
 function initDb() {
-    const db = new sqlite3.Database('save.db');
     db.serialize(() => {
         db.run("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, pseudo TEXT, score INTEGER, difficulte INTEGER, vie INTEGER, etage INTEGER, mdp TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS questions (id INTEGER PRIMARY KEY, difficulte INTEGER, texte TEXT, reponse TEXT)");

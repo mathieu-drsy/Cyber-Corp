@@ -61,10 +61,19 @@ app.get('/view', (req, res) => {
   res.sendFile(path.join(__dirname, 'view', 'index.html'));
 });
 
-// Nettoyer la table 'questions' à l'arrêt du serveur npm
-process.on('exit', () => {
+app.get('/stop', (req, res) => {
+  // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
+  res.sendFile(path.join(__dirname, 'view', 'stop.html'));
+});
+
+// Route pour arrêter le serveur
+app.post('/stop-server', (req, res) => {
+  console.log("Arrêt du serveur demandé.");
+  // Nettoyer la table 'questions'
   db.run("DELETE FROM questions");
   console.log('Table "questions" vidée.');
+  // Arrêter le serveur
+  process.exit();
 });
 
 app.listen(port, () => {
