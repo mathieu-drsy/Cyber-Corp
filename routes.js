@@ -35,9 +35,8 @@ function setupRoutes(app, db) {
     
         if (difficulty && typeof difficulty === 'number') {
             // Utilisez la difficulté reçue pour insérer des données dans la base de données
-            const pseudo = getDifficultyLabel(difficulty);  // Remplacez cela par la logique appropriée pour obtenir le pseudo
             db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
-                [pseudo, 420, difficulty, 3, 0, "test"],
+                ["MODIF", 420, difficulty, 3, 0, "test"],
                 (err) => {
                     if (err) {
                         return res.status(500).send(err.message);
