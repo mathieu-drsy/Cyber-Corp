@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
             padding: 20px;
         }
 
+
         .terminal {
             width: 80%;
             max-width: 800px;
@@ -23,6 +25,8 @@
             border-radius: 5px;
             overflow: hidden;
         }
+
+
 
         .terminal-header {
             background-color: #444;
@@ -40,14 +44,15 @@
             color: #fff;
             outline: none;
         }
-        
+
         .terminal-input button {
             background-color: #444;
             color: #fff;
             border: none;
             cursor: pointer;
         }
-        
+
+
 
         .terminal-prompt {
             color: #0f0;
@@ -62,58 +67,62 @@
             0% {
                 opacity: 1;
             }
+
             50% {
                 opacity: 0;
             }
+
             100% {
                 opacity: 1;
             }
         }
     </style>
 </head>
+
 <body>
 
-<div class="terminal">
-    <div class="terminal-header">Terminal</div>
-    <div class="terminal-body" id="terminal-body">
-        <div>Welcome to Terminal</div>
-        <div>Type 'help' for commands</div>
+    <div class="terminal">
+        <div class="terminal-header">Terminal</div>
+        <div class="terminal-body" id="terminal-body">
+            <div>Welcome to Terminal</div>
+            <div>Type 'help' for commands</div>
+        </div>
+        <div class="terminal-input row">
+            <div class="terminal-prompt">$</div>
+            <input type="text" id="commandInput">
+            <button onclick="sendCommand()">Send</button>
+            <div class="terminal-cursor">_</div>
+        </div>
     </div>
-    <div class="terminal-input row">
-        <div class="terminal-prompt">$</div>
-        <input type="text" id="commandInput">
-        <button onclick="sendCommand()">Send</button>
-        <div class="terminal-cursor">_</div>
-    </div>
-</div>
 
-<script>
-    async function sendCommand() {
-        const commandInput = document.getElementById('commandInput');
-        const terminalBody = document.getElementById('terminal-body');
+    <script>
+        async function sendCommand() {
+            const commandInput = document.getElementById('commandInput');
+            const terminalBody = document.getElementById('terminal-body');
 
-        const command = commandInput.value.trim();
-        if (!command) return;
+            const command = commandInput.value.trim();
+            if (!command) return;
 
-        terminalBody.innerHTML += `<div>$ ${command}</div>`;
-        commandInput.value = '';
+            terminalBody.innerHTML += `<div>$ ${command}</div>`;
+            commandInput.value = '';
 
-        try {
-            const response = await fetch('/execute-command', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ command })
-            });
-            const data = await response.json();
-            terminalBody.innerHTML += `<div>${data.message}</div>`;
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-        } catch (error) {
-            console.error('Error sending command:', error);
+            try {
+                const response = await fetch('/execute-command', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ command })
+                });
+                const data = await response.json();
+                terminalBody.innerHTML += `<div>${data.message}</div>`;
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            } catch (error) {
+                console.error('Error sending command:', error);
+            }
         }
-    }
-</script>
+    </script>
 
 </body>
+
 </html>
