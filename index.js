@@ -8,7 +8,7 @@ const port = 3000;
 const db = new sqlite3.Database('save.db');
 db.serialize(() => {
   db.run("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, pseudo TEXT, score INTEGER, difficulte INTEGER, vie INTEGER, etage INTEGER, mdp TEXT)");
-  db.run("CREATE TABLE IF NOT EXISTS questions (id INTERGER PRIMARY KEY, difficulte INTEGER, texte TEXT, reponse TEXT)");
+  db.run("CREATE TABLE IF NOT EXISTS questions (id INTEGER PRIMARY KEY, difficulte INTEGER, texte TEXT, reponse TEXT)");
 });
 
 app.get('/', (req, res) => {
