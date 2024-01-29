@@ -67,7 +67,7 @@ app.get('/stop', (req, res) => {
 });
 
 // Route pour arrêter le serveur
-app.post('/stop-server', (req, res) => {
+app.post('/arret-server', (req, res) => {
   console.log("Arrêt du serveur demandé.");
   // Nettoyer la table 'questions'
   db.run("DELETE FROM questions");
