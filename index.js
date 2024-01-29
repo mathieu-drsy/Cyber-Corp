@@ -76,8 +76,18 @@ app.get('/view', (req, res) => {
   res.sendFile(path.join(__dirname, 'view', 'index.html'));
 });
 
+app.get('/stop', (req, res) => {
+  // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
+  res.sendFile(path.join(__dirname, 'view', 'stop.html'));
+});
+
 // Nettoyer la table 'questions' à l'arrêt du serveur npm
 process.on('SIGINT', () => {
+  db.run("DELETE FROM questions");
+  console.log('Table "questions" vidée.');
+});
+
+process.on('exit', () => {
   db.run("DELETE FROM questions");
   console.log('Table "questions" vidée.');
 });
