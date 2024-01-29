@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +16,8 @@
         }
 
         .terminal {
-            width: 90%;
-            max-width: 1000px;
+            width: 80%;
+            max-width: 800px;
             margin: 0 auto;
             border: 2px solid #ccc;
             border-radius: 5px;
@@ -32,12 +31,23 @@
 
         .terminal-body {
             padding: 10px;
-            min-height: 650px;
+            min-height: 200px;
         }
 
-        .terminal-input {
-            display: flex;
+        .terminal-input input[type="text"] {
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
         }
+        
+        .terminal-input button {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        
 
         .terminal-prompt {
             color: #0f0;
@@ -52,79 +62,58 @@
             0% {
                 opacity: 1;
             }
-
             50% {
                 opacity: 0;
             }
-
             100% {
                 opacity: 1;
             }
         }
     </style>
 </head>
-
 <body>
 
-    <div class="terminal">
-        <div class="terminal-header">Terminal</div>
-        <div class="terminal-body" id="terminal-body">
-            <div>Welcome to Terminal</div>
-            <div>Type 'help' for commands</div>
-        </div>
-        <div class="terminal-input">
-            <div class="terminal-prompt">$</div>
-            <div class="terminal-cursor">_</div>
-        </div>
+<div class="terminal">
+    <div class="terminal-header">Terminal</div>
+    <div class="terminal-body" id="terminal-body">
+        <div>Welcome to Terminal</div>
+        <div>Type 'help' for commands</div>
     </div>
+    <div class="terminal-input row">
+        <div class="terminal-prompt">$</div>
+        <input type="text" id="commandInput">
+        <button onclick="sendCommand()">Send</button>
+        <div class="terminal-cursor">_</div>
+    </div>
+</div>
 
-    <script>
-        document.addEventListener('keypress', function (event) {
-            const terminalBody = document.getElementById('terminal-body');
-            const terminalInput = document.querySelector('.terminal-input');
-            const terminalCursor = document.querySelector('.terminal-cursor');
+<script>
+    async function sendCommand() {
+        const commandInput = document.getElementById('commandInput');
+        const terminalBody = document.getElementById('terminal-body');
 
-            if (event.key === 'Enter') {
-                const command = terminalInput.textContent.trim().substring(1);
-                terminalInput.textContent = '';
-                terminalBody.innerHTML += `<div>$ ${command}</div>`;
-                executeCommand(command);
-                terminalBody.scrollTop = terminalBody.scrollHeight;
-            } else {
-                //terminalCursor.classList.remove('terminal-cursor');
-                //setTimeout(() => terminalCursor.classList.add('terminal-cursor'), 500);
-                if (event.key !== 'Backspace') {
-                    terminalInput.textContent += event.key;
-                } else if (event.key === 'Backspace' && terminalInput.textContent.length > 1) { // Modifier cette ligne
-                    terminalInput.textContent = terminalInput.textContent.slice(0, -1);
-                }
-            }
-        });
+        const command = commandInput.value.trim();
+        if (!command) return;
 
+        terminalBody.innerHTML += `<div>$ ${command}</div>`;
+        commandInput.value = '';
 
-        function executeCommand(command) {
-            const terminalBody = document.getElementById('terminal-body');
-            let output = '';
-
-            switch (command) {
-                case 'help':
-                    output = `<div>Available commands:</div>
-                      <div>- help: Display available commands</div>
-                      <div>- date: Show current date and time</div>`;
-                    break;
-                case 'date':
-                    const currentDate = new Date();
-                    output = `<div>${currentDate}</div>`;
-                    break;
-                default:
-                    output = `<div>Command not found: ${command}</div>`;
-                    break;
-            }
-
-            terminalBody.innerHTML += output;
+        try {
+            const response = await fetch('/execute-command', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ command })
+            });
+            const data = await response.json();
+            terminalBody.innerHTML += `<div>${data.message}</div>`;
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        } catch (error) {
+            console.error('Error sending command:', error);
         }
-    </script>
+    }
+</script>
 
 </body>
-
 </html>
