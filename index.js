@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 });
 
 process.on('exit', () => {
-  const db = new sqlite3.Database('mydatabase.db');
+  const db = new sqlite3.Database('save.db');
   db.run("DROP DATABASE data");
   db.close();
   console.log('Base de données nettoyée.');
