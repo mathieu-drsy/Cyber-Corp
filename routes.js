@@ -1,3 +1,5 @@
+const path = require('path');
+
 function setupRoutes(app, db) {
     app.get('/', (req, res) => {
     // Exemple : insérer des données dans la base de données

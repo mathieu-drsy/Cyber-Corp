@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const initDb = require('./db_init');
 const { setupRoutes } = require('./routes');
 
