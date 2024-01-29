@@ -66,15 +66,15 @@
     <h1>Choisissez votre niveau</h1>
 
     <div class="btn-container">
-        <div class="btn1" onclick="setDifficulty(1)">
+        <div class="btn1" onclick="setDifficultyToNovice()">
             <h3>Novice</h3>
             <p>Si vous êtes nouveau dans le domaine.</p>
         </div>
-        <div class="btn2" onclick="setDifficulty(2)">
+        <div class="btn2" onclick="setDifficultyToIntermediaire()">
             <h3>Intermédiaire</h3>
             <p>Si vous avez des connaissances de base.</p>
         </div>
-        <div class="btn3" onclick="setDifficulty(3)">
+        <div class="btn3" onclick="setDifficultyToExpert()">
             <h3>Avancée</h3>
             <p>Si vous êtes un professionnel expérimenté.</p>
         </div>
@@ -86,23 +86,7 @@
         }
     </script>
     	<script>
-            function setDifficulty(difficulty) {    
-            // Utilisez la méthode fetch pour envoyer une requête POST vers la route correspondante
-            body.difficulty = difficulty;
-            fetch('/difficulte', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-            })
-            .catch(error => console.error(error));
-            }
-            /*function setDifficultyToNovice() {
+            function setDifficultyToNovice() {
                 // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
                 fetch('/difficulteNovice', { method: 'POST' })
                     .then(response => response.text())
@@ -134,7 +118,7 @@
                         window.location.href = 'view/index.html';
                     })
                     .catch(error => console.error(error));
-            }*/
+            }
             </script>
 </body>
 </html>
