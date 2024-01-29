@@ -36,7 +36,7 @@ db.get("SELECT COUNT(*) as count FROM questions", (err, row) => {
 
 app.get('/', (req, res) => {
   // Exemple : insérer des données dans la base de données
-  db.run("INSERT IGNORE INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["test", 420, 3, 3, 0, "test"]);
+  db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["test", 420, 3, 3, 0, "test"]);
   
 
   // Récupérer des données depuis la base de données
@@ -64,11 +64,10 @@ app.post('/difficulteNovice', (req, res) => {
   });
 });
 
+// Nettoyer la table 'questions' à l'arrêt du serveur npm
 process.on('exit', () => {
-  db.run("DROP DATABASE questions");
-  db.close();
-  console.log('||TEMP|| questions nettoyées.');
-  console.log('Base de donnée fermée proprement.');
+  db.run("DELETE FROM questions");
+  console.log('Table "questions" vidée.');
 });
 
 app.listen(port, () => {
