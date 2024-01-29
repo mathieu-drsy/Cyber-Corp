@@ -39,24 +39,24 @@ app.post('/difficulteNovice', (req, res) => {
 // Ajoutez cette route après la création de la base de données dans votre fichier index.js
 app.post('/difficulteIntermediaire', (req, res) => {
   // Exemple : insérer des données dans la base de données avec difficulté 1
-  db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 2, 3, 0, "test"], (err) => {
+  db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Intermediaire", 420, 2, 3, 0, "test"], (err) => {
     if (err) {
       return res.status(500).send(err.message);
     }
 
-    res.status(200).send("Difficulté Novice sélectionnée");
+    res.status(200).send("Difficulté Intermediaire sélectionnée");
   });
 });
 
 // Ajoutez cette route après la création de la base de données dans votre fichier index.js
 app.post('/difficulteExpert', (req, res) => {
   // Exemple : insérer des données dans la base de données avec difficulté 1
-  db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 3, 3, 0, "test"], (err) => {
+  db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Expert", 420, 3, 3, 0, "test"], (err) => {
     if (err) {
       return res.status(500).send(err.message);
     }
 
-    res.status(200).send("Difficulté Novice sélectionnée");
+    res.status(200).send("Difficulté Expert sélectionnée");
   });
 });
 
