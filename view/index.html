@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sélection de Niveau</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .btn1 {
+            width: 200px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn1:hover {
+            background-color: #1ab71a;
+        }
+
+        .btn2 {
+            width: 200px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn2:hover {
+            background-color: #e18f13;
+        }
+
+        .btn3 {
+            width: 200px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn3:hover {
+            background-color: #de1717;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenue sur CYBER CORP</h1>
+    <h1>Choisissez votre niveau</h1>
+
+    <div class="btn-container">
+        <div class="btn1" onclick="redirectTo('debutant.html')">
+            <h2>Novice</h2>
+            <p>Si vous êtes nouveau dans le domaine.</p>
+        </div>
+        <div class="btn2" onclick="redirectTo('intermediaire.html')">
+            <h2>Intermédiaire</h2>
+            <p>Si vous avez des connaissances de base.</p>
+        </div>
+        <div class="btn3" onclick="redirectTo('expert.html')">
+            <h2>Avancée</h2>
+            <p>Si vous êtes un professionnel expérimenté.</p>
+        </div>
+    </div>
+
+    <script>
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
