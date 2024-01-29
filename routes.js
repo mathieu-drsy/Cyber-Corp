@@ -1,4 +1,9 @@
 const path = require('path');
+const express = require('express');
+const app = express();
+
+// Utilisation du middleware pour le traitement du corps de la requête
+app.use(express.json());
 
 function setupRoutes(app, db) {
     app.get('/', (req, res) => {
