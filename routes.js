@@ -44,6 +44,20 @@ function setupRoutes(app, db) {
     });
   });
 
+  app.post('/setScore', (req, res) => {
+    const scoreValue = req.body.score;
+    // Utilisez la valeur de difficulté comme vous le souhaitez
+    // Exemple : insérer des données dans la base de données
+    /*db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["MODIF", 420, difficultyValue, 3, 0, "test"], (err) => {
+      if (err) {
+        return res.status(500).send(err.message);
+      }
+
+      res.status(200).send(`Difficulté ${difficultyValue} sélectionnée`);
+    });*/
+    console.log(scoreValue);
+  });
+
   app.post('/setUser', async (req, res) => {
     const usernameValue = req.body.username;
     const passwordValue = req.body.password;
@@ -70,7 +84,7 @@ function setupRoutes(app, db) {
             // L'utilisateur n'existe pas, afficher un log et envoyer une réponse appropriée
             const hashedPassword = await bcrypt.hash(passwordValue, 10);
             db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
-                [usernameValue, 420, 10, 3, 0, hashedPassword], (err) => {
+                [usernameValue, 0, 0, 0, 0, hashedPassword], (err) => {
                     if (err) {
                         return res.status(500).send(err.message);
                     }
