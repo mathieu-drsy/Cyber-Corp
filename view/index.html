@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
     <link rel="icon" href="/images/CyberCorp Logo.jpg"/>
     <body>
@@ -22,8 +21,8 @@
                             <a class="nav-link" href="/stat">Statistiques</a>
                         </li>
                     </ul>
-                    <span class="navbar-text">
-                        <a href="/login" class="nav-link">Login</a>
+                    <span class="navbar-text" id="loginLink">
+                        <a href="#" class="nav-link" onclick="redirectToLogin()">Login</a>
                     </span>
                 </div>
             </div>
@@ -86,30 +85,67 @@
             background-color: #de1717;
         }
     </style>
-</head>
-<body>
-    <h1>Bienvenue sur CYBER CORP</h1>
-    <h1>Choisissez votre niveau </h1>
+    </head>
+    <body>
+        <h1>Bienvenue sur CYBER CORP</h1>
+        <h1>Choisissez votre niveau </h1>
 
-    <div class="btn-container">
-        <div class="btn1" onclick="redirectTo('Novice/Novice.html')">
-            <h3>Novice</h3>
-            <p>Si vous êtes nouveau dans le domaine.</p>
+        <div class="btn-container">
+            <div class="btn1" onclick="setDifficulty(1)">
+                <h3>Novice</h3>
+                <p>Si vous êtes nouveau dans le domaine.</p>
+            </div>
+            <div class="btn2" onclick="setDifficulty(2)">
+                <h3>Intermédiaire</h3>
+                <p>Si vous avez des connaissances de base.</p>
+            </div>
+            <div class="btn3" onclick="setDifficulty(3)">
+                <h3>Avancée</h3>
+                <p>Si vous êtes un professionnel expérimenté.</p>
+            </div>
         </div>
-        <div class="btn2" onclick="redirectTo('transition/transition.html')">
-            <h3>Intermédiaire</h3>
-            <p>Si vous avez des connaissances de base.</p>
-        </div>
-        <div class="btn3" onclick="redirectTo('transition/transition.html')">
-            <h3>Avancée</h3>
-            <p>Si vous êtes un professionnel expérimenté.</p>
-        </div>
-    </div>
 
-    <script>
-        function redirectTo(url) {
-            window.location.href = url;
-        }
-    </script>
-</body>
+        <script>
+            function redirectTo(url) {
+                window.location.href = url;
+            }
+            function redirectToLogin() {
+                window.location.href = '/login';
+            }
+            function setDifficulty(difficultyValue) {
+                // Utilisez la méthode fetch pour envoyer une requête POST vers la route correspondante
+                const endpoint = `/difficulte`;
+
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ difficulty: difficultyValue }),
+                })
+                    .then(response => response.text())
+                    .then(message => {
+                        console.log(message);
+
+                        // Redirection en fonction de la valeur de difficultyValue
+                        switch (difficultyValue) {
+                            case 1:
+                                window.location.href = '/transition';
+                                break;
+                            case 2:
+                                window.location.href = '/transition';
+                                break;
+                            case 3:
+                                window.location.href = '/transition';
+                                break;
+                            default:
+                                console.error('Difficulté non reconnue.');
+                                break;
+                        }
+                    })
+                    .catch(error => console.error(error));
+            }
+        </script>
+    </body>
+
 </html>
