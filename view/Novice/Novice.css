@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.porte {
+    margin: 20px;
+    padding: 20px;
+    background-color: #8f8f8f;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.porte:hover {
+    background-color: #a9a9a9;
+}
+
+.niveaux {
+    margin-top: 50px;
+}
