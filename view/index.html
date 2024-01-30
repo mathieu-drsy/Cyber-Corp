@@ -88,7 +88,7 @@
     	<script>
             function setDifficultyToNovice() {
                 // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
-                fetch('/difficulteNovice', { method: 'POST' })
+                fetch('/difficulte', { method: 'POST' })
                     .then(response => response.text())
                     .then(message => {
                         console.log(message);
@@ -99,7 +99,7 @@
             }
             function setDifficultyToIntermediaire() {
                 // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
-                fetch('/difficulteIntermediaire', { method: 'POST' })
+                fetch('/difficulte', { method: 'POST' })
                     .then(response => response.text())
                     .then(message => {
                         console.log(message);
@@ -110,7 +110,7 @@
             }
             function setDifficultyToExpert() {
                 // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
-                fetch('/difficulteExpert', { method: 'POST' })
+                fetch('/difficulte', { method: 'POST' })
                     .then(response => response.text())
                     .then(message => {
                         console.log(message);
