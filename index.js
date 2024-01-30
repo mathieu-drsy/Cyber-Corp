@@ -23,6 +23,10 @@ app.get("/inscription", (req, res) => {
   res.sendFile(path.join(__dirname, "view", "inscription.html"));
 });
 
+app.get("/stat", (req, res) => {
+  res.sendFile(path.join(__dirname, "view", "stat.html"));
+});
+
 app.post("/execute-command", (req, res) => {
   const { command } = req.body;
   let output = "";
