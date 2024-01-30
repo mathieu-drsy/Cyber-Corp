@@ -23,6 +23,10 @@ app.get("/inscription", (req, res) => {
   res.sendFile(path.join(__dirname, "view", "inscription.html"));
 });
 
+app.get("/stat", (req, res) => {
+  res.sendFile(path.join(__dirname, "view", "stat.html"));
+});
+
 app.post("/execute-command", (req, res) => {
   const { command } = req.body;
   let output = "";
@@ -45,7 +49,7 @@ app.post("/execute-command", (req, res) => {
       break;
     case "false":
       // Here, you can define the behavior for the "true" command
-      output = "You have chosen to failed.";
+      output = "You have chose to fail.";
       correct = false; // Set correct to true for this command
       break;
     case "restart":

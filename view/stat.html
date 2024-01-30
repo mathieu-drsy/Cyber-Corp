@@ -28,88 +28,64 @@
                 </div>
             </div>
         </nav>
-    <title>CyberCorp - Accueuil</title>
-    <link rel="stylesheet" href="index.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vos Statistiques</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
             text-align: center;
-            margin: 0px;
+            padding: 10px 0;
         }
 
-        h1 {
-            color: #333;
-        }
-
-        .btn-container {
+        .statistics {
             display: flex;
             justify-content: space-around;
-            margin-top: 50px;
-        }
-
-        .btn1 {
-            width: 200px;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
-        .btn1:hover {
-            background-color: #1ab71a;
-        }
-
-        .btn2 {
-            width: 200px;
+        .statistic {
+            background-color: #fff;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 30%;
         }
 
-        .btn2:hover {
-            background-color: #e18f13;
-        }
-
-        .btn3 {
-            width: 200px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn3:hover {
-            background-color: #de1717;
+        .chart {
+            height: 200px;
+            background-image: linear-gradient(to bottom, #5c67ec, #4a54d1);
+            border-radius: 5px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-    <h1>Bienvenue sur CYBER CORP</h1>
-    <h1>Choisissez votre niveau </h1>
-
-    <div class="btn-container">
-        <div class="btn1" onclick="redirectTo('Novice/Novice.html')">
-            <h3>Novice</h3>
-            <p>Si vous êtes nouveau dans le domaine.</p>
+    <header>
+        <h1>Statistiques</h1>
+    </header>
+    <section class="statistics">
+        <div class="statistic">
+            <h2>Durée</h2>
+            <div class="chart" id="chart1"></div>
         </div>
-        <div class="btn2" onclick="redirectTo('transition/transition.html')">
-            <h3>Intermédiaire</h3>
-            <p>Si vous avez des connaissances de base.</p>
+        <div class="statistic">
+            <h2>Niveaux terminés</h2>
+            <div class="chart" id="chart2"></div>
         </div>
-        <div class="btn3" onclick="redirectTo('transition/transition.html')">
-            <h3>Avancée</h3>
-            <p>Si vous êtes un professionnel expérimenté.</p>
+        <div class="statistic">
+            <h2>Bonus obtenus</h2>
+            <div class="chart" id="chart3"></div>
         </div>
-    </div>
-
-    <script>
-        function redirectTo(url) {
-            window.location.href = url;
-        }
-    </script>
+    </section>
 </body>
 </html>
