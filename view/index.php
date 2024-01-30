@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-    <iframe src="entete.html" width="100%" height="150px" frameborder="0"></iframe>
+    <?php include("entete.html"); ?>
     <title>Sélection du niveau</title>
     <link rel="stylesheet" href="index.css">
     <style>
