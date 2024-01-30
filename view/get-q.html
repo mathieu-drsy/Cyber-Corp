@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Récupérer 3 questions</title>
     <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
+    <script src="./view/get3q.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -81,7 +82,7 @@
 <body>
     <h1>Récupérer des questions</h1>
 
-    <div class="container">
+    <!-- <div class="container">
         <div class="difficulty-buttons">
             <button type="button" class="difficulty-1" hx-get="/get-questions?difficulty=1" hx-trigger="click" hx-target="#questions-list" hx-swap="innerHTML">Novice</button>
             <button type="button" class="difficulty-2" hx-get="/get-questions?difficulty=2" hx-trigger="click" hx-target="#questions-list" hx-swap="innerHTML">Intermédiaire</button>
@@ -89,6 +90,29 @@
         </div>
 
         <div id="questions-list"></div>
+    </div> -->
+
+    <!-- <div>
+        <label>Niveau de difficulté :</label>
+        <div>
+            <button type="button" onclick="getQuestions(1)">Novice</button>
+            <button type="button" onclick="getQuestions(2)">Intermédiaire</button>
+            <button type="button" onclick="getQuestions(3)">Avancée</button>
+        </div>
+        <div id="questions-list"></div>
+    </div> -->
+    <div class="container">
+        <div class="difficulty-buttons">
+            <button type="button" class="difficulty-1" hx-trigger="click" onclick="getQuestions(1)" hx-target="#questions-list">Novice</button>
+            <button type="button" class="difficulty-2" hx-trigger="click" onclick="getQuestions(2)" hx-target="#questions-list">Intermédiaire</button>
+            <button type="button" class="difficulty-3" hx-trigger="click" onclick="getQuestions(3)" hx-target="#questions-list">Avancé</button>
+        </div>
+
+        <div id="questions-list"></div>
     </div>
+
+    <script>
+        
+    </script>
 </body>
 </html>
