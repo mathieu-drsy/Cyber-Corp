@@ -89,8 +89,8 @@ function setupRoutes(app, db) {
     });
 
     app.post('/get-questions', (req, res) => {
-        const difficulte = parseInt(req.body.difficulty); // Assurez-vous que la difficulté est un nombre entier
-        db.all("SELECT * FROM questions WHERE difficulte = ?", [difficulty], (err, rows) => {
+        const difficulte = req.body.difficulty; // Assurez-vous que la difficulté est un nombre entier
+        db.all("SELECT * FROM questions WHERE difficulte = ?", [difficulte], (err, rows) => {
             if (err) {
                 return console.error(err.message);
             }
