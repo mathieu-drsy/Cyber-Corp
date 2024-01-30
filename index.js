@@ -33,6 +33,14 @@ app.post("/execute-command", (req, res) => {
       const currentDate = new Date().toLocaleString();
       output = `Current date and time: ${currentDate}`;
       break;
+    case "true":
+      // Here, you can define the behavior for the "true" command
+      output = "You have chosen to continue.";
+      break;
+    case "restart":
+      // Send a specific response to indicate page reload
+      res.json({ reload: true });
+      return; // Stop further execution
     default:
       output = `Command not found: ${command}`;
       break;
