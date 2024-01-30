@@ -19,6 +19,10 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "login", "login.html"));
 });
 
+app.get("/inscription", (req, res) => {
+  res.sendFile(path.join(__dirname, "view", "inscription.html"));
+});
+
 app.post("/execute-command", (req, res) => {
   const { command } = req.body;
   let output = "";
