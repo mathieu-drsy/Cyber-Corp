@@ -89,7 +89,7 @@ function setupRoutes(app, db) {
     });
 
     app.post('/get-questions', (req, res) => {
-        const difficulty = req.body.difficulty;
+        const difficulte = parseInt(req.body.difficulty); // Assurez-vous que la difficulté est un nombre entier
         db.all("SELECT * FROM questions WHERE difficulte = ?", [difficulty], (err, rows) => {
             if (err) {
                 return console.error(err.message);
@@ -97,7 +97,12 @@ function setupRoutes(app, db) {
             res.send(rows);
         });
     });
-
+    
+    app.get('/get3q', (req, res) => {
+        // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
+        res.sendFile(path.join(__dirname, 'view', 'get-q.html'));
+        });
+    
     // Route pour arrêter le serveur
     app.post('/arret-server', (req, res) => {
     console.log("Arrêt du serveur demandé.");
