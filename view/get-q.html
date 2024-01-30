@@ -12,12 +12,11 @@
     <div>
         <label>Niveau de difficulté :</label>
         <div>
-            <button type="button" hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list" hx-params="difficulty=1">Novice</button>
-            <button type="button" hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list" hx-params="difficulty=2">Intermédiaire</button>
-            <button type="button" hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list" hx-params="difficulty=3">Avancée</button>
+            <button type="button" hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list" hx-json='{"difficulty": 1}'>Novice</button>
+            <button type="button" hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list" hx-json='{"difficulty": 2}'>Intermédiaire</button>
+            <button type="button" hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list" hx-json='{"difficulty": 3}'>Avancée</button>
         </div>
-    </div>
-
-    <div id="questions-list"></div>
+        
+        <div id="questions-list"></div>      
 </body>
 </html>
