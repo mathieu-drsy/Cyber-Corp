@@ -31,8 +31,8 @@ function displayQuestions(questions) {
         const questionTitle = document.createElement('h2');
         questionTitle.textContent = question.texte;
 
-        const answerList = document.createElement('ol');
-        answerList.type = "a"; // Définir le type de la liste comme "a"
+        const answerList = document.createElement('div');
+        answerList.classList.add('answer-list');
 
         // Tableau des réponses et de leurs clés associées
         const answersMap = [
@@ -44,13 +44,23 @@ function displayQuestions(questions) {
         // Enregistrer l'index de la bonne réponse
         const correctIndex = question.bonnereponse - 1;
 
-        // Ajouter chaque réponse à la liste
-        answersMap.forEach(answer => {
-            const answerItem = document.createElement('li');
-            answerItem.textContent = answer.text;
+        // Ajouter chaque réponse à la liste sous forme de boutons radio
+        answersMap.forEach((answer, idx) => {
+            const answerItem = document.createElement('label');
+            answerItem.classList.add('answer-item');
+            const radioButton = document.createElement('input');
+            radioButton.type = 'radio';
+            radioButton.name = `question-${index}`;
+            radioButton.value = idx;
+            radioButton.addEventListener('change', () => {
+                checkAnswer(radioButton, idx, correctIndex);
+            });
+            answerItem.appendChild(radioButton);
+            const answerText = document.createTextNode(answer.text);
+            answerItem.appendChild(answerText);
             answerList.appendChild(answerItem);
         });
-
+        
         // Marquer la bonne réponse
         const correctAnswerItem = answerList.children[correctIndex];
         correctAnswerItem.classList.add('correct-answer');
@@ -68,4 +78,14 @@ function displayQuestions(questions) {
 
         questionsList.appendChild(questionDiv);
     });
+}
+
+function checkAnswer(radioButton, idx, correctIndex) {
+    if (radioButton.checked) {
+        if (idx === correctIndex) {
+            console.log('OK');
+        } else {
+            console.log('WRONG');
+        }
+    }
 }

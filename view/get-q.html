@@ -83,6 +83,16 @@
             font-weight: bold; /* Gras pour mettre en évidence */
             color: green; /* Couleur verte pour indiquer la bonne réponse */
         }
+
+        .answer-item {
+            display: block;
+        }
+
+        .answer-item input[type="radio"] {
+            margin-right: 5px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -93,7 +103,7 @@
             <button type="button" class="difficulty-2" hx-trigger="click" onclick="getQuestions(2)" hx-target="#questions-list" hx-swap="innerHTML">Intermédiaire</button>
             <button type="button" class="difficulty-3" hx-trigger="click" onclick="getQuestions(3)" hx-target="#questions-list" hx-swap="innerHTML">Avancé</button>
         </div>
-        
+
         <div id="questions-list"></div>
     </div>
 
