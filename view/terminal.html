@@ -99,7 +99,6 @@
             <div class="terminal-header">Terminal</div>
             <div class="terminal-body" id="terminal-body">
                 <div class="red-text">You have been hacked</div>
-                <div>Type 'help' for commands</div>
             </div>
             <div class="terminal-input row">
                 <div class="terminal-prompt">$</div>
@@ -112,10 +111,11 @@
 
         <!-- Lives -->
         <div class="lives">
-            <img src="/Image_terminal/undertale.png" alt="Heart" id="heart1" style="width: 20px; height: 20px;">
-            <img src="/Image_terminal/undertale.png" alt="Heart" id="heart2" style="width: 20px; height: 20px;">
-            <img src="/Image_terminal/undertale.png" alt="Heart" id="heart3" style="width: 20px; height: 20px;">
+            <img src="/Image_terminal/heart.png" alt="Heart" id="heart1" style="width: 20px; height: 20px;">
+            <img src="/Image_terminal/heart.png" alt="Heart" id="heart2" style="width: 20px; height: 20px;">
+            <img src="/Image_terminal/heart.png" alt="Heart" id="heart3" style="width: 20px; height: 20px;">
         </div>
+
     </div>
 
     <script>
@@ -125,6 +125,8 @@
                 sendCommand();
             }
         });
+
+        let remainingLives = 3;
 
         async function sendCommand() {
             const commandInput = document.getElementById('commandInput');
@@ -147,8 +149,33 @@
                 const data = await response.json();
                 terminalBody.innerHTML += `<div>${data.message}</div>`;
                 terminalBody.scrollTop = terminalBody.scrollHeight;
+
+                // Check if the response indicates a page reload
+                if (data.reload) {
+                    window.location.reload(); // Reload the page
+                    return; // Stop further execution
+                }
+
+                // Check if game over message received
+                if (data.message.includes('Game Over')) {
+                    // Disable the input field
+                    commandInput.disabled = true;
+                }
             } catch (error) {
                 console.error('Error sending command:', error);
+            }
+        }
+
+        function updateHeartImages() {
+            for (let i = 1; i <= 3; i++) {
+                const heartImg = document.getElementById(`heart${i}`);
+                if (i <= remainingLives) {
+                    // If the life is still remaining, use the heart image
+                    heartImg.src = "/Image_terminal/heart.png";
+                } else {
+                    // If the life is lost, use the broken heart image
+                    heartImg.src = "/Image_terminal/broken_heart.png";
+                }
             }
         }
     </script>
