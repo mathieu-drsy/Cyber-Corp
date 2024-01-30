@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="icon" href="/images/CyberCorp Logo.jpg"/>
+<link rel="icon" href="/images/CyberCorp Logo.jpg" />
 
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -38,9 +38,12 @@
         }
 
         .terminal-body {
-            padding: 10px;
-            min-height: 650px;
+            height: 400px;
+            /* Set a fixed height */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
         }
+
 
         .terminal-input input[type="text"] {
             background-color: transparent;
@@ -97,7 +100,7 @@
 
         .progress-bar-container {
             position: absolute;
-            bottom: 20px;
+            bottom: 250px;
             width: 65%;
             left: 47%;
             transform: translateX(-50%);
@@ -192,12 +195,16 @@
 
                 // Update progress bar if the answer is correct
                 if (data.correct) {
-                    correctAnswers++; // Increment correct answers
-                    updateProgressBar();
+                    if (command === "true" || command === "false") {
+                        correctAnswers++; // Increment correct answers
+                        updateProgressBar();
+                    }
                 } else {
-                    // If the answer is incorrect, decrement lives
-                    remainingLives--;
-                    updateHeartImages();
+                    // If the answer is incorrect and the command is "true" or "false", decrement lives
+                    if (command === "true" || command === "false") {
+                        remainingLives--;
+                        updateHeartImages();
+                    }
                 }
 
                 // Check if game over message received
@@ -209,6 +216,7 @@
                 console.error('Error sending command:', error);
             }
         }
+
 
 
         function updateProgressBar() {
