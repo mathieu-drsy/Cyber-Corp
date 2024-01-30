@@ -62,15 +62,18 @@ function setupRoutes(app, db) {
     res.sendFile(path.join(__dirname, 'view', 'stop.html'));
     });
 
-    app.post('/get-questions', (req, res) => {
-        const difficulte = req.body.difficulty; // Assurez-vous que la difficulté est un nombre entier
-        db.all("SELECT * FROM questions WHERE difficulte = ?", [difficulte], (err, rows) => {
+    app.get('/get-questions', (req, res) => {
+        const difficulty = req.query.difficulty; // Récupérer la difficulté à partir de la query string
+        const sql = "SELECT * FROM questions WHERE difficulte = ? ORDER BY RANDOM() LIMIT 3"; // Sélectionner 3 questions aléatoires
+    
+        db.all(sql, [parseInt(difficulty)], (err, rows) => {
             if (err) {
-                return console.error(err.message);
+                return res.status(500).send('Une erreur est survenue lors de la récupération des questions.');
             }
-            res.send(rows);
+            res.send(rows); // Renvoyer les données récupérées
         });
     });
+    
     
     app.get('/get3q', (req, res) => {
         // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
@@ -78,13 +81,10 @@ function setupRoutes(app, db) {
         });
     
     // Route pour arrêter le serveur
-    app.post('/arret-server', (req, res) => {
-    console.log("Arrêt du serveur demandé.");
+    app.post('/clear-questions', (req, res) => {
     // Nettoyer la table 'questions'
     db.run("DELETE FROM questions");
     console.log('Table "questions" vidée.');
-    // Arrêter le serveur
-    process.exit();
     });
 }
 
