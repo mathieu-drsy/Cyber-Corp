@@ -64,7 +64,7 @@
 </head> 
     <div class="fond-numerique"></div>
     <div class="message">Vous avez été piraté</div>
-    <button class="commencer-btn">Commencer les épreuves</button>
+    <button class="commencer-btn">Commencer l'épreuve</button>
 
     <script>
         function generateNumber() {
@@ -86,7 +86,7 @@
 
         document.querySelector('.commencer-btn').addEventListener('click', function() {
             // Logique au clic du bouton, par exemple rediriger vers une autre page
-            window.location.href = 'Novice.html';
+            window.location.href = '../terminal.html';
         });
     </script>
 </body>
@@ -97,20 +97,5 @@
             margin: 0px;
         }
     </style>
-    <h1>Novice</h1>
-    <div class="etages">
-        <div class="porte" onclick="ouvrirPorte(1)">étage 1</div>
-        <div class="porte" onclick="ouvrirPorte(2)">étage 2</div>
-        <div class="porte" onclick="ouvrirPorte(3)">étage 3</div>
-        <div class="porte" onclick="ouvrirPorte(4)">étage 4</div>
-        <div class="porte" onclick="ouvrirPorte(5)">étage 5</div>
-        <div class="porte" onclick="ouvrirPorte(6)">étage 6</div>
-        <div class="porte" onclick="ouvrirPorte(7)">étage 7</div>
-        <div class="porte" onclick="ouvrirPorte(8)">étage 8</div>
-        <div class="porte" onclick="ouvrirPorte(9)">étage 9</div>
-        <div class="porte" onclick="ouvrirPorte(10)">étage 10</div>
-        
-    </div>
-    <script src="Novice.js"></script>
 </body>
 </html>
