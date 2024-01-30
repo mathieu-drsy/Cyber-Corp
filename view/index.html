@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <body>
-    <iframe src="entete.html" width="100%" height="150px" frameborder="0"></iframe>
     <title>Sélection du niveau</title>
+    <link rel="import" href="/view/entete.html">
     <link rel="stylesheet" href="index.css">
     <style>
         body {
@@ -104,13 +104,13 @@
         // Redirection en fonction de la valeur de difficultyValue
         switch (difficultyValue) {
             case 1:
-                window.location.href = 'view/transition/transition.html';
+                window.location.href = '/transition';
                 break;
             case 2:
-                window.location.href = 'view/transition/transition.html';
+                window.location.href = '/transition';
                 break;
             case 3:
-                window.location.href = 'view/transition/transition.html';
+                window.location.href = '/transition';
                 break;
             default:
                 console.error('Difficulté non reconnue.');
@@ -119,40 +119,6 @@
     })
     .catch(error => console.error(error));
 }
-
-            /*function setDifficultyToNovice() {
-                // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
-                fetch('/difficulteNovice', { method: 'POST' })
-                    .then(response => response.text())
-                    .then(message => {
-                        console.log(message);
-                        // Redirigez l'utilisateur vers la page Novice après l'insertion des données
-                        window.location.href = 'view/index.html';
-                    })
-                    .catch(error => console.error(error));
-            }
-            function setDifficultyToIntermediaire() {
-                // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
-                fetch('/difficulteIntermediaire', { method: 'POST' })
-                    .then(response => response.text())
-                    .then(message => {
-                        console.log(message);
-                        // Redirigez l'utilisateur vers la page Novice après l'insertion des données
-                        window.location.href = 'view/index.html';
-                    })
-                    .catch(error => console.error(error));
-            }
-            function setDifficultyToExpert() {
-                // Utilisez la méthode fetch pour envoyer une requête POST vers la route /insertNovice
-                fetch('/difficulteExpert', { method: 'POST' })
-                    .then(response => response.text())
-                    .then(message => {
-                        console.log(message);
-                        // Redirigez l'utilisateur vers la page Novice après l'insertion des données
-                        window.location.href = 'view/index.html';
-                    })
-                    .catch(error => console.error(error));
-            }*/
             </script>
 </body>
 </html>
