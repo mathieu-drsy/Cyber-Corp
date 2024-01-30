@@ -309,15 +309,15 @@
         <h2>Inscription</h2>
         <div class="form">
           <div class="inputBox">
-            <input type="text" id="usernameInput" required> <i>Adresse e-mail</i>
+            <input type="text" id="usernameInscriptionInput" required> <i>Adresse e-mail</i>
           </div>
           <div class="inputBox">
-            <input type="password" id="passwordInput" required> <i>Mot de passe</i>
+            <input type="password" id="passwordInscriptionInput" required> <i>Mot de passe</i>
           </div>
           <div class="links">
           </div>
           <div class="inputBox">
-            <input type="submit" value="Connexion" id="inscriptionButton" onclick="addUser()">
+            <input type="submit" value="Inscription" id="inscriptionButton" onclick="addUser()">
         </div>
           <div class="inputBox2">
             <a href="/login"><input type="submit" value="&#8592; Revenir en arrière"></a>
@@ -325,12 +325,11 @@
         </div>
       </div>
     </div>
-    <!-- Ajoutez le script ici -->
     <script>
       function addUser() {
-        var username = document.getElementById('usernameInput').value;
-        var password = document.getElementById('passwordInput').value;
-        console.log('Utilisateur ajouté avec succès');
+        var username = document.getElementById('usernameInscriptionInput').value;
+        var password = document.getElementById('passwordInscriptionInput').value;
+        console.log(username);
         // Envoyer les données au serveur via fetch
         fetch('/inscription', {
           method: 'POST',

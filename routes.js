@@ -4,21 +4,6 @@ const bcrypt = require('bcrypt');
 function setupRoutes(app, db) {
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'index.html'));
-    // Exemple : insérer des données dans la base de données
-    //db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["test", 420, 3, 3, 0, "test"]);
-
-
-    // Récupérer des données depuis la base de données
-    /*db.all("SELECT * FROM data", (err, rows) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      // Envoyer les données en réponse HTTP
-      res.send(rows);
-    });*/
-
-    //SELECTION QUESTIONS
-    //SELECT {3 questions} FROM questions WHERE questions.difficulte EQUALS data.difficulte
   });
 
   app.get('/q_raw', (req, res) => {
@@ -79,34 +64,31 @@ function setupRoutes(app, db) {
         } else {
           // Le mot de passe ne correspond pas, afficher un log et envoyer une réponse appropriée
           console.log('Mot de passe incorrect');
-          //res.status(401).send('Mot de passe incorrect');
+          res.sendFile(path.join(__dirname, "login", "login.html"));
         }
-      } 
+      }
+      else{
+        console.log("L'utilisateur n'existe pas");
+        res.sendFile(path.join(__dirname, "login", "login.html"));
+      }
     } catch (error) {
-      //console.error('Erreur lors de la vérification de l\'utilisateur:', error);
-      //res.status(500).json({ error: 'Erreur lors de la vérification de l\'utilisateur' });
     }
   });
-
-  /*app.get("/inscription", (req, res) => {
-    res.sendFile(path.join(__dirname, "view", "inscription.html"));
-  });*/
 
   app.post('/inscription', async (req, res) => {
     const usernameValue = req.body.username;
     const passwordValue = req.body.password;
-
+    //console.log(passwordValue);
     try {
       // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
       const existingUser = await getUserByUsername(usernameValue);
-
       if (existingUser) {
         console.log('Utilisateur existe déjà');
       }
       else {
         // L'utilisateur n'existe pas, afficher un log et envoyer une réponse appropriée
         const hashedPassword = await bcrypt.hash(passwordValue, 10);
-        db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
+        db.run("INSERT INTO data (pseudo, score, difficulte, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
           [usernameValue, 0, 0, 0, 0, hashedPassword], (err) => {
             if (err) {
               return res.status(500).send(err.message);
