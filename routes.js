@@ -120,11 +120,6 @@ async function getUserByUsername(username) {
     res.sendFile(path.join(__dirname, 'view', 'login.html'));
   });
 
-  app.get('/stop', (req, res) => {
-    // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
-    res.sendFile(path.join(__dirname, 'view', 'stop.html'));
-  });
-
   app.get('/get-questions', (req, res) => {
     const difficulty = req.query.difficulty; // Récupérer la difficulté à partir de la query string
     const sql = "SELECT * FROM questions WHERE difficulte = ? ORDER BY RANDOM() LIMIT 3"; // Sélectionner 3 questions aléatoires
