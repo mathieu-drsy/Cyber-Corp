@@ -18,6 +18,7 @@ app.get("/terminal", (req, res) => {
 app.post("/execute-command", (req, res) => {
   const { command } = req.body;
   let output = "";
+  let correct = false; // Track if the command was correct
 
   // Execute specific commands
   switch (command.trim()) {
@@ -32,6 +33,12 @@ app.post("/execute-command", (req, res) => {
     case "true":
       // Here, you can define the behavior for the "true" command
       output = "You have chosen to continue.";
+      correct = true; // Set correct to true for this command
+      break;
+    case "false":
+      // Here, you can define the behavior for the "true" command
+      output = "You have chosen to failed.";
+      correct = false; // Set correct to true for this command
       break;
     case "restart":
       // Send a specific response to indicate page reload
@@ -42,9 +49,9 @@ app.post("/execute-command", (req, res) => {
       break;
   }
 
-  // Log the command and send back the output
+  // Log the command and send back the output along with correct flag
   console.log("Command received:", command);
-  res.json({ message: output });
+  res.json({ message: output, correct });
 });
 
 app.listen(port, () => {
