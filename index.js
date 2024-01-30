@@ -27,6 +27,10 @@ app.get("/stat", (req, res) => {
   res.sendFile(path.join(__dirname, "view", "stat.html"));
 });
 
+app.get("/profil", (req, res) => {
+  res.sendFile(path.join(__dirname, "view", "profil.html"));
+});
+
 app.post("/execute-command", (req, res) => {
   const { command } = req.body;
   let output = "";
