@@ -61,15 +61,16 @@ section
   gap: 2px;
   flex-wrap: wrap;
   overflow: hidden;
+
+  
 }
-section::before 
-{
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(#000,#0f0,#000);
-  animation: animate 5s linear infinite;
+section::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    animation: animate 5s linear infinite;
 }
 @keyframes animate 
 {
@@ -91,10 +92,12 @@ section span
   background: #181818;
   z-index: 2;
   transition: 1.5s;
+  background-image: url(images/matrix.gif);
+
 }
 section span:hover 
 {
-  background: #0f0;
+  background: rgb(19, 107, 19);
   transition: 0s;
 }
 
