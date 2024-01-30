@@ -30,7 +30,16 @@ function setupRoutes(app, db) {
     });
     });
 
-    app.post('/difficulteNovice', (req, res) => {
+    app.post('/difficulte', (req, res) => {
+      const difficultyValue = req.body.difficulty;
+  
+      // Utilisez la valeur de difficulté comme vous le souhaitez
+      // ... Votre code de gestion ici ...
+  
+      res.status(200).send(`Difficulté ${difficultyValue} sélectionnée`);
+  });
+
+    /*app.post('/difficulteNovice', (req, res) => {
         // Exemple : insérer des données dans la base de données avec difficulté 1
         db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["Novice", 420, 1, 3, 0, "test"], (err) => {
           if (err) {
@@ -63,7 +72,7 @@ function setupRoutes(app, db) {
       
           res.status(200).send("Difficulté Expert sélectionnée");
         });
-      });
+      });*/
 
     app.get('/view', (req, res) => {
     // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
@@ -76,25 +85,23 @@ function setupRoutes(app, db) {
     });
 
     app.post('/get-questions', (req, res) => {
-        const difficulte = parseInt(req.body.difficulty); // Assurez-vous que la difficulté est un nombre entier
-        db.all("SELECT * FROM questions WHERE difficulte = ?", [difficulte], (err, rows) => {
+        const difficulty = req.body.difficulty;
+        db.all("SELECT * FROM questions WHERE difficulte = ?", [difficulty], (err, rows) => {
             if (err) {
                 return console.error(err.message);
             }
             res.send(rows);
         });
     });
-    
-    app.get('/get3q', (req, res) => {
-        // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
-        res.sendFile(path.join(__dirname, 'view', 'get-q.html'));
-        });
 
     // Route pour arrêter le serveur
-    app.post('/clear-questions', (req, res) => {
-        // Nettoyer la table 'questions'
-        db.run("DELETE FROM questions");
-        console.log('Table "questions" vidée.');
+    app.post('/arret-server', (req, res) => {
+    console.log("Arrêt du serveur demandé.");
+    // Nettoyer la table 'questions'
+    db.run("DELETE FROM questions");
+    console.log('Table "questions" vidée.');
+    // Arrêter le serveur
+    process.exit();
     });
 }
 
