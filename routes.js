@@ -32,16 +32,15 @@ function setupRoutes(app, db) {
 
     app.post('/difficulte', (req, res) => {
       const difficultyValue = req.body.difficulty;
+      // Utilisez la valeur de difficulté comme vous le souhaitez
+      // Exemple : insérer des données dans la base de données
       db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", ["MODIF", 420, difficultyValue, 3, 0, "test"], (err) => {
-        if (err) {
-          return res.status(500).send(err.message);
-        }
-    
-        res.status(200).send("Difficulté Novice sélectionnée");
-      });
- 
+          if (err) {
+              return res.status(500).send(err.message);
+          }
   
-      res.status(200).send(`Difficulté ${difficultyValue} sélectionnée`);
+          res.status(200).send(`Difficulté ${difficultyValue} sélectionnée`);
+      });
   });
 
     /*app.post('/difficulteNovice', (req, res) => {
