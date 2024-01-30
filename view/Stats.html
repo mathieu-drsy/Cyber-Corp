@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vos Statistiques</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .statistics {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .statistic {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 30%;
+        }
+
+        .chart {
+            height: 200px;
+            background-image: linear-gradient(to bottom, #5c67ec, #4a54d1);
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Statistiques</h1>
+    </header>
+    <section class="statistics">
+        <div class="statistic">
+            <h2>Durée</h2>
+            <div class="chart" id="chart1"></div>
+        </div>
+        <div class="statistic">
+            <h2>Niveaux terminés</h2>
+            <div class="chart" id="chart2"></div>
+        </div>
+        <div class="statistic">
+            <h2>Bonus obtenus</h2>
+            <div class="chart" id="chart3"></div>
+        </div>
+    </section>
+</body>
+</html>
