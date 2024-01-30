@@ -16,7 +16,7 @@ app.get("/terminal", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "view", "login.html"));
+  res.sendFile(path.join(__dirname, "login", "login.html"));
 });
 
 app.post("/execute-command", (req, res) => {
