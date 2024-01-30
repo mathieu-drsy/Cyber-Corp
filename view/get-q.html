@@ -10,15 +10,13 @@
     <h1>Récupérer des questions</h1>
     
     <div>
-        <label for="difficulty">Niveau de difficulté :</label>
-        <select id="difficulty">
-            <option value="1">Novice</option>
-            <option value="2">Intermédiaire</option>
-            <option value="3">Avancée</option>
-        </select>
+        <label>Niveau de difficulté :</label>
+        <div>
+            <button type="button" hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list" hx-params="difficulty=1">Novice</button>
+            <button type="button" hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list" hx-params="difficulty=2">Intermédiaire</button>
+            <button type="button" hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list" hx-params="difficulty=3">Avancée</button>
+        </div>
     </div>
-
-    <button hx-post="/get-questions" hx-trigger="click" hx-target="#questions-list">Obtenir des questions</button>
 
     <div id="questions-list"></div>
 </body>
