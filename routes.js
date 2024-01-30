@@ -73,8 +73,6 @@ function setupRoutes(app, db) {
             res.send(rows); // Renvoyer les données récupérées
         });
     });
-    
-    
     app.get('/get3q', (req, res) => {
         // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
         res.sendFile(path.join(__dirname, 'view', 'get-q.html'));
