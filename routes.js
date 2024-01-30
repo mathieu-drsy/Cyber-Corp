@@ -42,6 +42,24 @@ function setupRoutes(app, db) {
       res.status(200).send(`Difficulté ${difficultyValue} sélectionnée`);
     });
   });
+
+  app.post('/setUser', (req, res) => {
+    const usernameValue = req.body.username;
+    const passwordValue = req.body.password;
+    console.log('Nom d\'utilisateur:', usernameValue);
+    console.log('Mot de passe:', passwordValue);
+
+    // Utiliser la valeur de difficulté comme vous le souhaitez
+    // Exemple : insérer des données dans la base de données
+    db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)", [usernameValue, 420, 10, 3, 0, passwordValue], (err) => {
+        if (err) {
+            return res.status(500).send(err.message);
+        }
+
+        res.status(200).json({ message: 'Données reçues avec succès' });
+    });
+});
+
   app.get('/index', (req, res) => {
     // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
     res.sendFile(path.join(__dirname, 'view', 'index.html'));

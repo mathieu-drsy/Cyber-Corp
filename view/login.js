@@ -410,6 +410,27 @@ function eventListenerz() {
 
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    // Récupérez les références des éléments du DOM
+	console.log('APPUI');
+    var usernameInput = document.getElementById('usernameInput');
+    var passwordInput = document.getElementById('passwordInput');
+    var loginButton = document.getElementById('loginButton');
+
+    // Ajoutez un gestionnaire d'événements pour le clic sur le bouton de connexion
+    loginButton.addEventListener('click', function () {
+        // Récupérez les valeurs des champs
+        var username = usernameInput.value;
+        var password = passwordInput.value;
+
+        // Faites ce que vous voulez avec les valeurs (par exemple, les afficher dans la console)
+        console.log('Nom d\'utilisateur:', username);
+        console.log('Mot de passe:', password);
+
+        // Ajoutez ici le code pour envoyer les données au serveur (par exemple, via une requête AJAX)
+    });
+});
+
 window.onload = function () {
 
 	M.init();
