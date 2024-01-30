@@ -8,11 +8,15 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "view")));
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.sendFile(path.join(__dirname, "view", "index.html"));
 });
 
 app.get("/terminal", (req, res) => {
   res.sendFile(path.join(__dirname, "view", "terminal.html"));
+});
+
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "view", "login.html"));
 });
 
 app.post("/execute-command", (req, res) => {
