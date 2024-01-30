@@ -59,7 +59,7 @@ function setupRoutes(app, db) {
     console.log(scoreValue);
   });
 
-  app.post('/setUser', async (req, res) => {
+  app.post('/connexion', async (req, res) => {
     const usernameValue = req.body.username;
     const passwordValue = req.body.password;
 
@@ -81,7 +81,29 @@ function setupRoutes(app, db) {
           console.log('Mot de passe incorrect');
           //res.status(401).send('Mot de passe incorrect');
         }
-      } else {
+      } 
+    } catch (error) {
+      //console.error('Erreur lors de la vérification de l\'utilisateur:', error);
+      //res.status(500).json({ error: 'Erreur lors de la vérification de l\'utilisateur' });
+    }
+  });
+
+  /*app.get("/inscription", (req, res) => {
+    res.sendFile(path.join(__dirname, "view", "inscription.html"));
+  });*/
+
+  app.post('/inscription', async (req, res) => {
+    const usernameValue = req.body.username;
+    const passwordValue = req.body.password;
+
+    try {
+      // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
+      const existingUser = await getUserByUsername(usernameValue);
+
+      if (existingUser) {
+        console.log('Utilisateur existe déjà');
+      }
+      else {
         // L'utilisateur n'existe pas, afficher un log et envoyer une réponse appropriée
         const hashedPassword = await bcrypt.hash(passwordValue, 10);
         db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
@@ -93,7 +115,7 @@ function setupRoutes(app, db) {
             console.log('Utilisateur ajouté avec succès');
             res.status(200).send('Utilisateur ajouté avec succès');
           });
-        console.log(`Utilisateur ${usernameValue} ajouté`);
+
         //res.status(404).send('Utilisateur non trouvé');
       }
     } catch (error) {
