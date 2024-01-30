@@ -22,7 +22,6 @@
             padding: 20px;
         }
 
-
         .terminal {
             width: 80%;
             max-width: 1000px;
@@ -31,8 +30,6 @@
             border-radius: 5px;
             overflow: hidden;
         }
-
-
 
         .terminal-header {
             background-color: #444;
@@ -58,8 +55,6 @@
             cursor: pointer;
         }
 
-
-
         .terminal-prompt {
             color: #0f0;
             margin-right: 5px;
@@ -82,23 +77,44 @@
                 opacity: 1;
             }
         }
+
+        .red-text {
+            color: red;
+        }
+
+        .terminal-container {
+            display: flex;
+        }
+
+        .lives {
+            margin-left: 20px;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="terminal">
-        <div class="terminal-header">Terminal</div>
-        <div class="terminal-body" id="terminal-body">
-            <div>Welcome to Terminal</div>
-            <div>Type 'help' for commands</div>
+    <div class="terminal-container">
+        <div class="terminal">
+            <div class="terminal-header">Terminal</div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="red-text">You have been hacked</div>
+                <div>Type 'help' for commands</div>
+            </div>
+            <div class="terminal-input row">
+                <div class="terminal-prompt">$</div>
+                <input type="text" id="commandInput">
+                <!-- Add the onkeypress event listener to the input field -->
+                <button onclick="sendCommand()">Send</button>
+                <div class="terminal-cursor">_</div>
+            </div>
         </div>
-        <div class="terminal-input row">
-            <div class="terminal-prompt">$</div>
-            <input type="text" id="commandInput">
-            <!-- Add the onkeypress event listener to the input field -->
-            <button onclick="sendCommand()">Send</button>
-            <div class="terminal-cursor">_</div>
+
+        <!-- Lives -->
+        <div class="lives">
+            <img src="/Image_terminal/undertale.png" alt="Heart" id="heart1" style="width: 20px; height: 20px;">
+            <img src="/Image_terminal/undertale.png" alt="Heart" id="heart2" style="width: 20px; height: 20px;">
+            <img src="/Image_terminal/undertale.png" alt="Heart" id="heart3" style="width: 20px; height: 20px;">
         </div>
     </div>
 
