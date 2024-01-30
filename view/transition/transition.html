@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hacker</title>
     <link rel="stylesheet" href="transition.css">
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
             overflow: hidden;
-            font-family: 'Courier New', monospace; /* Police monospace */
+            font-family: 'Courier New', monospace;
+            /* Police monospace */
         }
 
         .fond-numerique {
@@ -40,12 +43,15 @@
 
         .commencer-btn {
             position: absolute;
-            top: 60%; /* Ajustez selon votre mise en page */
+            top: 60%;
+            /* Ajustez selon votre mise en page */
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 10px 20px;
-            background-color: green; /* Couleur du bouton */
-            color: white; /* Couleur du texte */
+            background-color: green;
+            /* Couleur du bouton */
+            color: white;
+            /* Couleur du texte */
             border: none;
             border-radius: 5px;
             font-size: 20px;
@@ -54,10 +60,12 @@
         }
 
         .commencer-btn:hover {
-            background-color: darkgreen; /* Couleur au survol */
+            background-color: darkgreen;
+            /* Couleur au survol */
         }
     </style>
 </head>
+
 <body>
     <div class="fond-numerique"></div>
     <div class="message">Vous avez été piraté</div>
@@ -81,10 +89,11 @@
 
         setInterval(generateNumber, 100);
 
-        document.querySelector('.commencer-btn').addEventListener('click', function() {
+        document.querySelector('.commencer-btn').addEventListener('click', function () {
             // Logique au clic du bouton, par exemple rediriger vers une autre page
             window.location.href = '/terminal';
         });
     </script>
 </body>
+
 </html>
