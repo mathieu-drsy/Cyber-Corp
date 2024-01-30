@@ -45,7 +45,7 @@ app.post("/execute-command", (req, res) => {
       break;
     case "false":
       // Here, you can define the behavior for the "true" command
-      output = "You have chosen to failed.";
+      output = "You have chose to fail.";
       correct = false; // Set correct to true for this command
       break;
     case "restart":
