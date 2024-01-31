@@ -1,48 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+<head>
     <link rel="icon" href="/images/CyberCorpLogo.jpg"/>
-    <body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vos Statistiques - CyberCORP</title>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">CyberCorp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Profil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/stat">Statistiques</a>
-                        </li>
-                    </ul>
-                    <span class="navbar-text">
-                        <a href="/login" class="nav-link">Login</a>
-                    </span>
-                </div>
-            </div>
-        </nav>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vos Statistiques</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-image: url(images/matrix.gif);
+            color: #fff;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #121212;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("images/matrix.gif");
         }
 
         header {
-            background-color: #333;
-            color: #fff;
+            background-color: transparent;
             text-align: center;
             padding: 10px 0;
         }
@@ -54,25 +42,58 @@
         }
 
         .statistic {
-            background-color: #fff;
+            background-color: #333333;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             width: 30%;
         }
 
         .chart {
             height: 200px;
-            background-image: linear-gradient(to bottom, #5c67ec, #4a54d1);
+            background-image: linear-gradient(to bottom, #32cd32, #008000);
             border-radius: 5px;
             margin-top: 15px;
+        }
+
+        /* Style spécifique pour le lien Profil actif */
+        .nav-link.active {
+            color: #ffffff !important;
         }
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">CyberCorp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/stat">Statistiques</a>
+                    </li>
+                </ul>
+                <span class="navbar-text">
+                    <a href="/login" class="nav-link">Login</a>
+                </span>
+            </div>
+        </div>
+    </nav>
+
     <header>
         <h1>Statistiques</h1>
     </header>
+    <section class="statistics">
+        <!-- Contenu des statistiques -->
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <section class="statistics">
         <div class="statistic">
             <h2>Durée</h2>
