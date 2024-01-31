@@ -230,21 +230,34 @@ function setupRoutes(app, db) {
     res.sendFile(path.join(__dirname, "login", "login.html"));
   });
 
-  app.post("/inscription", (req, res) => {
+  app.post('/inscription', async (req, res) => {
+    const usernameValue = req.body.username;
+    const passwordValue = req.body.password;
+
     try {
-        // Accédez aux données du formulaire à partir de req.body
-        const username = req.body.username;
-        const password = req.body.password;
+        // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
+        const existingUser = await getUserByUsername(usernameValue);
 
-        // Faites quelque chose avec username et password, par exemple, les imprimer dans la console
-        console.log('Username:', username);
-        console.log('Password:', password);
+        if (existingUser) {
+            console.log('Utilisateur ' + '"' + usernameValue + '"' + ' existe déjà');
+            return res.status(409).json({ success: false, error: 'Utilisateur déjà existant' });
+        } else {
+            // L'utilisateur n'existe pas, procéder à l'inscription
+            const hashedPassword = await bcrypt.hash(passwordValue, 10);
+            db.run("INSERT INTO data (pseudo, score, difficulte, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
+                [usernameValue, 0, 0, 0, 0, hashedPassword], (err) => {
+                    if (err) {
+                        console.error('Erreur lors de l\'insertion de l\'utilisateur dans la base de données:', err);
+                        return res.status(500).json({ success: false, error: 'Erreur lors de l\'insertion de l\'utilisateur dans la base de données' });
+                    }
 
-        // Envoyez une réponse au client (vous pouvez personnaliser cela en fonction de votre application)
-        res.json({ status: 'success' });
+                    console.log('Utilisateur ajouté avec succès');
+                    return res.status(200).json({ success: true, message: 'Utilisateur ajouté avec succès' });
+                });
+        }
     } catch (error) {
-        console.error('Client-Side Error:', error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
+        console.error('Erreur lors de la vérification de l\'utilisateur:', error);
+        return res.status(500).json({ success: false, error: 'Erreur lors de la vérification de l\'utilisateur' });
     }
 });
 
