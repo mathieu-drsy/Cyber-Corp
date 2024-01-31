@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="icon" href="/images/CyberCorpLogo.jpg" />
+<link rel="icon" href="/images/CyberCorp Logo.jpg" />
 
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,15 +21,85 @@
             line-height: 1.5;
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: row;
+            /* Display in a row */
+        }
+
+        .score-stats-container {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-right: 20px;
+            /* Adjusted margin */
+            flex-shrink: 0;
+            /* Prevent stats container from shrinking */
+            margin-bottom: 10%;
+            /* Ajouter la marge entre les conteneurs stat */
+        }
+
+        .score-stats-title {
+            font-weight: bold;
+        }
+
+        .score-stats-item {
+            margin-top: 5px;
+        }
+
+        .live-stats-container {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-right: 20px;
+            /* Adjusted margin */
+            flex-shrink: 0;
+            /* Prevent stats container from shrinking */
+            margin-bottom: 10%;
+            /* Ajouter la marge entre les conteneurs stat */
+        }
+
+        .live-stats-title {
+            font-weight: bold;
+        }
+
+        .live-stats-item {
+            margin-top: 5px;
+        }
+
+        .etage-stats-container {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-right: 20px;
+            /* Adjusted margin */
+            flex-shrink: 0;
+            /* Prevent stats container from shrinking */
+            margin-bottom: 10%;
+            /* Ajouter la marge entre les conteneurs stat */
+        }
+
+        .etage-stats-title {
+            font-weight: bold;
+        }
+
+        .etage-stats-item {
+            margin-top: 5px;
+        }
+
+        .terminal-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
         }
 
         .terminal {
-            width: 80%;
+            width: 90%;
             max-width: 920px;
-            margin: 0 auto;
             border: 2px solid #ccc;
             border-radius: 5px;
             overflow: hidden;
+            position: relative;
         }
 
         .terminal-header {
@@ -42,9 +112,22 @@
             /* Set a fixed height */
             overflow-y: auto;
             /* Enable vertical scrolling */
+            padding: 10px;
         }
 
-        .terminal-input input[type="text"] {
+        .terminal-input {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .terminal-prompt {
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        #commandInput {
+            flex: 1;
             background-color: transparent;
             border: none;
             color: #fff;
@@ -58,54 +141,49 @@
             cursor: pointer;
         }
 
-        .terminal-prompt {
-            color: #0f0;
-            margin-right: 5px;
-        }
-
         .red-text {
             color: red;
         }
 
-        .terminal-container {
-            display: flex;
-        }
-
-        .lives {
-            margin-left: 20px;
-        }
-
-        .container {
-            position: relative;
-        }
-
         .progress-bar-container {
-            position: absolute;
-            bottom: 200px;
-            width: 65%;
-            left: 45%;
-            transform: translateX(-50%);
+            width: 80%;
+            max-width: 920px;
+            margin-top: 10px;
+            /* Adjusted margin */
         }
 
         .progress-bar {
-            width: 100%;
             height: 20px;
             border: 1px solid #ccc;
             background-color: #fff;
+            width: 100%;
+            /* Full width */
+            border-radius: 5px;
+            overflow: hidden;
         }
 
         .progress-bar-inner {
             height: 100%;
-            background-color: #007bff;
+            background-color: #00ff00;
+            /* Green color */
             transition: width 0.3s ease;
         }
 
-        /* CSS for highlighting correct number */
-        .correct-answer {
-            color: #00ff00;
-            /* Change the color as needed */
-            font-weight: bold;
-            /* Make the text bold */
+        .number-list {
+            margin-top: 10px;
+        }
+
+        /* Adjusted size for heart images */
+        .heart-img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .stat-container {
+            display: flex;
+            flex-direction: column;
+            /* Changer la direction du flex en colonne */
+            margin-bottom: 10%;
         }
 
         /* Style the modal content */
@@ -119,44 +197,69 @@
             text-align: center;
         }
 
-        /* Style the close button */
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
+        /* CSS for highlighting correct number */
+        .etage-reussi {
+            color: #00ff00;
+            /* Change the color as needed */
             font-weight: bold;
+            /* Make the text bold */
         }
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+        .etage-actuel {
+            color: #eeff00;
+            /* Change the color as needed */
+            font-weight: bold;
+            /* Make the text bold */
         }
+
+        /* Add styles for modals and other elements as needed */
     </style>
 </head>
 
 <body>
+    <div class="stat-container">
+        <!-- Score Container -->
+        <div class="score-stats-container">
+            <div class="score-stats-title">Score:</div>
+            <div id="scoreDisplay">0</div>
+        </div>
+
+        <!-- Lives Container -->
+        <div class="live-stats-container">
+            <div class="live-stats-title">Lives:</div>
+            <div id="livesDisplay">
+                <img src="/Image_terminal/heart.png" alt="Heart" class="heart-img" id="heart1">
+                <img src="/Image_terminal/heart.png" alt="Heart" class="heart-img" id="heart2">
+                <img src="/Image_terminal/heart.png" alt="Heart" class="heart-img" id="heart3">
+            </div>
+        </div>
+
+        <!-- Etage Container -->
+        <div class="etage-stats-container">
+            <div class="etage-stats-title">Etage:</div>
+            <div id="etageDisplay">
+                <ul id="number-list">
+                    <!-- Numbers will be dynamically added here -->
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <div class="terminal-container">
         <div class="terminal">
             <div class="terminal-header">Terminal</div>
             <div class="terminal-body" id="terminal-body">
-                <div class="red-text">You have been hacked</div>
+                <div class="red-text">Vous êtes coincé dans le Prompt ! Pour vous échapper vous devez répondre aux
+                    questions.</div>
+                <div class="red-text">Attention, vous n'avez que 3 vies !</div>
+                <div>$</div>
             </div>
-            <div class="terminal-input row">
-                <div class="terminal-prompt">$</div>
+            <div class="terminal-input">
+                <div class="terminal-prompt">:~$</div>
                 <input type="text" id="commandInput">
                 <!-- Add the onkeypress event listener to the input field -->
+                <button onclick="sendCommand()">Envoyer</button>
             </div>
-        </div>
-
-        <!-- Lives -->
-        <div class="lives">
-            <img src="/Image_terminal/heart.png" alt="Heart" id="heart1" style="width: 20px; height: 20px;">
-            <img src="/Image_terminal/heart.png" alt="Heart" id="heart2" style="width: 20px; height: 20px;">
-            <img src="/Image_terminal/heart.png" alt="Heart" id="heart3" style="width: 20px; height: 20px;">
-            <span id="scoreDisplay">Score: </span>
         </div>
 
         <!-- Progress Bar -->
@@ -166,18 +269,13 @@
             </div>
         </div>
 
-        <div class="number-list">
-            <ul id="number-list">
-                <!-- Numbers will be dynamically added here -->
-            </ul>
-        </div>
         <!-- HTML structure for the modals -->
         <div id="gameOverModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Game Over</h2>
-                <p>You have lost the game.</p>
-                <button id="restartButton">Restart</button>
+                <p>Vous avez perdu la partie !</p>
+                <button id="restartButton">Recommencer</button>
             </div>
         </div>
 
@@ -185,8 +283,8 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Victory</h2>
-                <p>Congratulations! You have won the game.</p>
-                <button id="nextLevelButton">Next Level</button>
+                <p>Bravo! Vous avez réussi</p>
+                <button id="nextLevelButton">Augmenter Difficulté</button>
             </div>
         </div>
 
@@ -233,33 +331,50 @@
                     return; // Stop further execution
                 }
 
-                // Update progress bar if the answer is correct
-                if (data.correct) {
-                    if (command === "true" || command === "false") {
-                        correctAnswers++; // Increment correct answers
-                        updateProgressBar();
-                        updateNumberList(); // Call updateNumberList after correct answer
-                        //updateHeartImages();
-                    }
-                } else {
-                    // If the answer is incorrect and the command is "true" or "false", decrement lives
-                    if (command === "true" || command === "false") {
-                        remainingLives--;
-                        updateHeartImages();
-                    }
-                }
-
                 // Check if game over message received
                 if (data.message.includes('Game Over')) {
                     // Disable the input field
                     commandInput.disabled = true;
                 }
 
-                // Check conditions for displaying modals after each command
-                checkModals();
+                // Check if the command is a question and process the answer
+                console.log(command);
+                if (command == "1" || command == "2" || command == "3") {
+                    processAnswer(command);
+                }
 
             } catch (error) {
                 console.error('Error sending command:', error);
+            }
+        }
+
+        // Fonction pour traiter la réponse à une question
+        function processAnswer(answer) {
+            const terminalBody = document.getElementById('terminal-body');
+
+            // Check if the user input matches the correct answer for the current question
+            const correctAnswer = parseInt(allQuestions[currentQuestionIndex].bonnereponse);
+            const userIsCorrect = parseInt(answer) === correctAnswer;
+
+            // Display the result in the terminal
+            if (userIsCorrect) {
+                terminalBody.innerHTML += '<div>$</div>';
+                terminalBody.innerHTML += '<div><span style="color: green;">Bonne réponse</span></div>';
+                terminalBody.innerHTML += '<div>$</div>';
+                correctAnswers++; // Increment correct answers
+                etage++;
+                checkModals();
+                updateProgressBar();
+                updateNumberList(); // Call updateNumberList after correct answer
+                currentQuestionIndex++;
+                initializeTerminal();
+            } else {
+                terminalBody.innerHTML += '<div>$</div>';
+                terminalBody.innerHTML += '<div><span style="color: red;">Mauvaise réponse</span></div>';
+                terminalBody.innerHTML += '<div>$</div>';
+                remainingLives--;
+                checkModals();
+                updateHeartImages();
             }
         }
         /*let userScore = 0;
@@ -268,6 +383,73 @@
             const progressBarInner = document.getElementById('progress-bar-inner');
             const progress = (correctAnswers / 10) * 100; // Assuming there are 10 questions
             progressBarInner.style.width = `${progress}%`;
+            var pseudo = "moi@gmail.com"
+            fetch(`/getVie/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => console.log(`Nombre de vies récupéré : ${data.lives}`))
+                .catch(error => console.error('Error getting lives:', error));
+            // Appel à la route /getScore pour récupérer le score
+            //var pseudo = "moi@gmail.com"
+            // Appel à la route /getScore pour récupérer le score
+            fetch(`/getScore/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userScore = data.score; // Stockez le score dans la variable userScore
+                    console.log(`Score: ${userScore}`);
+                    console.log(`Pseudo: ${pseudo}`);
+                    userScore = userScore + 1;
+                    fetch('/setScore', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ pseudo: pseudo, userScore }),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Update the score variable
+                            score = userScore;
+                            // Update the score display
+                            document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+                        })
+
+                        .catch(error => console.error('Error updating lives:', error));
+                })
+                .catch(error => console.error('Erreur lors de la récupération du score :', error));
+            fetch(`/getEtage/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userEtage = data.etage; // Stockez le score dans la variable userScore
+                    console.log(`Etage: ${userEtage}`);
+                    console.log(`Pseudo: ${pseudo}`);
+                    userEtage = userEtage + 1;
+                    fetch('/setEtage', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ pseudo: pseudo, userEtage }),
+                    })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                        .catch(error => console.error('Error updating lives:', error));
+                })
+                .catch(error => console.error('Erreur lors de la récupération du score :', error));
         }
 
         function updateHeartImages() {
@@ -283,40 +465,16 @@
             }
             var pseudo = "moi@gmail.com";
             // Envoi des données vers le serveur via une requête POST
-            /*let sc = 5000;
-            let et = 6;
-            let mvie = 9;
-            // Envoi des données vers le serveur via une requête POST
-            fetch('/setMaxVie', {
+            fetch('/setVie', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ pseudo: pseudo, maxvie: mvie }),
+                body: JSON.stringify({ pseudo: pseudo, remainingLives }),
             })
                 .then(response => response.json())
                 .then(data => console.log(data))
                 .catch(error => console.error('Error updating lives:', error));
-            fetch('/setMaxScore', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ pseudo: pseudo, maxscore: sc }),
-            })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error updating lives:', error));
-            fetch('/setMaxEtage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ pseudo: pseudo, maxetage: et }),
-            })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error updating lives:', error));*/
         }
 
         function updateNumberList() {
@@ -326,8 +484,11 @@
             for (let i = 1; i <= 10; i++) {
                 const listItem = document.createElement('li');
                 listItem.textContent = i;
-                if (i === correctAnswers) {
-                    listItem.classList.add('correct-answer');
+                if (i < correctAnswers + 1) {
+                    listItem.classList.add('etage-reussi');
+                }
+                if (i == correctAnswers + 1) {
+                    listItem.classList.add('etage-actuel');
                 }
                 numberList.appendChild(listItem);
             }
@@ -335,14 +496,155 @@
 
         // Function to check conditions for displaying modals
         function checkModals() {
+            var pseudo = "moi@gmail.com";
             // Display game over modal if remaining lives are 0
             if (remainingLives === 0) {
                 displayGameOverModal();
+
+                fetch(`/getMaxEtage/${pseudo}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (etage > data.maxetage) {
+                            fetch('/setMaxEtage', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ pseudo: pseudo, maxetage: etage }),
+                            })
+                                .then(response => response.json())
+                                .then(data => console.log(data))
+                                .catch(error => console.error('Error updating max etage:', error));
+                        }
+                    })
+                    .catch(error => console.error('Error getting max etage:', error));
+
+                fetch(`/getMaxScore/${pseudo}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (score > data.maxscore) {
+                            fetch('/setMaxScore', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ pseudo: pseudo, maxscore: score }),
+                            })
+                                .then(response => response.json())
+                                .then(data => console.log(data))
+                                .catch(error => console.error('Error updating max etage:', error));
+                        }
+                    })
+                    .catch(error => console.error('Error getting max etage:', error));
+
+                fetch(`/getMaxVie/${pseudo}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (remainingLives > data.maxvie) {
+                            fetch('/setMaxVie', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ pseudo: pseudo, maxvie: remainingLives }),
+                            })
+                                .then(response => response.json())
+                                .then(data => console.log(data))
+                                .catch(error => console.error('Error updating max vie:', error));
+                        }
+                    })
+                    .catch(error => console.error('Error getting max vie:', error));
+
             }
 
             // Display victory modal if correct answers reach 10
             if (correctAnswers === 10) {
                 displayVictoryModal();
+
+                fetch(`/getMaxEtage/${pseudo}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (etage > data.maxetage) {
+                            fetch('/setMaxEtage', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ pseudo: pseudo, maxetage: etage }),
+                            })
+                                .then(response => response.json())
+                                .then(data => console.log(data))
+                                .catch(error => console.error('Error updating max etage:', error));
+                        }
+                    })
+                    .catch(error => console.error('Error getting max etage:', error));
+
+                fetch(`/getMaxScore/${pseudo}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (score > data.maxscore) {
+                            fetch('/setMaxScore', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ pseudo: pseudo, maxscore: score }),
+                            })
+                                .then(response => response.json())
+                                .then(data => console.log(data))
+                                .catch(error => console.error('Error updating max etage:', error));
+                        }
+                    })
+                    .catch(error => console.error('Error getting max etage:', error));
+
+                fetch(`/getMaxVie/${pseudo}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (remainingLives > data.maxvie) {
+                            fetch('/setMaxVie', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ pseudo: pseudo, maxvie: remainingLives }),
+                            })
+                                .then(response => response.json())
+                                .then(data => console.log(data))
+                                .catch(error => console.error('Error updating max vie:', error));
+                        }
+                    })
+                    .catch(error => console.error('Error getting max vie:', error));
+
             }
         }
 
@@ -407,6 +709,48 @@
                 .then(data => console.log(data))
                 .catch(error => console.error('Error resetting stats:', error));
         }
+        // Définissez une variable globale pour stocker les questions
+        let allQuestions = [];
+        let currentQuestionIndex = 0;
+        async function initializeTerminal() {
+            const terminalBody = document.getElementById('terminal-body');
+
+            try {
+                // Exécutez la requête vers la route /get-questions pour récupérer les questions
+                if (currentQuestionIndex <= 0) {
+                    const response = await fetch('/get-questions?difficulty=1'); // Remplacez 1 par la difficulté souhaitée
+                    const data = await response.json();
+
+                    // Affichez toutes les questions dans la console
+                    console.log('Questions renvoyées par /get-questions :', data.texte);
+
+                    // Stockez les questions dans la variable globale
+                    allQuestions = data;
+                }
+                console.log(allQuestions);
+                // Affichez les questions dans le terminal
+                // Affichez seulement la première question dans le terminal
+                if (allQuestions.length > 0 && allQuestions.length < 9) {
+                    terminalBody.innerHTML += '<div>$</div>';
+                    terminalBody.innerHTML += `<div>${allQuestions[currentQuestionIndex].texte}</div>`;
+                    terminalBody.innerHTML += '<div>$</div>';
+                    terminalBody.innerHTML += `<div>"1" ${allQuestions[currentQuestionIndex].reponseA}</div>`;
+                    terminalBody.innerHTML += `<div>"2" ${allQuestions[currentQuestionIndex].reponseB}</div>`;
+                    terminalBody.innerHTML += `<div>"3" ${allQuestions[currentQuestionIndex].reponseC}</div>`;
+                }
+                // Ajoutez une ligne vide pour la clarté
+
+                terminalBody.innerHTML += '<div></div>';
+
+            } catch (error) {
+                console.error("Erreur lors de initialisation du terminal:", error);
+            }
+        }
+
+        // Appelez la fonction d'initialisation lors du chargement de la page
+        window.addEventListener('load', initializeTerminal);
+
+        // ... (votre code existant ici)
     </script>
 
 </body>

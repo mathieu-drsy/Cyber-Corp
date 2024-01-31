@@ -6,7 +6,7 @@ function initDb() {
     db.serialize(() => {
         db.run("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, pseudo TEXT, score INTEGER, difficulte INTEGER, vie INTEGER, etage INTEGER, mdp TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS questions (id INTEGER PRIMARY KEY, difficulte INTEGER, texte TEXT, reponseA TEXT, reponseB TEXT, reponseC TEXT, bonnereponse INTEGER)");
-
+        db.run("CREATE TABLE IF NOT EXISTS maxData (id INTEGER PRIMARY KEY, pseudo TEXT, max_score INTEGER, max_difficulte INTEGER, max_vie INTEGER, max_etage INTEGER)");
         db.get("SELECT COUNT(*) as count FROM questions", (err, row) => {
             if (err) {
                 console.error(err.message);
