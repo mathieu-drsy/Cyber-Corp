@@ -255,7 +255,6 @@ app.get("/connexion", (req, res) => {
     res.sendFile(path.join(__dirname, "login", "login.html"));
   });
 
-<<<<<<< HEAD
   app.post('/connexion', async (req, res) => {
     const usernameValue = req.body.username;
     const passwordValue = req.body.password;
@@ -317,11 +316,6 @@ app.get("/connexion", (req, res) => {
       return res.status(500).json({ success: false, error: 'Erreur lors de la vérification de l\'utilisateur' });
     }
 });
-
-
-
-=======
->>>>>>> e003a155ce96e932dd335802f1b7f9832317b060
   app.get("/inscription", (req, res) => {
     res.sendFile(path.join(__dirname, "view", "inscription.html"));
   });
