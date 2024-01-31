@@ -265,6 +265,11 @@ function setupRoutes(app, db) {
     res.sendFile(path.join(__dirname, 'view', 'terminal.html'));
   });
 
+  app.get('/terminal-adv', (req, res) => {
+    // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
+    res.sendFile(path.join(__dirname, 'view', 'terminald3.html'));
+  });
+
   app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "login", "login.html"));
   });
