@@ -292,7 +292,7 @@
                     userScore = data.score; // Stockez le score dans la variable userScore
                     console.log(`Score: ${userScore}`);
                     console.log(`Pseudo: ${pseudo}`);
-                    userScore = userScore + 20;
+                    userScore = userScore + 1;
                     fetch('/setScore', {
                         method: 'POST',
                         headers: {
