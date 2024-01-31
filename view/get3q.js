@@ -12,9 +12,9 @@ function getQuestions(difficulty) {
 // Fonction pour afficher les questions sur la page
 function displayQuestions(questions) {
     const questionsList = document.getElementById('questions-list');
-    questionsList.innerHTML = ''; // Efface le contenu précédent
+    questionsList.innerHTML = ''; // Initialise la liste vide
 
-    // Fonction pour mélanger un tableau aléatoirement
+    // Fonction pour mélanger un tableau de réponses aléatoirement
     function shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -68,7 +68,7 @@ function displayQuestions(questions) {
         // Mélanger les réponses (après avoir marqué la bonne réponse)
         const answers = Array.from(answerList.children);
         shuffle(answers);
-        answerList.innerHTML = ''; // Efface les éléments existants
+        answerList.innerHTML = ''; // Initialise la liste vide
         answers.forEach(answer => {
             answerList.appendChild(answer);
         });
