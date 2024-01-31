@@ -2,6 +2,8 @@ const express = require('express');
 const initDb = require('./db_init');
 const path = require('path');
 const { setupRoutes } = require('./routes');
+const jwt = require('jsonwebtoken');
+
 
 const app = express();
 const port = 3000;

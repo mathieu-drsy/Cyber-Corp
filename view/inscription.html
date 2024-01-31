@@ -264,6 +264,24 @@
       letter-spacing: 0.05em;
       cursor: pointer;
     }
+
+    .styled-link {
+    padding: 10px;
+    background: rgb(203, 57, 27);
+    color: #000;
+    font-weight: 600;
+    font-size: 1.35em;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.styled-link:hover {
+    opacity: 0.8;
+}
   </style>
   <section> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
     <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
@@ -317,7 +335,7 @@
                             <input type="submit" value="Inscription" id="inscriptionButton">
                         </div>
                         <div class="inputBox2">
-                            <a href="/login"><input type="submit" value="&#8592; Revenir en arrière"></a>
+                            <a href="/login" class="styled-link">Revenir en arrière</a>
                         </div>
                     </div>
                 </form>
@@ -340,16 +358,20 @@
           body: JSON.stringify({ username: username, password: password })
         })
         .then(response => response.json())
-          .then(data => {
-          console.log('Server Response:', data);
-                // Mettre à jour le message d'inscription réussie
-                var inscriptionMessage = document.getElementById('inscriptionMessage');
-                if (data.status === 'success') {
-                    inscriptionMessage.innerText = 'Erreur lors de l\'inscription';
-                } else {
-                    inscriptionMessage.innerText = 'Inscription réussie';
-                } 
-            })
+        .then(data => {
+    console.log('Server Response:', data);
+    // Mettre à jour le message d'inscription réussie ou d'erreur
+    var inscriptionMessage = document.getElementById('inscriptionMessage');
+    if (data.status === 'success') {
+        inscriptionMessage.innerText = 'Inscription réussie';
+    } else {
+        // Vérifiez si le serveur a renvoyé un message d'erreur
+        var errorMessage = data.message || 'Erreur lors de l\'inscription';
+        inscriptionMessage.innerText = errorMessage;
+    }
+})
+
+
             .catch(error => {
     console.error('Fetch Error:', error);
     if (error && error.text) {

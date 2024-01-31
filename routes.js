@@ -1,5 +1,7 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 function setupRoutes(app, db) {
   app.get('/', (req, res) => {
@@ -40,31 +42,41 @@ function setupRoutes(app, db) {
     const passwordValue = req.body.password;
 
     try {
-      // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
-      const existingUser = await getUserByUsername(usernameValue);
+        // Récupérer l'utilisateur par le nom d'utilisateur
+        const user = await getUserByUsername(usernameValue);
 
-      if (existingUser) {
-        // 2. L'utilisateur existe
-        // 3. Vérifier le mot de passe
-        const passwordMatch = await bcrypt.compare(passwordValue, existingUser.mdp);
+        if (!user) {
+            console.log('Utilisateur ' + '"' + usernameValue + '"' + ' introuvable');
+            return res.status(404).json({ success: false, error: 'Utilisateur introuvable' });
+        }
+
+        // Comparer les mots de passe hachés
+        const passwordMatch = await bcrypt.compare(passwordValue, user.mdp);
+        const token = jwt.sign({ username: usernameValue }, 'votreSecretKey', { expiresIn: '1h' });
+
+        function generateToken(user) {
+          const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
+          return token;
+      }
 
         if (passwordMatch) {
-          // Le mot de passe correspond, afficher un log et envoyer une réponse appropriée
-          console.log('Connexion réussie');
-          //res.status(200).send('Connexion réussie');
+            console.log('Connexion réussie');
+            res.status(200).json({ success: true, message: 'Connexion réussie' });
         } else {
-          // Le mot de passe ne correspond pas, afficher un log et envoyer une réponse appropriée
-          console.log('Mot de passe incorrect');
-          res.sendFile(path.join(__dirname, "login", "login.html"));
+            console.log('Mot de passe incorrect');
+            res.status(401).json({ success: false, error: 'Mot de passe incorrect' });
         }
-      }
-      else {
-        console.log("L'utilisateur n'existe pas");
-        res.sendFile(path.join(__dirname, "login", "login.html"));
-      }
     } catch (error) {
+        console.error('Erreur lors de la connexion', error);
+        //return res.status(500).json({ success: false, error: 'Erreur lors de la connexion' });
     }
-  });
+});
+
+// Exemple de route pour envoyer la page de connexion
+app.get("/connexion", (req, res) => {
+    res.sendFile(path.join(__dirname, "view", "connexion.html"));
+});
+  
 
 
   // Fonction pour récupérer un utilisateur par nom d'utilisateur
@@ -229,6 +241,28 @@ function setupRoutes(app, db) {
   app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "login", "login.html"));
   });
+
+  app.post('/connexion', async (req, res) => {
+    const usernameValue = req.body.username;
+    const passwordValue = req.body.password;
+
+    try {
+        // Récupérer l'utilisateur par le nom d'utilisateur
+        const user = await getUserByUsername(usernameValue);
+
+        if (user && (await bcrypt.compare(passwordValue, user.password))) {
+            console.log('Connexion réussie pour l\'utilisateur: ' + user.username);
+            res.status(200).json({ success: true, message: 'Connexion réussie' });
+        } else {
+            console.log('Nom d\'utilisateur ou mot de passe incorrect');
+            return res.status(401).json({ success: false, error: 'Nom d\'utilisateur ou mot de passe incorrect' });
+        }
+    } catch (error) {
+        console.error('Erreur lors de la vérification de l\'utilisateur:', error);
+        return res.status(500).json({ success: false, error: 'Erreur lors de la vérification de l\'utilisateur' });
+    }
+});
+
 
   app.post('/inscription', async (req, res) => {
     const usernameValue = req.body.username;

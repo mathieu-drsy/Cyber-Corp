@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <link rel="icon" href="/images/CyberCorpLogo.jpg"/>
- <head> 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <meta charset="UTF-8"> 
-  <title>Connexion - CyberCorp</title> 
-  <link rel="stylesheet" href="/login/login.css"/> 
+
+<head>
+  <link rel="icon" href="/images/CyberCorpLogo.jpg" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>Connexion - CyberCorp</title>
+  <link rel="stylesheet" href="/login/login.css" />
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">CyberCorp</a>
@@ -24,9 +29,12 @@
             <a class="nav-link" href="#">Statistiques</a>
           </li>
         </ul>
-        <span class="navbar-text">
+        <span class="navbar-text" id="loginLink">
           <a href="/login" class="nav-link">Login</a>
         </span>
+        <span class="navbar-text" id="logoutSection" style="display: none;">
+          <a href="#" class="nav-link" onclick="logout()">Logout</a>
+      </span>
       </div>
     </div>
   </nav>
@@ -263,6 +271,40 @@
       letter-spacing: 0.05em;
       cursor: pointer;
     }
+    section .signin .content .form p {
+    font-size: 1em;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+section .signin .content .form p a {
+    color: rgb(203, 57, 27);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+section .signin .content .form p a:hover {
+    color: rgb(19, 107, 19);
+}
+
+.signin .content .form .inputBox2 .custom-button {
+    background: #0f0; /* Couleur verte correspondant au titre "Connexion" */
+    color: #000;
+    font-weight: 600;
+    font-size: 1.35em;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+}
+
+.signin .content .form .inputBox2 input[type="submit"]:not(.custom-button) {
+    background: rgb(203, 57, 27); /* Couleur rouge pour les autres boutons */
+}
+
+
+
+
   </style>
   <section> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
     <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
@@ -292,53 +334,98 @@
     <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
     <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
     <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
-    <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
     <span></span> <span></span> <span></span> <span></span> <span></span>
     <div class="signin">
-      <div class="content">
-        <h2>Connexion</h2>
-        <div class="form">
-          <div class="inputBox">
-            <input type="text" id="usernameConnexionInput"  required> <i>Adresse e-mail</i>
-          </div>
-          <div class="inputBox">
-            <input type="password" id="passwordConnexionInput" required> <i>Mot de passe</i>
-          </div>
-          <div class="links"> <a>Pas encore de compte ?</a> <a href="/inscription">Créez-en un ici</a>
-          </div>
-          <div class="inputBox">
-            <input type="submit" value="Connexion" id="loginButton" onclick="connectUser()">
-          </div>
-          <div class="inputBox2">
-            <a href="/"><input type="submit" value="&#8592; Page d'accueil"></a>
-          </div>
+            <div class="content">
+                <h2>Connexion</h2>
+                <p id="connexionMessage" style="color: rgb(194, 23, 23);"></p>
+                <form id="connexionForm" action="/connexion" method="POST" onsubmit="connectUser();">
+                    <div class="form">
+                        <div class="inputBox">
+                            <input type="text" id="username" name="username"> <i>Username</i>
+                        </div>
+                        <div class="inputBox">
+                            <input type="password" id="password" name="password"> <i>Mot de passe</i>
+                        </div>
+                        <p>Pas encore de compte ? Créer en un <a href="/inscription">ici</a></p>
+                        <!-- Ajout d'un champ caché pour le token -->
+                        <input type="hidden" name="token" id="token" value="VotreTokenSecretConnexion">
+
+                        <div class="inputBox2">
+                            <input type="submit" value="Connexion" id="connexionButton" class="custom-button">
+                        </div>
+                        <div class="inputBox2">
+                            <a href="/"><input type="submit" value="&#8592; Revenir en arrière"></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
-    </div>
     <script>
-			function connectUser() {
-                var username = document.getElementById('usernameConnexionInput').value;
-                var password = document.getElementById('passwordConnexionInput').value;
-                    // Envoyer les données au serveur via fetch
-                    fetch('/connexion', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ username: username, password: password })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-            }
-        </script>
-  </section> <!-- partial -->
+      function connectUser() {
+    event.preventDefault();
+
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+
+    fetch('/connexion', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username, password: password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Server Response:', data);
+
+        if (data.success) {
+            // Si la connexion est réussie, stockez le token dans le stockage local
+            localStorage.setItem('token', data.token);
+            // Rediriger vers une autre page, par exemple, la page de profil
+            window.location.href = '/';
+        } else {
+            // Si la connexion échoue
+            var connexionMessage = document.getElementById('connexionMessage');
+            connexionMessage.style.color = 'red';
+            connexionMessage.innerText = data.error;
+        }
+    })
+    .catch(error => {
+        console.error('Fetch Error:', error);
+        if (error && error.text) {
+            error.text().then(errorMessage => console.error('Server Error Message:', errorMessage));
+        }
+    });
+}
+
+const token = localStorage.getItem('token');
+fetch('/resource', {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
+
+document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem('token');
+        const loginSection = document.getElementById('loginSection');
+
+        if (token) {
+            // Masquer le lien de connexion
+            loginSection.style.display = 'none';
+        }
+
+    });
+
+    function logout() {
+        // Supprimer le token du stockage local
+        localStorage.removeItem('token');
+        // Rediriger vers la page de connexion ou une autre page
+        window.location.href = '/login';
+    }
+    </script>
+  </section>
+
 </body>
+
 </html>
