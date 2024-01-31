@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="icon" href="/images/CyberCorpLogo.jpg" />
+<link rel="icon" href="/images/CyberCorp Logo.jpg" />
 
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -133,6 +133,16 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        /* Nouvelle classe pour styliser les questions */
+        .question {
+            color: #00ff00;
+            /* Couleur des questions */
+            font-weight: bold;
+            /* Rendre le texte gras */
+            margin-bottom: 5px;
+            /* Ajouter une marge en bas pour distinguer les questions */
+        }
     </style>
 </head>
 
@@ -159,10 +169,12 @@
             <span id="scoreDisplay">Score: </span>
         </div>
 
-        <!-- Progress Bar -->
-        <div class="progress-bar-container">
-            <div class="progress-bar">
-                <div class="progress-bar-inner" id="progress-bar-inner" style="width: 0%;"></div>
+        <div class="progress-bar-container row justify-content-center">
+            <div class="col-md-6">
+                <div class="progress">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 0%;" id="progress-bar-inner">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -216,58 +228,135 @@
             commandInput.value = '';
 
             try {
-                const response = await fetch('/execute-command', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ command })
-                });
-                const data = await response.json();
-                terminalBody.innerHTML += `<div>${data.message}</div>`;
-                terminalBody.scrollTop = terminalBody.scrollHeight;
-
-                // Check if the response indicates a page reload
-                if (data.reload) {
-                    window.location.reload(); // Reload the page
-                    return; // Stop further execution
-                }
-
-                // Update progress bar if the answer is correct
-                if (data.correct) {
-                    if (command === "true" || command === "false") {
-                        correctAnswers++; // Increment correct answers
-                        updateProgressBar();
-                        updateNumberList(); // Call updateNumberList after correct answer
-                        //updateHeartImages();
-                    }
+                if (command === 'questions') {
+                    // Si la commande est "questions", récupérer les questions
+                    getDi('Novice'); // Vous pouvez spécifier le niveau de difficulté ici
                 } else {
-                    // If the answer is incorrect and the command is "true" or "false", decrement lives
-                    if (command === "true" || command === "false") {
-                        remainingLives--;
-                        updateHeartImages();
+                    // Sinon, exécuter la commande normalement
+                    const response = await fetch('/execute-command', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ command })
+                    });
+                    const data = await response.json();
+                    terminalBody.innerHTML += `<div>${data.message}</div>`;
+                    terminalBody.scrollTop = terminalBody.scrollHeight;
+
+                    // Check if the response indicates a page reload
+                    if (data.reload) {
+                        window.location.reload(); // Reload the page
+                        return; // Stop further execution
                     }
+
+                    // Update progress bar if the answer is correct
+                    if (data.correct) {
+                        if (command === "true" || command === "false") {
+                            correctAnswers++; // Increment correct answers
+                            updateProgressBar();
+                            updateNumberList(); // Call updateNumberList after correct answer
+                            //updateHeartImages();
+                        }
+                    } else {
+                        // If the answer is incorrect and the command is "true" or "false", decrement lives
+                        if (command === "true" || command === "false") {
+                            remainingLives--;
+                            updateHeartImages();
+                        }
+                    }
+
+                    // Check if game over message received
+                    if (data.message.includes('Game Over')) {
+                        // Disable the input field
+                        commandInput.disabled = true;
+                    }
+
+                    // Check conditions for displaying modals after each command
+                    checkModals();
+
                 }
-
-                // Check if game over message received
-                if (data.message.includes('Game Over')) {
-                    // Disable the input field
-                    commandInput.disabled = true;
-                }
-
-                // Check conditions for displaying modals after each command
-                checkModals();
-
             } catch (error) {
                 console.error('Error sending command:', error);
             }
         }
+
         /*let userScore = 0;
         let userEtage = 0;*/
         function updateProgressBar() {
             const progressBarInner = document.getElementById('progress-bar-inner');
             const progress = (correctAnswers / 10) * 100; // Assuming there are 10 questions
             progressBarInner.style.width = `${progress}%`;
+<<<<<<< HEAD
+=======
+            var pseudo = "moi@gmail.com"
+            fetch(`/getVie/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => console.log(`Nombre de vies récupéré : ${data.lives}`))
+                .catch(error => console.error('Error getting lives:', error));
+            // Appel à la route /getScore pour récupérer le score
+            //var pseudo = "moi@gmail.com"
+            // Appel à la route /getScore pour récupérer le score
+            fetch(`/getScore/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userScore = data.score; // Stockez le score dans la variable userScore
+                    console.log(`Score: ${userScore}`);
+                    console.log(`Pseudo: ${pseudo}`);
+                    userScore = userScore + 1;
+                    fetch('/setScore', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ pseudo: pseudo, userScore }),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Update the score variable
+                            score = userScore;
+                            // Update the score display
+                            document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+                        })
+
+                        .catch(error => console.error('Error updating lives:', error));
+                })
+                .catch(error => console.error('Erreur lors de la récupération du score :', error));
+            fetch(`/getEtage/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userEtage = data.etage; // Stockez le score dans la variable userScore
+                    console.log(`Etage: ${userEtage}`);
+                    console.log(`Pseudo: ${pseudo}`);
+                    userEtage = userEtage + 1;
+                    fetch('/setEtage', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ pseudo: pseudo, userEtage }),
+                    })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                        .catch(error => console.error('Error updating lives:', error));
+                })
+                .catch(error => console.error('Erreur lors de la récupération du score :', error));
+>>>>>>> ec8ca291d4465cf915fb4ba76142283db4c3bbd6
         }
 
         function updateHeartImages() {
@@ -407,7 +496,30 @@
                 .then(data => console.log(data))
                 .catch(error => console.error('Error resetting stats:', error));
         }
+
+        // Fonction pour récupérer les questions depuis le serveur
+        function getQuestions(difficulty) {
+            fetch(`/get-questions?difficulty=${difficulty}`)
+                .then(response => response.json())
+                .then(questions => {
+                    // Une fois les questions récupérées, appeler la fonction displayQuestions
+                    displayQuestions(questions);
+                })
+                .catch(error => console.error('Une erreur s\'est produite lors de la récupération des questions :', error));
+        }
+
+        function displayQuestions(questions) {
+            const terminalBody = document.getElementById('terminal-body');
+
+            // Ajouter les questions dans le terminal avec la nouvelle classe
+            questions.forEach(question => {
+                terminalBody.innerHTML += `<div class="question">$ ${question}</div>`;
+            });
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
     </script>
+
 
 </body>
 
