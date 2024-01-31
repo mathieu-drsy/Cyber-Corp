@@ -15,6 +15,10 @@ const db=initDb();
 setupRoutes(app, db);
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "view")));
+
+// Ajoutez cette ligne pour servir les fichiers statiques depuis le répertoire 'view'
+app.use('/view', express.static(path.join(__dirname, 'view')));
 
 app.listen(port, () => {
   console.log(`Fonctionnel sur http://localhost:${port}`);
