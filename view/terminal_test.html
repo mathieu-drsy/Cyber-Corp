@@ -147,7 +147,7 @@
             <div class="terminal-input row">
                 <div class="terminal-prompt">$</div>
                 <input type="text" id="commandInput">
-
+                <!-- Add the onkeypress event listener to the input field -->
             </div>
         </div>
 
@@ -156,6 +156,7 @@
             <img src="/Image_terminal/heart.png" alt="Heart" id="heart1" style="width: 20px; height: 20px;">
             <img src="/Image_terminal/heart.png" alt="Heart" id="heart2" style="width: 20px; height: 20px;">
             <img src="/Image_terminal/heart.png" alt="Heart" id="heart3" style="width: 20px; height: 20px;">
+            <span id="scoreDisplay">Score: </span>
         </div>
 
         <!-- Progress Bar -->
@@ -202,6 +203,7 @@
         let remainingLives = 3;
         let score = 0;
         let correctAnswers = 0; // Variable to track correct answers
+        let etage = 0;
 
         async function sendCommand() {
             const commandInput = document.getElementById('commandInput');
@@ -290,7 +292,7 @@
                     userScore = data.score; // Stockez le score dans la variable userScore
                     console.log(`Score: ${userScore}`);
                     console.log(`Pseudo: ${pseudo}`);
-                    userScore = userScore+20;
+                    userScore = userScore + 20;
                     fetch('/setScore', {
                         method: 'POST',
                         headers: {
@@ -299,11 +301,17 @@
                         body: JSON.stringify({ pseudo: pseudo, userScore }),
                     })
                         .then(response => response.json())
-                        .then(data => console.log(data))
+                        .then(data => {
+                            // Update the score variable
+                            score = userScore;
+                            // Update the score display
+                            document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+                        })
+
                         .catch(error => console.error('Error updating lives:', error));
                 })
                 .catch(error => console.error('Erreur lors de la récupération du score :', error));
-                fetch(`/getEtage/${pseudo}`, {
+            fetch(`/getEtage/${pseudo}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -314,7 +322,7 @@
                     userEtage = data.etage; // Stockez le score dans la variable userScore
                     console.log(`Etage: ${userEtage}`);
                     console.log(`Pseudo: ${pseudo}`);
-                    userEtage = userEtage+1;
+                    userEtage = userEtage + 1;
                     fetch('/setEtage', {
                         method: 'POST',
                         headers: {
@@ -422,6 +430,26 @@
             window.location.reload();
         });
 
+
+        // Call resetStats() when the page reloads
+        window.addEventListener('load', function () {
+            const pseudo = "moi@gmail.com"; // Assuming you have access to pseudo here
+            resetStats(pseudo);
+        });
+
+        // Function to reset Score, Etage, and Vie
+        function resetStats(pseudo) {
+            fetch('/reset-stats', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo: pseudo }),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error resetting stats:', error));
+        }
     </script>
 
 </body>

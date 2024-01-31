@@ -121,12 +121,10 @@ function setupRoutes(app, db) {
     db.run(sql, [remainingLives, pseudo], (err) => {
       if (err) {
         console.error("Error updating lives in the database:", err);
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Error updating lives in the database",
-          });
+        return res.status(500).json({
+          success: false,
+          error: "Error updating lives in the database",
+        });
       }
 
       console.log(
@@ -145,12 +143,10 @@ function setupRoutes(app, db) {
     db.get(sql, [pseudo], (err, row) => {
       if (err) {
         console.error("Error getting lives from the database:", err);
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Error getting lives from the database",
-          });
+        return res.status(500).json({
+          success: false,
+          error: "Error getting lives from the database",
+        });
       }
 
       if (row) {
@@ -178,12 +174,10 @@ function setupRoutes(app, db) {
           "Erreur lors de la mise à jour du score dans la db:",
           err
         );
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Erreur lors de la lecture du score dans la db",
-          });
+        return res.status(500).json({
+          success: false,
+          error: "Erreur lors de la lecture du score dans la db",
+        });
       }
 
       if (row) {
@@ -191,12 +185,10 @@ function setupRoutes(app, db) {
         res.json({ score: row.score });
       } else {
         console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
-        res
-          .status(404)
-          .json({
-            success: false,
-            error: "Utilisateur introuvable dans la db",
-          });
+        res.status(404).json({
+          success: false,
+          error: "Utilisateur introuvable dans la db",
+        });
       }
     });
   });
@@ -231,24 +223,20 @@ function setupRoutes(app, db) {
           "Erreur lors de la mise à jour du score dans la db:",
           err
         );
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Erreur lors de la lecture du score dans la db",
-          });
+        return res.status(500).json({
+          success: false,
+          error: "Erreur lors de la lecture du score dans la db",
+        });
       }
 
       if (row) {
         res.json({ etage: row.etage });
       } else {
         console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
-        res
-          .status(404)
-          .json({
-            success: false,
-            error: "Utilisateur introuvable dans la db",
-          });
+        res.status(404).json({
+          success: false,
+          error: "Utilisateur introuvable dans la db",
+        });
       }
     });
   });
@@ -268,6 +256,27 @@ function setupRoutes(app, db) {
       }
 
       console.log(`Mise à jour du Score de ${pseudo} - Score: ${userEtage}`);
+      res.json({ success: true });
+    });
+  });
+
+  // Add a new route to reset Score and Etage along with Vie
+  app.post("/reset-stats", (req, res) => {
+    const { pseudo } = req.body;
+
+    // Update the 'Score' and 'Etage' fields to 0 in the database
+    const sql =
+      "UPDATE data SET score = 0, etage = 0, vie = 3 WHERE pseudo = ?";
+
+    db.run(sql, [pseudo], (err) => {
+      if (err) {
+        console.error("Error resetting stats:", err);
+        return res
+          .status(500)
+          .json({ success: false, error: "Error resetting stats" });
+      }
+
+      console.log(`Stats reset for ${pseudo}`);
       res.json({ success: true });
     });
   });
