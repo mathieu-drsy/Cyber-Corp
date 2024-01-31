@@ -32,41 +32,39 @@
             color: #ffffff;
         }
 
-        .btn-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 50px;
-        }
-
         .btn1, .btn2, .btn3 {
-            width: 200px;
-            padding: 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            background-color: #444; /* Dark Grey */
-            color: white;
-            font-size: 18px;
-            text-align: center;
-        }
+        width: 200px;
+        padding: 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        background-color: #464646; /* Gris par défaut */
+        color: white;
+        font-size: 18px;
+        text-align: center;
+    }
 
-        .btn1:hover, .btn2:hover, .btn3:hover {
-            transform: scale(1.1);
-            background-color: #555; /* Lighter Grey */
-        }
+    .btn-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 50px;
+    }
 
-        .btn1 {
-            background-color: #4CAF50; /* Green */
-        }
+    .btn1:hover {
+        transform: scale(1.1);
+        background-color: #4CAF50; /* Vert au survol */
+    }
 
-        .btn2 {
-            background-color: #ff9800; /* Orange */
-        }
+    .btn2:hover {
+        transform: scale(1.1);
+        background-color: #ff9800; /* Orange au survol */
+    }
 
-        .btn3 {
-            background-color: #f44336; /* Red */
-        }
+    .btn3:hover {
+        transform: scale(1.1);
+        background-color: #f44336; /* Rouge au survol */
+    }
     </style>
 </head>
 <body>
