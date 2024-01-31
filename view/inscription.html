@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr"> 
-    <link rel="icon" href="/images/CyberCorpLogo.jpg"/>
+    <link rel="icon" href="/images/logo.jpg"/>
  <head> 
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -299,31 +299,38 @@
     <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
     <span></span> <span></span> <span></span> <span></span> <span></span>
     <div class="signin">
-      <div class="content">
-        <h2>Inscription</h2>
-        <div class="form">
-          <div class="inputBox">
-            <input type="text" id="usernameInscriptionInput" required> <i>Adresse e-mail</i>
-          </div>
-          <div class="inputBox">
-            <input type="password" id="passwordInscriptionInput" required> <i>Mot de passe</i>
-          </div>
-          <div class="links">
-          </div>
-          <div class="inputBox">
-            <input type="submit" value="Inscription" id="inscriptionButton" onclick="addUser()">
+            <div class="content">
+                <h2>Inscription</h2>
+                <p id="inscriptionMessage" style="color: rgb(194, 23, 23);"></p> <!-- Ajout de l'élément pour afficher le message -->
+                <form id="inscriptionForm" action="/inscription" method="POST" onsubmit="addUser();">
+                    <div class="form">
+                        <div class="inputBox">
+                            <input type="text" id="username" name="username"> <i>Username</i>
+                        </div>
+                        <div class="inputBox">
+                            <input type="password" id="password" name="password"> <i>Mot de passe</i>
+                        </div>
+                        <!-- Ajout d'un champ caché pour le token -->
+                        <input type="hidden" name="token" id="token" value="VotreTokenSecret">
+
+                        <div class="inputBox">
+                            <input type="submit" value="Inscription" id="inscriptionButton">
+                        </div>
+                        <div class="inputBox2">
+                            <a href="/login"><input type="submit" value="&#8592; Revenir en arrière"></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-          <div class="inputBox2">
-            <a href="/login"><input type="submit" value="&#8592; Revenir en arrière"></a>
-          </div>
-        </div>
-      </div>
-    </div>
     <script>
       function addUser() {
-        var username = document.getElementById('usernameInscriptionInput').value;
-        var password = document.getElementById('passwordInscriptionInput').value;
-        console.log(username);
+        event.preventDefault();
+
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        
+        var token = 'VotreTokenSecret';
         // Envoyer les données au serveur via fetch
         fetch('/inscription', {
           method: 'POST',
@@ -332,13 +339,23 @@
           },
           body: JSON.stringify({ username: username, password: password })
         })
-          .then(response => response.json())
+        .then(response => response.json())
           .then(data => {
-            console.log(data);
-          })
-          .catch(error => {
-            console.error(error);
-          });
+          console.log('Server Response:', data);
+                // Mettre à jour le message d'inscription réussie
+                var inscriptionMessage = document.getElementById('inscriptionMessage');
+                if (data.status === 'success') {
+                    inscriptionMessage.innerText = 'Erreur lors de l\'inscription';
+                } else {
+                    inscriptionMessage.innerText = 'Inscription réussie';
+                } 
+            })
+            .catch(error => {
+    console.error('Fetch Error:', error);
+    if (error && error.text) {
+        error.text().then(errorMessage => console.error('Server Error Message:', errorMessage));
+    }
+});
       }
     </script>
   </section>
