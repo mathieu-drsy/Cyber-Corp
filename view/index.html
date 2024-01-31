@@ -41,22 +41,31 @@
         .btn1, .btn2, .btn3 {
             width: 200px;
             padding: 20px;
-            border: 1px solid #ccc;
+            border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease;
+            background-color: #444; /* Dark Grey */
+            color: white;
+            font-size: 18px;
+            text-align: center;
         }
 
-        .btn1:hover {
-            background-color: #1ab71a;
+        .btn1:hover, .btn2:hover, .btn3:hover {
+            transform: scale(1.1);
+            background-color: #555; /* Lighter Grey */
         }
 
-        .btn2:hover {
-            background-color: #e18f13;
+        .btn1 {
+            background-color: #4CAF50; /* Green */
         }
 
-        .btn3:hover {
-            background-color: #de1717;
+        .btn2 {
+            background-color: #ff9800; /* Orange */
+        }
+
+        .btn3 {
+            background-color: #f44336; /* Red */
         }
     </style>
 </head>

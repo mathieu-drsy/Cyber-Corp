@@ -81,7 +81,7 @@
 
         .progress-bar-container {
             position: absolute;
-            bottom: 250px;
+            bottom: 200px;
             width: 65%;
             left: 45%;
             transform: translateX(-50%);
@@ -268,73 +268,6 @@
             const progressBarInner = document.getElementById('progress-bar-inner');
             const progress = (correctAnswers / 10) * 100; // Assuming there are 10 questions
             progressBarInner.style.width = `${progress}%`;
-            var pseudo = "moi@gmail.com"
-            fetch(`/getVie/${pseudo}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then(response => response.json())
-                .then(data => console.log(`Nombre de vies récupéré : ${data.lives}`))
-                .catch(error => console.error('Error getting lives:', error));
-            // Appel à la route /getScore pour récupérer le score
-            //var pseudo = "moi@gmail.com"
-            // Appel à la route /getScore pour récupérer le score
-            fetch(`/getScore/${pseudo}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then(response => response.json())
-                .then(data => {
-                    userScore = data.score; // Stockez le score dans la variable userScore
-                    console.log(`Score: ${userScore}`);
-                    console.log(`Pseudo: ${pseudo}`);
-                    userScore = userScore + 20;
-                    fetch('/setScore', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ pseudo: pseudo, userScore }),
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            // Update the score variable
-                            score = userScore;
-                            // Update the score display
-                            document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
-                        })
-
-                        .catch(error => console.error('Error updating lives:', error));
-                })
-                .catch(error => console.error('Erreur lors de la récupération du score :', error));
-            fetch(`/getEtage/${pseudo}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then(response => response.json())
-                .then(data => {
-                    userEtage = data.etage; // Stockez le score dans la variable userScore
-                    console.log(`Etage: ${userEtage}`);
-                    console.log(`Pseudo: ${pseudo}`);
-                    userEtage = userEtage + 1;
-                    fetch('/setEtage', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ pseudo: pseudo, userEtage }),
-                    })
-                        .then(response => response.json())
-                        .then(data => console.log(data))
-                        .catch(error => console.error('Error updating lives:', error));
-                })
-                .catch(error => console.error('Erreur lors de la récupération du score :', error));
         }
 
         function updateHeartImages() {
@@ -350,16 +283,40 @@
             }
             var pseudo = "moi@gmail.com";
             // Envoi des données vers le serveur via une requête POST
-            fetch('/setVie', {
+            /*let sc = 5000;
+            let et = 6;
+            let mvie = 9;
+            // Envoi des données vers le serveur via une requête POST
+            fetch('/setMaxVie', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ pseudo: pseudo, remainingLives }),
+                body: JSON.stringify({ pseudo: pseudo, maxvie: mvie }),
             })
                 .then(response => response.json())
                 .then(data => console.log(data))
                 .catch(error => console.error('Error updating lives:', error));
+            fetch('/setMaxScore', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo: pseudo, maxscore: sc }),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error updating lives:', error));
+            fetch('/setMaxEtage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo: pseudo, maxetage: et }),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error updating lives:', error));*/
         }
 
         function updateNumberList() {
