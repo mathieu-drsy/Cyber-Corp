@@ -152,6 +152,24 @@
             text-decoration: none;
             cursor: pointer;
         }
+        
+        .redirect-button {
+            position: absolute;
+            bottom: 20px; /* Espacement par rapport au bas du conteneur */
+            right: 20px; /* Espacement par rapport à la droite du conteneur */
+            background-color: #007bff; /* Couleur de fond du bouton */
+            color: #fff; /* Couleur du texte */
+            padding: 10px 20px; /* Espacement interne */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease; /* Transition pour l'effet hover */
+        }
+
+        .redirect-button:hover {
+            background-color: #69ffcb; /* Couleur de fond du bouton lors du survol */
+        }
     </style>
 </head>
 
@@ -168,7 +186,7 @@
                 <input type="text" id="commandInput">
                 <!-- Add the onkeypress event listener to the input field -->
                 <button onclick="sendCommand()">Send</button>
-                <button onclick="openNewTab()">Rediriger</button>
+                <button class="redirect-button" onclick="openNewTab()">Open SSH</button>
 
                 <script>
                     function openNewTab() {
