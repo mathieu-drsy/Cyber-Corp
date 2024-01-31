@@ -63,24 +63,6 @@
             margin-right: 5px;
         }
 
-        .terminal-cursor {
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
         .red-text {
             color: red;
         }
@@ -99,7 +81,7 @@
 
         .progress-bar-container {
             position: absolute;
-            bottom: 250px;
+            bottom: 200px;
             width: 65%;
             left: 45%;
             transform: translateX(-50%);
@@ -165,9 +147,7 @@
             <div class="terminal-input row">
                 <div class="terminal-prompt">$</div>
                 <input type="text" id="commandInput">
-                <!-- Add the onkeypress event listener to the input field -->
-                <button onclick="sendCommand()">Send</button>
-                <div class="terminal-cursor">_</div>
+                <!-- Add the onkeypress event listener to the input field -->                
             </div>
         </div>
 
@@ -179,11 +159,15 @@
         </div>
 
         <!-- Progress Bar -->
-        <div class="progress-bar-container">
-            <div class="progress-bar">
-                <div class="progress-bar-inner" id="progress-bar-inner" style="width: 0%;"></div>
+        <div class="progress-bar-container row justify-content-center">
+            <div class="col-md-6">
+                <div class="progress">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 0%;" id="progress-bar-inner">
+                    </div>
+                </div>
             </div>
         </div>
+
 
         <div class="number-list">
             <ul id="number-list">
