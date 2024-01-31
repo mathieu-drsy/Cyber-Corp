@@ -1,12 +1,12 @@
-const path = require("path");
-const bcrypt = require("bcrypt");
+const path = require('path');
+const bcrypt = require('bcrypt');
 
 function setupRoutes(app, db) {
-  app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "view", "index.html"));
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'index.html'));
   });
 
-  app.get("/q_raw", (req, res) => {
+  app.get('/q_raw', (req, res) => {
     // Récupérer des données depuis la base de données
     db.all("SELECT * FROM questions", (err, rows) => {
       if (err) {
@@ -17,7 +17,7 @@ function setupRoutes(app, db) {
     });
   });
 
-  app.post("/setDifficulte", (req, res) => {
+  app.post('/setDifficulte', (req, res) => {
     const difficultyValue = req.body.difficulty;
     const pseudo = "moi@gmail.com";
     // Utilisez la valeur de difficulté comme vous le souhaitez
@@ -26,23 +26,16 @@ function setupRoutes(app, db) {
 
     db.run(sql, [difficultyValue, pseudo], (err) => {
       if (err) {
-        console.error("Error updating lives in the database:", err);
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Error updating lives in the database",
-          });
+        console.error('Error updating lives in the database:', err);
+        return res.status(500).json({ success: false, error: 'Error updating lives in the database' });
       }
 
-      console.log(
-        `Updated difficulty for ${pseudo} - Difficulté: ${difficultyValue}`
-      );
+      console.log(`Updated difficulty for ${pseudo} - Difficulté: ${difficultyValue}`);
       res.json({ success: true });
     });
   });
 
-  app.post("/connexion", async (req, res) => {
+  app.post('/connexion', async (req, res) => {
     const usernameValue = req.body.username;
     const passwordValue = req.body.password;
 
@@ -53,26 +46,26 @@ function setupRoutes(app, db) {
       if (existingUser) {
         // 2. L'utilisateur existe
         // 3. Vérifier le mot de passe
-        const passwordMatch = await bcrypt.compare(
-          passwordValue,
-          existingUser.mdp
-        );
+        const passwordMatch = await bcrypt.compare(passwordValue, existingUser.mdp);
 
         if (passwordMatch) {
           // Le mot de passe correspond, afficher un log et envoyer une réponse appropriée
-          console.log("Connexion réussie");
+          console.log('Connexion réussie');
           //res.status(200).send('Connexion réussie');
         } else {
           // Le mot de passe ne correspond pas, afficher un log et envoyer une réponse appropriée
-          console.log("Mot de passe incorrect");
+          console.log('Mot de passe incorrect');
           res.sendFile(path.join(__dirname, "login", "login.html"));
         }
-      } else {
+      }
+      else {
         console.log("L'utilisateur n'existe pas");
         res.sendFile(path.join(__dirname, "login", "login.html"));
       }
-    } catch (error) {}
+    } catch (error) {
+    }
   });
+
 
   // Fonction pour récupérer un utilisateur par nom d'utilisateur
   async function getUserByUsername(username) {
@@ -87,7 +80,7 @@ function setupRoutes(app, db) {
     });
   }
 
-  app.post("/setVie", (req, res) => {
+  app.post('/setVie', (req, res) => {
     const { pseudo, remainingLives } = req.body;
 
     // Mise à jour de la valeur de la colonne 'vie' dans la base de données
@@ -95,23 +88,16 @@ function setupRoutes(app, db) {
 
     db.run(sql, [remainingLives, pseudo], (err) => {
       if (err) {
-        console.error("Error updating lives in the database:", err);
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Error updating lives in the database",
-          });
+        console.error('Error updating lives in the database:', err);
+        return res.status(500).json({ success: false, error: 'Error updating lives in the database' });
       }
 
-      console.log(
-        `Updated lives for ${pseudo} - Remaining Lives: ${remainingLives}`
-      );
+      console.log(`Updated lives for ${pseudo} - Remaining Lives: ${remainingLives}`);
       res.json({ success: true });
     });
   });
 
-  app.get("/getVie/:pseudo", (req, res) => {
+  app.get('/getVie/:pseudo', (req, res) => {
     const pseudo = req.params.pseudo;
 
     // Sélection du nombre de vies depuis la base de données
@@ -119,30 +105,21 @@ function setupRoutes(app, db) {
 
     db.get(sql, [pseudo], (err, row) => {
       if (err) {
-        console.error("Error getting lives from the database:", err);
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Error getting lives from the database",
-          });
+        console.error('Error getting lives from the database:', err);
+        return res.status(500).json({ success: false, error: 'Error getting lives from the database' });
       }
 
       if (row) {
-        console.log(
-          `Retrieved lives for ${pseudo} - Remaining Lives: ${row.vie}`
-        );
+        console.log(`Retrieved lives for ${pseudo} - Remaining Lives: ${row.vie}`);
         res.json({ success: true, lives: row.vie });
       } else {
         console.log(`User ${pseudo} not found in the database`);
-        res
-          .status(404)
-          .json({ success: false, error: "User not found in the database" });
+        res.status(404).json({ success: false, error: 'User not found in the database' });
       }
     });
   });
 
-  app.get("/getDifficulte/:pseudo", (req, res) => {
+  app.get('/getDifficulte/:pseudo', (req, res) => {
     const pseudo = req.params.pseudo;
 
     // Sélection du nombre de vies depuis la base de données
@@ -150,46 +127,29 @@ function setupRoutes(app, db) {
 
     db.get(sql, [pseudo], (err, row) => {
       if (err) {
-        console.error("Error getting lives from the database:", err);
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Error getting lives from the database",
-          });
+        console.error('Error getting lives from the database:', err);
+        return res.status(500).json({ success: false, error: 'Error getting lives from the database' });
       }
 
       if (row) {
-        console.log(
-          `Retrieved lives for ${pseudo} - Difficulte: ${row.difficulte}`
-        );
+        console.log(`Retrieved lives for ${pseudo} - Difficulte: ${row.difficulte}`);
         res.json({ success: true, lives: row.difficulte });
       } else {
         console.log(`User ${pseudo} not found in the database`);
-        res
-          .status(404)
-          .json({ success: false, error: "User not found in the database" });
+        res.status(404).json({ success: false, error: 'User not found in the database' });
       }
     });
   });
 
-  app.get("/getScore/:pseudo", (req, res) => {
+  app.get('/getScore/:pseudo', (req, res) => {
     const pseudo = req.params.pseudo;
     // Sélection du nombre de vies depuis la base de données
     const sql = "SELECT score FROM data WHERE pseudo = ?";
 
     db.get(sql, [pseudo], (err, row) => {
       if (err) {
-        console.error(
-          "Erreur lors de la mise à jour du score dans la db:",
-          err
-        );
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Erreur lors de la lecture du score dans la db",
-          });
+        console.error('Erreur lors de la mise à jour du score dans la db:', err);
+        return res.status(500).json({ success: false, error: 'Erreur lors de la lecture du score dans la db' });
       }
 
       if (row) {
@@ -197,17 +157,12 @@ function setupRoutes(app, db) {
         res.json({ score: row.score });
       } else {
         console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
-        res
-          .status(404)
-          .json({
-            success: false,
-            error: "Utilisateur introuvable dans la db",
-          });
+        res.status(404).json({ success: false, error: 'Utilisateur introuvable dans la db' });
       }
     });
   });
 
-  app.post("/setScore", (req, res) => {
+  app.post('/setScore', (req, res) => {
     const { pseudo, userScore } = req.body;
     console.log(userScore);
     // Mise à jour de la valeur de la colonne 'vie' dans la base de données
@@ -215,10 +170,8 @@ function setupRoutes(app, db) {
 
     db.run(sql, [userScore, pseudo], (err) => {
       if (err) {
-        console.error("Erreur lors de la mise à jour du score:", err);
-        return res
-          .status(500)
-          .json({ success: false, error: "Erreur de la mise à jour de la db" });
+        console.error('Erreur lors de la mise à jour du score:', err);
+        return res.status(500).json({ success: false, error: 'Erreur de la mise à jour de la db' });
       }
 
       console.log(`Mise à jour du Score de ${pseudo} - Score: ${userScore}`);
@@ -226,40 +179,27 @@ function setupRoutes(app, db) {
     });
   });
 
-  app.get("/getEtage/:pseudo", (req, res) => {
+  app.get('/getEtage/:pseudo', (req, res) => {
     const pseudo = req.params.pseudo;
     // Sélection du nombre de vies depuis la base de données
     const sql = "SELECT etage FROM data WHERE pseudo = ?";
 
     db.get(sql, [pseudo], (err, row) => {
       if (err) {
-        console.error(
-          "Erreur lors de la mise à jour du score dans la db:",
-          err
-        );
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Erreur lors de la lecture du score dans la db",
-          });
+        console.error('Erreur lors de la mise à jour du score dans la db:', err);
+        return res.status(500).json({ success: false, error: 'Erreur lors de la lecture du score dans la db' });
       }
 
       if (row) {
         res.json({ etage: row.etage });
       } else {
         console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
-        res
-          .status(404)
-          .json({
-            success: false,
-            error: "Utilisateur introuvable dans la db",
-          });
+        res.status(404).json({ success: false, error: 'Utilisateur introuvable dans la db' });
       }
     });
   });
 
-  app.post("/setEtage", (req, res) => {
+  app.post('/setEtage', (req, res) => {
     const { pseudo, userEtage } = req.body;
     console.log(userEtage);
     // Mise à jour de la valeur de la colonne 'vie' dans la base de données
@@ -267,10 +207,8 @@ function setupRoutes(app, db) {
 
     db.run(sql, [userEtage, pseudo], (err) => {
       if (err) {
-        console.error("Erreur lors de la mise à jour du score:", err);
-        return res
-          .status(500)
-          .json({ success: false, error: "Erreur de la mise à jour de la db" });
+        console.error('Erreur lors de la mise à jour du score:', err);
+        return res.status(500).json({ success: false, error: 'Erreur de la mise à jour de la db' });
       }
 
       console.log(`Mise à jour du Score de ${pseudo} - Score: ${userEtage}`);
@@ -278,76 +216,51 @@ function setupRoutes(app, db) {
     });
   });
 
-  app.get("/transition", (req, res) => {
+  app.get('/transition', (req, res) => {
     // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
-    res.sendFile(path.join(__dirname, "view/transition", "transition.html"));
+    res.sendFile(path.join(__dirname, 'view/transition', 'transition.html'));
   });
 
-  app.get("/terminal", (req, res) => {
+  app.get('/terminal', (req, res) => {
     // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
-    res.sendFile(path.join(__dirname, "view", "terminal.html"));
+    res.sendFile(path.join(__dirname, 'view', 'terminal.html'));
   });
 
   app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "login", "login.html"));
   });
 
-  app.post("/inscription", async (req, res) => {
+  app.post('/inscription', async (req, res) => {
     const usernameValue = req.body.username;
     const passwordValue = req.body.password;
 
     try {
-      // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
-      const existingUser = await getUserByUsername(usernameValue);
+        // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
+        const existingUser = await getUserByUsername(usernameValue);
 
-      if (existingUser) {
-        console.log(
-          "Utilisateur " + '"' + usernameValue + '"' + " existe déjà"
-        );
-        return res
-          .status(409)
-          .json({ success: false, error: "Utilisateur déjà existant" });
-      } else {
-        // L'utilisateur n'existe pas, procéder à l'inscription
-        const hashedPassword = await bcrypt.hash(passwordValue, 10);
-        db.run(
-          "INSERT INTO data (pseudo, score, difficulte, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
-          [usernameValue, 0, 0, 0, 0, hashedPassword],
-          (err) => {
-            if (err) {
-              console.error(
-                "Erreur lors de l'insertion de l'utilisateur dans la base de données:",
-                err
-              );
-              return res
-                .status(500)
-                .json({
-                  success: false,
-                  error:
-                    "Erreur lors de l'insertion de l'utilisateur dans la base de données",
+        if (existingUser) {
+            console.log('Utilisateur ' + '"' + usernameValue + '"' + ' existe déjà');
+            return res.status(409).json({ success: false, error: 'Utilisateur déjà existant' });
+        } else {
+            // L'utilisateur n'existe pas, procéder à l'inscription
+            const hashedPassword = await bcrypt.hash(passwordValue, 10);
+            db.run("INSERT INTO data (pseudo, score, difficulte, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
+                [usernameValue, 0, 0, 0, 0, hashedPassword], (err) => {
+                    if (err) {
+                        console.error('Erreur lors de l\'insertion de l\'utilisateur dans la base de données:', err);
+                        return res.status(500).json({ success: false, error: 'Erreur lors de l\'insertion de l\'utilisateur dans la base de données' });
+                    }
+
+                    console.log('Utilisateur ajouté avec succès');
+                    return res.status(200).json({ success: true, message: 'Utilisateur ajouté avec succès' });
                 });
-            }
-
-            console.log("Utilisateur ajouté avec succès");
-            return res
-              .status(200)
-              .json({
-                success: true,
-                message: "Utilisateur ajouté avec succès",
-              });
-          }
-        );
-      }
+        }
     } catch (error) {
-      console.error("Erreur lors de la vérification de l'utilisateur:", error);
-      return res
-        .status(500)
-        .json({
-          success: false,
-          error: "Erreur lors de la vérification de l'utilisateur",
-        });
+        console.error('Erreur lors de la vérification de l\'utilisateur:', error);
+        return res.status(500).json({ success: false, error: 'Erreur lors de la vérification de l\'utilisateur' });
     }
-  });
+});
+
 
   app.get("/inscription", (req, res) => {
     res.sendFile(path.join(__dirname, "view", "inscription.html"));
@@ -361,30 +274,26 @@ function setupRoutes(app, db) {
     res.sendFile(path.join(__dirname, "view", "profil.html"));
   });
 
-  app.get("/get-questions", (req, res) => {
+  app.get('/get-questions', (req, res) => {
     const difficulty = req.query.difficulty; // Récupérer la difficulté à partir de la query string
-    const sql =
-      "SELECT * FROM questions WHERE difficulté = ? ORDER BY RANDOM() LIMIT 3"; // Sélectionner 3 questions aléatoires
+    const sql = "SELECT * FROM questions WHERE difficulté = ? ORDER BY RANDOM() LIMIT 3"; // Sélectionner 3 questions aléatoires
 
     db.all(sql, [parseInt(difficulty)], (err, rows) => {
       if (err) {
-        return res
-          .status(500)
-          .send(
-            "Une erreur est survenue lors de la récupération des questions."
-          );
+        return res.status(500).send('Une erreur est survenue lors de la récupération des questions.');
       }
       res.send(rows); // Renvoyer les données récupérées
     });
   });
 
-  app.get("/get3q", (req, res) => {
+
+  app.get('/get3q', (req, res) => {
     // Utilisez la méthode sendFile pour renvoyer la page index.html située dans le répertoire 'view'
-    res.sendFile(path.join(__dirname, "view", "get-q.html"));
+    res.sendFile(path.join(__dirname, 'view', 'get-q.html'));
   });
 
   // Route pour arrêter le serveur
-  app.post("/clear-questions", (req, res) => {
+  app.post('/clear-questions', (req, res) => {
     // Nettoyer la table 'questions'
     db.run("DELETE FROM questions");
     console.log('Table "questions" vidée.');
@@ -429,7 +338,9 @@ function setupRoutes(app, db) {
     res.json({ message: output, correct });
   });
 
-  app.post("/setMaxVie", (req, res) => {
+
+
+  app.post('/setMaxVie', (req, res) => {
     const { pseudo, maxvie } = req.body;
 
     // Mise à jour de la valeur de la colonne 'vie' dans la base de données
@@ -437,13 +348,8 @@ function setupRoutes(app, db) {
 
     db.run(sql, [maxvie, pseudo], (err) => {
       if (err) {
-        console.error("Error updating MAX lives in the database:", err);
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Error updating MAX lives in the database",
-          });
+        console.error('Error updating MAX lives in the database:', err);
+        return res.status(500).json({ success: false, error: 'Error updating MAX lives in the database' });
       }
 
       console.log(`Updated lives for ${pseudo} - Remaining Lives: ${maxvie}`);
@@ -451,7 +357,7 @@ function setupRoutes(app, db) {
     });
   });
 
-  app.get("/getMaxVie/:pseudo", (req, res) => {
+  app.get('/getMaxVie/:pseudo', (req, res) => {
     const pseudo = req.params.pseudo;
 
     // Sélection du nombre de vies depuis la base de données
@@ -459,60 +365,40 @@ function setupRoutes(app, db) {
 
     db.get(sql, [pseudo], (err, row) => {
       if (err) {
-        console.error("Error getting MAX lives from the database:", err);
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Error getting MAX lives from the database",
-          });
+        console.error('Error getting MAX lives from the database:', err);
+        return res.status(500).json({ success: false, error: 'Error getting MAX lives from the database' });
       }
 
       if (row) {
         res.json({ success: true, maxvie: row.max_vie });
       } else {
         console.log(`User ${pseudo} not found in the database`);
-        res
-          .status(404)
-          .json({ success: false, error: "User not found in the database" });
+        res.status(404).json({ success: false, error: 'User not found in the database' });
       }
     });
   });
 
-  app.get("/getMaxScore/:pseudo", (req, res) => {
+  app.get('/getMaxScore/:pseudo', (req, res) => {
     const pseudo = req.params.pseudo;
     // Sélection du nombre de vies depuis la base de données
     const sql = "SELECT max_score FROM maxData WHERE pseudo = ?";
 
     db.get(sql, [pseudo], (err, row) => {
       if (err) {
-        console.error(
-          "Erreur lors de la mise à jour du score MAX dans la db:",
-          err
-        );
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Erreur lors de la lecture du score MAX dans la db",
-          });
+        console.error('Erreur lors de la mise à jour du score MAX dans la db:', err);
+        return res.status(500).json({ success: false, error: 'Erreur lors de la lecture du score MAX dans la db' });
       }
 
       if (row) {
         res.json({ maxscore: row.max_score });
       } else {
         console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
-        res
-          .status(404)
-          .json({
-            success: false,
-            error: "Utilisateur introuvable dans la db",
-          });
+        res.status(404).json({ success: false, error: 'Utilisateur introuvable dans la db' });
       }
     });
   });
 
-  app.post("/setMaxScore", (req, res) => {
+  app.post('/setMaxScore', (req, res) => {
     const { pseudo, maxscore } = req.body;
     console.log(maxscore);
     // Mise à jour de la valeur de la colonne 'vie' dans la base de données
@@ -520,10 +406,8 @@ function setupRoutes(app, db) {
 
     db.run(sql, [maxscore, pseudo], (err) => {
       if (err) {
-        console.error("Erreur lors de la mise à jour du score MAX:", err);
-        return res
-          .status(500)
-          .json({ success: false, error: "Erreur de la mise à jour de la db" });
+        console.error('Erreur lors de la mise à jour du score MAX:', err);
+        return res.status(500).json({ success: false, error: 'Erreur de la mise à jour de la db' });
       }
 
       console.log(`Mise à jour du Score de ${pseudo} - Score: ${maxscore}`);
@@ -531,40 +415,27 @@ function setupRoutes(app, db) {
     });
   });
 
-  app.get("/getMaxEtage/:pseudo", (req, res) => {
+  app.get('/getMaxEtage/:pseudo', (req, res) => {
     const pseudo = req.params.pseudo;
     // Sélection du nombre de vies depuis la base de données
     const sql = "SELECT max_etage FROM maxData WHERE pseudo = ?";
 
     db.get(sql, [pseudo], (err, row) => {
       if (err) {
-        console.error(
-          "Erreur lors de la mise à jour de l'étage MAX dans la db:",
-          err
-        );
-        return res
-          .status(500)
-          .json({
-            success: false,
-            error: "Erreur lors de la lecture de l'étage MAX dans la db",
-          });
+        console.error("Erreur lors de la mise à jour de l'étage MAX dans la db:", err);
+        return res.status(500).json({ success: false, error: "Erreur lors de la lecture de l'étage MAX dans la db" });
       }
 
       if (row) {
         res.json({ maxetage: row.max_etage });
       } else {
         console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
-        res
-          .status(404)
-          .json({
-            success: false,
-            error: "Utilisateur introuvable dans la db",
-          });
+        res.status(404).json({ success: false, error: 'Utilisateur introuvable dans la db' });
       }
     });
   });
 
-  app.post("/setMaxEtage", (req, res) => {
+  app.post('/setMaxEtage', (req, res) => {
     const { pseudo, maxetage } = req.body;
     console.log(maxetage);
     // Mise à jour de la valeur de la colonne 'vie' dans la base de données
@@ -572,10 +443,8 @@ function setupRoutes(app, db) {
 
     db.run(sql, [maxetage, pseudo], (err) => {
       if (err) {
-        console.error("Erreur lors de la mise à jour etage MAX:", err);
-        return res
-          .status(500)
-          .json({ success: false, error: "Erreur de la mise à jour de la db" });
+        console.error('Erreur lors de la mise à jour etage MAX:', err);
+        return res.status(500).json({ success: false, error: 'Erreur de la mise à jour de la db' });
       }
 
       console.log(`Mise à jour du Score de ${pseudo} - Score: ${maxetage}`);
@@ -583,25 +452,7 @@ function setupRoutes(app, db) {
     });
   });
 
-  app.post("/reset-stats", (req, res) => {
-    const { pseudo } = req.body;
 
-    // Update the 'Score' and 'Etage' fields to 0 in the database
-    const sql =
-      "UPDATE data SET score = 0, etage = 0, vie = 3 WHERE pseudo = ?";
-
-    db.run(sql, [pseudo], (err) => {
-      if (err) {
-        console.error("Error resetting stats:", err);
-        return res
-          .status(500)
-          .json({ success: false, error: "Error resetting stats" });
-      }
-
-      console.log(`Stats reset for ${pseudo}`);
-      res.json({ success: true });
-    });
-  });
 }
 
 module.exports = { setupRoutes };
