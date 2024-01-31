@@ -220,6 +220,7 @@
         });
 
         let remainingLives = 3;
+        let score = 0;
         let correctAnswers = 0; // Variable to track correct answers
 
         async function sendCommand() {
@@ -256,6 +257,7 @@
                         correctAnswers++; // Increment correct answers
                         updateProgressBar();
                         updateNumberList(); // Call updateNumberList after correct answer
+                        //updateHeartImages();
                     }
                 } else {
                     // If the answer is incorrect and the command is "true" or "false", decrement lives
@@ -278,7 +280,7 @@
                 console.error('Error sending command:', error);
             }
         }
-
+        
         function updateProgressBar() {
             const progressBarInner = document.getElementById('progress-bar-inner');
             const progress = (correctAnswers / 10) * 100; // Assuming there are 10 questions
@@ -296,6 +298,18 @@
                     heartImg.src = "/Image_terminal/broken_heart.png";
                 }
             }
+            var pseudo = "moi@gmail.com";
+            // Envoi des données vers le serveur via une requête POST
+            fetch('/setVie', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo: pseudo, remainingLives }),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error updating lives:', error));
         }
 
         function updateNumberList() {
