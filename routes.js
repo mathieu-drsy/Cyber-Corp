@@ -235,31 +235,40 @@ function setupRoutes(app, db) {
     const passwordValue = req.body.password;
 
     try {
-        // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
-        const existingUser = await getUserByUsername(usernameValue);
+      // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
+      const existingUser = await getUserByUsername(usernameValue);
 
-        if (existingUser) {
-            console.log('Utilisateur ' + '"' + usernameValue + '"' + ' existe déjà');
-            return res.status(409).json({ success: false, error: 'Utilisateur déjà existant' });
-        } else {
-            // L'utilisateur n'existe pas, procéder à l'inscription
-            const hashedPassword = await bcrypt.hash(passwordValue, 10);
-            db.run("INSERT INTO data (pseudo, score, difficulte, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
-                [usernameValue, 0, 0, 0, 0, hashedPassword], (err) => {
-                    if (err) {
-                        console.error('Erreur lors de l\'insertion de l\'utilisateur dans la base de données:', err);
-                        return res.status(500).json({ success: false, error: 'Erreur lors de l\'insertion de l\'utilisateur dans la base de données' });
-                    }
+      if (existingUser) {
+        console.log('Utilisateur ' + '"' + usernameValue + '"' + ' existe déjà');
+        return res.status(409).json({ success: false, error: 'Utilisateur déjà existant' });
+      } else {
+        // L'utilisateur n'existe pas, procéder à l'inscription
+        const hashedPassword = await bcrypt.hash(passwordValue, 10);
+        db.run("INSERT INTO data (pseudo, score, difficulte, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
+          [usernameValue, 0, 0, 0, 0, hashedPassword], (err) => {
+            if (err) {
+              console.error('Erreur lors de l\'insertion de l\'utilisateur dans la base de données:', err);
+              return res.status(500).json({ success: false, error: 'Erreur lors de l\'insertion de l\'utilisateur dans la base de données' });
+            }
 
-                    console.log('Utilisateur ajouté avec succès');
-                    return res.status(200).json({ success: true, message: 'Utilisateur ajouté avec succès' });
-                });
-        }
+            console.log('Utilisateur ajouté avec succès');
+            return res.status(200).json({ success: true, message: 'Utilisateur ajouté avec succès' });
+          });
+        db.run("INSERT INTO maxData (pseudo, max_score, max_difficulte, max_vie, max_etage) VALUES (?, ?, ?, ?, ?)",
+          [usernameValue, 0, 0, 0, 0], (err) => {
+            if (err) {
+              return res.status(500).send(err.message);
+            }
+
+            console.log('Utilisateur ajouté avec succès dans maxDATA');
+            //res.status(200).send('Utilisateur ajouté avec succès maxDATA');
+          });
+      }
     } catch (error) {
-        console.error('Erreur lors de la vérification de l\'utilisateur:', error);
-        return res.status(500).json({ success: false, error: 'Erreur lors de la vérification de l\'utilisateur' });
+      console.error('Erreur lors de la vérification de l\'utilisateur:', error);
+      return res.status(500).json({ success: false, error: 'Erreur lors de la vérification de l\'utilisateur' });
     }
-});
+  });
 
 
   app.get("/inscription", (req, res) => {
