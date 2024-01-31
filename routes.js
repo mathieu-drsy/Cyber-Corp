@@ -22,7 +22,7 @@ function setupRoutes(app, db) {
     //const pseudo = "moi@gmail.com";
     // Utilisez la valeur de difficulté comme vous le souhaitez
     // Exemple : insérer des données dans la base de données
-    const sql = "UPDATE data SET difficulte = ? WHERE pseudo = ?";
+    const sql = "UPDATE data SET difficulté = ? WHERE pseudo = ?";
 
     db.run(sql, [difficultyValue, pseudo], (err) => {
       if (err) {
@@ -69,33 +69,34 @@ function setupRoutes(app, db) {
   app.post('/inscription', async (req, res) => {
     const usernameValue = req.body.username;
     const passwordValue = req.body.password;
-    //console.log(passwordValue);
+
     try {
-      // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
-      const existingUser = await getUserByUsername(usernameValue);
-      if (existingUser) {
-        console.log('Utilisateur existe déjà');
-      }
-      else {
-        // L'utilisateur n'existe pas, afficher un log et envoyer une réponse appropriée
-        const hashedPassword = await bcrypt.hash(passwordValue, 10);
-        db.run("INSERT INTO data (pseudo, score, difficulte, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
-          [usernameValue, 0, 0, 0, 0, hashedPassword], (err) => {
-            if (err) {
-              return res.status(500).send(err.message);
-            }
+        // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
+        const existingUser = await getUserByUsername(usernameValue);
 
-            console.log('Utilisateur ajouté avec succès');
-            res.status(200).send('Utilisateur ajouté avec succès');
-          });
+        if (existingUser) {
+            console.log('Utilisateur ' + '"' + usernameValue + '"' + ' existe déjà');
+            return res.status(409).json({ status: "success", error: 'Utilisateur déjà existant' });
+        } else {
+            // L'utilisateur n'existe pas, procéder à l'inscription
+            const hashedPassword = await bcrypt.hash(passwordValue, 10);
+            db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
+                [usernameValue, 0, 0, 0, 0, hashedPassword], (err) => {
+                    if (err) {
+                        console.error('Erreur lors de l\'insertion de l\'utilisateur dans la base de données:', err);
+                        return res.status(500).json({ success: false, error: 'Erreur lors de l\'insertion de l\'utilisateur dans la base de données' });
+                    }
 
-        //res.status(404).send('Utilisateur non trouvé');
-      }
+                    console.log('Utilisateur ajouté avec succès');
+                    return res.status(200).json({ success: true, message: 'Utilisateur ajouté avec succès' });
+                });
+        }
     } catch (error) {
-      //console.error('Erreur lors de la vérification de l\'utilisateur:', error);
-      //res.status(500).json({ error: 'Erreur lors de la vérification de l\'utilisateur' });
+        console.error('Erreur lors de la vérification de l\'utilisateur:', error);
+        return res.status(500).json({ success: false, error: 'Erreur lors de la vérification de l\'utilisateur' });
     }
-  });
+});
+
 
   // Fonction pour récupérer un utilisateur par nom d'utilisateur
   async function getUserByUsername(username) {
@@ -238,6 +239,25 @@ function setupRoutes(app, db) {
     res.sendFile(path.join(__dirname, "login", "login.html"));
   });
 
+  app.post("/inscription", (req, res) => {
+    try {
+        // Accédez aux données du formulaire à partir de req.body
+        const username = req.body.username;
+        const password = req.body.password;
+
+        // Faites quelque chose avec username et password, par exemple, les imprimer dans la console
+        console.log('Username:', username);
+        console.log('Password:', password);
+
+        // Envoyez une réponse au client (vous pouvez personnaliser cela en fonction de votre application)
+        res.json({ status: 'success' });
+    } catch (error) {
+        console.error('Client-Side Error:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+
   app.get("/inscription", (req, res) => {
     res.sendFile(path.join(__dirname, "view", "inscription.html"));
   });
@@ -252,7 +272,7 @@ function setupRoutes(app, db) {
 
   app.get('/get-questions', (req, res) => {
     const difficulty = req.query.difficulty; // Récupérer la difficulté à partir de la query string
-    const sql = "SELECT * FROM questions WHERE difficulte = ? ORDER BY RANDOM() LIMIT 3"; // Sélectionner 3 questions aléatoires
+    const sql = "SELECT * FROM questions WHERE difficulté = ? ORDER BY RANDOM() LIMIT 3"; // Sélectionner 3 questions aléatoires
 
     db.all(sql, [parseInt(difficulty)], (err, rows) => {
       if (err) {

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
     <body>
-    <?php include("entete.html"); ?>
     <title>Sélection du niveau</title>
     <link rel="stylesheet" href="index.css">
     <style>
