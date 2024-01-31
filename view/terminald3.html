@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="icon" href="/images/CyberCorp Logo.jpg" />
+
+<head>
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .terminal {
+            width: 80%;
+            max-width: 920px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background-color: #444;
+            padding: 5px 10px;
+        }
+
+        .terminal-body {
+            height: 400px;
+            /* Set a fixed height */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+        }
+
+        .terminal-input input[type="text"] {
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+        }
+
+        .terminal-input button {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .terminal-prompt {
+            color: #0f0;
+            margin-right: 5px;
+        }
+
+        .terminal-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .red-text {
+            color: red;
+        }
+
+        .terminal-container {
+            display: flex;
+        }
+
+        .lives {
+            margin-left: 20px;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .progress-bar-container {
+            position: absolute;
+            bottom: 250px;
+            width: 65%;
+            left: 45%;
+            transform: translateX(-50%);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            background-color: #007bff;
+            transition: width 0.3s ease;
+        }
+
+        /* CSS for highlighting correct number */
+        .correct-answer {
+            color: #00ff00;
+            /* Change the color as needed */
+            font-weight: bold;
+            /* Make the text bold */
+        }
+
+        /* Style the modal content */
+        .modal-content {
+            background-color: #444;
+            margin: 20% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* Style the close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .redirect-button {
+            position: absolute;
+            bottom: 20px; /* Espacement par rapport au bas du conteneur */
+            right: 20px; /* Espacement par rapport à la droite du conteneur */
+            background-color: #007bff; /* Couleur de fond du bouton */
+            color: #fff; /* Couleur du texte */
+            padding: 10px 20px; /* Espacement interne */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease; /* Transition pour l'effet hover */
+        }
+
+        .redirect-button:hover {
+            background-color: #69ffcb; /* Couleur de fond du bouton lors du survol */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="terminal-container">
+        <div class="terminal">
+            <div class="terminal-header">Terminal</div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="red-text">You have been hacked</div>
+            </div>
+            <div class="terminal-input row">
+                <div class="terminal-prompt">$</div>
+                <input type="text" id="commandInput">
+                <!-- Add the onkeypress event listener to the input field -->
+                <button onclick="sendCommand()">Send</button>
+                <button class="redirect-button" onclick="openNewTab()">Open SSH</button>
+
+                <script>
+                    function openNewTab() {
+                        window.open('http://192.168.1.36:2224/ssh/host', '_blank');
+                    }
+                </script>
+
+                <div class="terminal-cursor">_</div>
+            </div>
+        </div>
+
+        <!-- Lives -->
+        <div class="lives">
+            <img src="/Image_terminal/heart.png" alt="Heart" id="heart1" style="width: 20px; height: 20px;">
+            <img src="/Image_terminal/heart.png" alt="Heart" id="heart2" style="width: 20px; height: 20px;">
+            <img src="/Image_terminal/heart.png" alt="Heart" id="heart3" style="width: 20px; height: 20px;">
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress-bar-inner" id="progress-bar-inner" style="width: 0%;"></div>
+            </div>
+        </div>
+
+
+        <div class="number-list">
+            <ul id="number-list">
+                <!-- Numbers will be dynamically added here -->
+            </ul>
+        </div>
+        <!-- HTML structure for the modals -->
+        <div id="gameOverModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Game Over</h2>
+                <p>You have lost the game.</p>
+                <button id="restartButton">Restart</button>
+            </div>
+        </div>
+
+        <div id="victoryModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Victory</h2>
+                <p>Congratulations! You have won the game.</p>
+                <button id="nextLevelButton">Next Level</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Modify the function to trigger when Enter key is pressed
+        document.getElementById("commandInput").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                sendCommand();
+            }
+        });
+
+        let remainingLives = 3;
+        let score = 0;
+        let correctAnswers = 0; // Variable to track correct answers
+
+        async function sendCommand() {
+            const commandInput = document.getElementById('commandInput');
+            const terminalBody = document.getElementById('terminal-body');
+
+            const command = commandInput.value.trim();
+            if (!command) return;
+
+            terminalBody.innerHTML += `<div>$ ${command}</div>`;
+            commandInput.value = '';
+
+            try {
+                const response = await fetch('/execute-command', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ command })
+                });
+                const data = await response.json();
+                terminalBody.innerHTML += `<div>${data.message}</div>`;
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+
+                // Check if the response indicates a page reload
+                if (data.reload) {
+                    window.location.reload(); // Reload the page
+                    return; // Stop further execution
+                }
+
+                // Update progress bar if the answer is correct
+                if (data.correct) {
+                    if (command === "true" || command === "false") {
+                        correctAnswers++; // Increment correct answers
+                        updateProgressBar();
+                        updateNumberList(); // Call updateNumberList after correct answer
+                        //updateHeartImages();
+                    }
+                } else {
+                    // If the answer is incorrect and the command is "true" or "false", decrement lives
+                    if (command === "true" || command === "false") {
+                        remainingLives--;
+                        updateHeartImages();
+                    }
+                }
+
+                // Check if game over message received
+                if (data.message.includes('Game Over')) {
+                    // Disable the input field
+                    commandInput.disabled = true;
+                }
+
+                // Check conditions for displaying modals after each command
+                checkModals();
+
+            } catch (error) {
+                console.error('Error sending command:', error);
+            }
+        }
+        /*let userScore = 0;
+        let userEtage = 0;*/
+        function updateProgressBar() {
+            const progressBarInner = document.getElementById('progress-bar-inner');
+            const progress = (correctAnswers / 10) * 100; // Assuming there are 10 questions
+            progressBarInner.style.width = `${progress}%`;
+            var pseudo = "moi@gmail.com"
+            /*fetch(`/getVie/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => console.log(`Nombre de vies récupéré : ${data.lives}`))
+                .catch(error => console.error('Error getting lives:', error));*/
+            // Appel à la route /getScore pour récupérer le score
+            //var pseudo = "moi@gmail.com"
+            // Appel à la route /getScore pour récupérer le score
+            fetch(`/getScore/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userScore = data.score; // Stockez le score dans la variable userScore
+                    console.log(`Score: ${userScore}`);
+                    console.log(`Pseudo: ${pseudo}`);
+                    userScore = userScore+20;
+                    fetch('/setScore', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ pseudo: pseudo, userScore }),
+                    })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                        .catch(error => console.error('Error updating lives:', error));
+                })
+                .catch(error => console.error('Erreur lors de la récupération du score :', error));
+                /*fetch(`/getEtage/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userEtage = data.etage; // Stockez le score dans la variable userScore
+                    console.log(`Etage: ${userEtage}`);
+                    console.log(`Pseudo: ${pseudo}`);
+                    userEtage = userEtage+1;
+                    fetch('/setEtage', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ pseudo: pseudo, userEtage }),
+                    })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                        .catch(error => console.error('Error updating lives:', error));
+                })
+                .catch(error => console.error('Erreur lors de la récupération du score :', error));*/
+        }
+
+        function updateHeartImages() {
+            for (let i = 1; i <= 3; i++) {
+                const heartImg = document.getElementById(`heart${i}`);
+                if (i <= remainingLives) {
+                    // If the life is still remaining, use the heart image
+                    heartImg.src = "/Image_terminal/heart.png";
+                } else {
+                    // If the life is lost, use the broken heart image
+                    heartImg.src = "/Image_terminal/broken_heart.png";
+                }
+            }
+            var pseudo = "moi@gmail.com";
+            // Envoi des données vers le serveur via une requête POST
+            fetch('/setVie', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo: pseudo, remainingLives }),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error updating lives:', error));
+        }
+
+        function updateNumberList() {
+            const numberList = document.getElementById('number-list');
+            numberList.innerHTML = ''; // Clear the list first
+
+            for (let i = 1; i <= 10; i++) {
+                const listItem = document.createElement('li');
+                listItem.textContent = i;
+                if (i === correctAnswers) {
+                    listItem.classList.add('correct-answer');
+                }
+                numberList.appendChild(listItem);
+            }
+        }
+
+        // Function to check conditions for displaying modals
+        function checkModals() {
+            // Display game over modal if remaining lives are 0
+            if (remainingLives === 0) {
+                displayGameOverModal();
+            }
+
+            // Display victory modal if correct answers reach 10
+            if (correctAnswers === 10) {
+                displayVictoryModal();
+            }
+        }
+
+        // Call this function whenever you want to update the number list
+        updateNumberList();
+
+        // Get the modal elements
+        const gameOverModal = document.getElementById("gameOverModal");
+        const victoryModal = document.getElementById("victoryModal");
+
+        // Function to display the game over modal
+        function displayGameOverModal() {
+            gameOverModal.style.display = "block";
+        }
+
+        // Function to display the victory modal
+        function displayVictoryModal() {
+            victoryModal.style.display = "block";
+        }
+
+        // Close the modal when the user clicks on the close button
+        document.querySelectorAll(".close").forEach((closeButton) => {
+            closeButton.addEventListener("click", function () {
+                this.parentElement.parentElement.style.display = "none";
+            });
+        });
+
+        // Close the modal when the user clicks anywhere outside of it
+        window.addEventListener("click", function (event) {
+            if (event.target === gameOverModal || event.target === victoryModal) {
+                event.target.style.display = "none";
+            }
+        });
+
+        // Reload the page when the "Restart" button is clicked
+        document.getElementById("restartButton").addEventListener("click", function () {
+            window.location.reload();
+        });
+
+        // Reload the page when the "Next Level" button is clicked
+        document.getElementById("nextLevelButton").addEventListener("click", function () {
+            window.location.reload();
+        });
+
+    </script>
+
+</body>
+
+</html>
