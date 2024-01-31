@@ -2,15 +2,13 @@
 <html>
     <head>
     <link rel="icon" href="/images/CyberCorpLogo.jpg"/>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">   
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
             <a class="navbar-brand" href="/">CyberCorp </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,340 +30,182 @@
     </nav>
     </head>
     <body>
-          <style>
-            body {
-  background-color: #3d3c3c;
-  background-size: 1400px 700px;
-  background-position: 30%;
-  background-attachment: fixed;
+      <style>
+.card-style1 {
+    box-shadow: 0px 0px 10px 0px rgb(89 75 128 / 9%);
+}
+.mb-0 a{
+  text-decoration: none;
+  color: red;
+}
+.border-0 {
+    border: 0!important;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
 }
 
-
-.text {
-  font-family: raleway;
-  font-size: 40px;
-  position: absolute center;
-  text-align: center;
-  padding-left: 0%;
-  color: #000;
-  margin-top: 43px;
+section {
+    padding: 120px 0;
+    overflow: hidden;
+    background: #fff;
+}
+.mb-2-3, .my-2-3 {
+    margin-bottom: 2.3rem;
 }
 
-.text1 {
-  font-family: raleway;
-  font-size: 21px;
-  text-align: center;
-  margin-top: -20px;
-  color: #000;
+.section-title {
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+.text-primary {
+    color: #ceaa4d !important;
+}
+.text-secondary {
+    color: #15395A !important;
+}
+.font-weight-600 {
+    font-weight: 600;
+}
+.display-26 {
+    font-size: 1.3rem;
 }
 
-.image {
-  text-align: center;
-  width: 200px;
-  height: 200px;
-  -webkit-border-radius: 75%;
-  -moz-border-radius: 75%;
-  box-shadow: 0 0 0 1px #eee;
-  background: url("images/user.jpg") center center no-repeat;
-  background-size: cover;
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: -30px;
-  align-content: center;
+@media screen and (min-width: 992px){
+    .p-lg-7 {
+        padding: 4rem;
+    }
+}
+@media screen and (min-width: 768px){
+    .p-md-6 {
+        padding: 3.5rem;
+    }
+}
+@media screen and (min-width: 576px){
+    .p-sm-2-3 {
+        padding: 2.3rem;
+    }
+}
+.p-1-9 {
+    padding: 1.9rem;
 }
 
-
-
-.trick {
-  display: inline-block;
-  vertical-align: middle;
-  height: 150px;
+.bg-secondary {
+    background: #15395A !important;
+}
+@media screen and (min-width: 576px){
+    .pe-sm-6, .px-sm-6 {
+        padding-right: 3.5rem;
+    }
+}
+@media screen and (min-width: 576px){
+    .ps-sm-6, .px-sm-6 {
+        padding-left: 3.5rem;
+    }
+}
+.pe-1-9, .px-1-9 {
+    padding-right: 1.9rem;
+}
+.ps-1-9, .px-1-9 {
+    padding-left: 1.9rem;
+}
+.pb-1-9, .py-1-9 {
+    padding-bottom: 1.9rem;
+}
+.pt-1-9, .py-1-9 {
+    padding-top: 1.9rem;
+}
+.mb-1-9, .my-1-9 {
+    margin-bottom: 1.9rem;
+}
+@media (min-width: 992px){
+    .d-lg-inline-block {
+        display: inline-block!important;
+    }
+}
+.rounded {
+    border-radius: 0.25rem!important;
 }
 
-.image:hover {
-  box-shadow: 0px 5px 20px .9px #3F3F3F;
-}
-
-.image:hover {
-  -webkit-transform: scale(1.12);
-  transform: scale(1.12);
-  -webkit-transition: 1.6s ease-in-out;
-  transition: 1.6s ease-in-out;
-}
-
-
-
-.trick:hover img {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-
-#overlay {
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  padding: 0 0 0 0;
-  opacity: 1.0;
-  -webkit-transition: opacity 2.25s ease;
-  -moz-transition: opacity 10.25s ease;
-}
-
-#box:hover #overlay {
-  opacity: 1;
-}
-
-
-
-
-
-.panel-group{
-  width:350px;
-  margin:auto;
-  /*margin:50px 400px 50px 400px;*/
-  max-width:100%;
-}
-
-.panel-heading{
-  background-color:transparent !important;
-}
-
-.title{
-  text-align: center;
-  background-color:transparent;
-  color:#000;
-  font-family:lato;
-  font-weight:300;
-  font-size:15px;
-  max-width:100%;
-}
-
-
-
-
-#accordion{
-  background-color: transparent;
-  max-width:100%;
-  margin-bottom:200px;
-}
-
-
-
-
-
-
-
-.btn-outline {
-  color: inherit;
-  transition: all 1.4s;
-  background-color: transparent;
-}
-/* button CSS */
-
-.btn-danger.btn-outline {
-  margin-top: 9px;
-  background-color: transparent;
-  color: #000;
-  border-color: #000;
-  padding:auto;
-  padding:10px 0px 10px 0px;
-  margin: 1px 5px 1px 0px;
-  width: 100%;
-  text-align:center;
-  font-family: raleway;
-  font-weight: 300;
-  max-width:100%;
-}
-
-/*---------    Contact Form    ------------*/
-
-input::-webkit-input-placeholder,
-textarea::-webkit-input-placeholder {
-  color: #000;
-  font-size: 15px;
-}
-/* on hover placeholder */
-
-input:hover::-webkit-input-placeholder,
-textarea:hover::-webkit-input-placeholder {
-  color: #fff;
-  font-size: 15px;
-  font-family: raleway;
-}
-
-input:hover:focus::-webkit-input-placeholder,
-textarea:hover:focus::-webkit-input-placeholder {
-  color: #fff;
-  font-family: raleway;
-}
-
-input:hover::-moz-placeholder,
-textarea:hover::-moz-placeholder {
-  color: #fff;
-  font-size: 15px;
-  font-family: raleway;
-}
-
-input:hover:focus::-moz-placeholder,
-textarea:hover:focus::-moz-placeholder {
-  color: #fff;
-  font-family: raleway;
-}
-
-input:hover::placeholder,
-textarea:hover::placeholder {
-  color: #fff;
-  font-size: 15px;
-  font-family: raleway;
-}
-
-input:hover:focus::placeholder,
-textarea:hover:focus::placeholder {
-  color: #fff;
-  font-family: raleway;
-}
-
-input:hover::placeholder,
-textarea:hover::placeholder {
-  color: #fff;
-  font-size: 15px;
-  font-family: raleway;
-}
-
-input:hover:focus::-ms-placeholder,
-textarea:hover::focus:-ms-placeholder {
-  color: #fff;
-  font-family: raleway;
-}
-
-#form {
-  position: relative;
-  width: 100%;
-  margin: 0px auto 0px auto;
-  font-family: raleway;
-}
-
-input {
-  font-family: raleway;
-  font-size: 15px;
-  width: 100%;
-  height: 50px;
-  padding: 0px 12px 0px 12px;
-  background: transparent;
-  outline: none;
-  color: #726659;
-  border: solid 1px #eee;
-  border-bottom: none;
-  transition: all 0.9s ease-in-out;
-  -webkit-transition: all 0.9s ease-in-out;
-  -moz-transition: all 0.9s ease-in-out;
-  -ms-transition: all 0.9s ease-in-out;
-}
-
-input:hover {
-  background: #ccc;
-  color: #fff;
-  font-family: raleway;
-}
-
-textarea {
-  width: 100%;
-  max-width: 100%;
-  height: 110px;
-  max-height: 110px;
-  padding: 15px;
-  background: transparent;
-  outline: none;
-  color: #000;
-  font-family: raleway;
-  font-size: 25px;
-  border: solid 1px #eee;
-  transition: all 0.9s ease-in-out;
-  -webkit-transition: all 0.9s ease-in-out;
-  -moz-transition: all 0.9s ease-in-out;
-  -ms-transition: all 0.9s ease-in-out;
-}
-
-textarea:hover {
-  background: #ccc;
-  color: #fff;
-  font-family: raleway;
-}
-
-#submit {
-  width: 100%;
-  padding: 0;
-  font-family: raleway;
-  font-size: 20px;
-  color: #000;
-  outline: none;
-  cursor: pointer;
-  border: solid 1px #eee;
-  border-top: none;
-  margin-bottom: 0px;
-}
-
-#submit:hover {
-  color: #fff;
-  background-color: #ccc;
-}
-          </style>
-            <div class="box">
-              <div id="overlay">
-                <div class="image">
-                  <div class="trick">
-          
-                  </div>
+      </style>
+      <section class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div class="card card-style1 border-0">
+                        <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6 mb-4 mb-lg-0">
+                                    <img src="images/user.jpg" alt="...">
+                                </div>
+                                <div class="col-lg-6 px-xl-10">
+                                    <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
+                                        <h3 class="h2 text-white mb-0">Votre profil</h3>
+                                        <span class="text-primary">Utilisateur</span>
+                                    </div>
+                                    <ul class="list-unstyled mb-1-9">
+                                        <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Username :</span> Username</li>
+                                        <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span> email@email.com</li>
+                                    </ul>
+                                    <ul class="social-icon-style1 list-unstyled mb-0 ps-0">
+                                        <li><a href="#!"><i class="ti-twitter-alt"></i></a></li>
+                                        <li><a href="#!"><i class="ti-facebook"></i></a></li>
+                                        <li><a href="#!"><i class="ti-pinterest"></i></a></li>
+                                        <li><a href="#!"><i class="ti-instagram"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="text"> Nom d'utilisateur</ul>
-          
-          
-          
-          
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-              <div class="panel-heading " role="tab" id="headingOne">
-                <h4 class="panel-title ">
-                    <div class="title  btn btn-danger btn-outline btn-lg disabled">E-mail : </div>
-                </h4>
-              </div>
-              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-              </div>
+                <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div>
+                        <span class="section-title text-primary mb-3 mb-sm-4">Informations</span>
+                        <p>Ici, vous pouvez visualiser les informations de votre profil, ainsi qu'un aperçu de vos statistiques.</p>
+                        <p class="mb-0">Pour en savoir plus sur vos statistiques, veuillez consulter la section dédiée à cet effet <a href="/stat"><b>ici</b></a></p>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12 mb-4 mb-sm-5">
+                            <div class="mb-4 mb-sm-5">
+                                <span class="section-title text-primary mb-3 mb-sm-4">Statistiques</span>
+                                <div class="progress-text">
+                                    <div class="row">
+                                        <div class="col-6">Durée maximale sur un niveau</div>
+                                        <div class="col-6 text-end">52 minutes</div>
+                                    </div>
+                                </div>
+                                <div class="custom-progress progress progress-medium mb-3" style="height: 4px;">
+                                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:80%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="10" role="progressbar"></div>
+                                </div>
+                                <div class="progress-text">
+                                    <div class="row">
+                                        <div class="col-6">Nombre de niveaux effectuées</div>
+                                        <div class="col-6 text-end">3</div>
+                                    </div>
+                                </div>
+                                <div class="custom-progress progress progress-medium mb-3" style="height: 4px;">
+                                    <div class="animated custom-bar progress-bar slideInLeft bg-secondary" style="width:100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">
-                  Walter has been building websites for years. He enjoys making unique websites and web projects. His hobbies include photography, woodworking, leatherworking, fishing, and mid century modern furniture.
-                </div>
-              </div>
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="headingThree">
-                <h4 class="panel-title">
-                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    <div class="title btn btn-danger btn-outline btn-lg">CONTACT</div>
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                <div class="panel-body">
-          
-                  
-                  
-                            <form id="form" class="topBefore">
-          
-                      <input id="name" type="text" placeholder="NAME">
-                      <input id="email" type="text" placeholder="E-MAIL">
-                      <textarea id="message" type="text" placeholder="MESSAGE"></textarea>
-                      <input id="submit" type="submit" value="Submit Now!">
-          
-                    </form>
-          
-          
-                  
-                  
-                  
-                  
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
+    </section>
     </body>
 </html>
