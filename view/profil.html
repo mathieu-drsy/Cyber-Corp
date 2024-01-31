@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">   
-        <link href='https://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <link rel="icon" href="/images/CyberCorpLogo.jpg"/>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">   
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">CyberCorp </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/profil">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/stat">Statistiques</a>
+                    </li>
+                </ul>
+                <span class="navbar-text">
+                    <a href="/login" class="nav-link">Login</a>
+                </span>
+            </div>
+        </div>
+    </nav>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">CyberCorp </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/profil">Profil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/stat">Statistiques</a>
-                        </li>
-                    </ul>
-                    <span class="navbar-text">
-                        <a href="/login" class="nav-link">Login</a>
-                    </span>
-                </div>
-            </div>
-        </nav>
           <style>
             body {
   background-color: #3d3c3c;
@@ -59,8 +62,6 @@
 .image {
   text-align: center;
   width: 200px;
-  /* Container's dimensions */
-  
   height: 200px;
   -webkit-border-radius: 75%;
   -moz-border-radius: 75%;
@@ -173,23 +174,6 @@
   font-weight: 300;
   max-width:100%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*---------    Contact Form    ------------*/
 
@@ -340,26 +324,18 @@ textarea:hover {
             <div class="panel panel-default">
               <div class="panel-heading " role="tab" id="headingOne">
                 <h4 class="panel-title ">
-                    <div class="title  btn btn-danger btn-outline btn-lg">E-mail : </div>
+                    <div class="title  btn btn-danger btn-outline btn-lg disabled">E-mail : </div>
                 </h4>
               </div>
               <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
               </div>
             </div>
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="headingTwo">
-                <h4 class="panel-title">
-                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    <div class="title btn btn-danger btn-outline btn-lg">Pseudonyme</div>
-                  </a>
-                </h4>
-              </div>
+            
               <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body">
                   Walter has been building websites for years. He enjoys making unique websites and web projects. His hobbies include photography, woodworking, leatherworking, fishing, and mid century modern furniture.
                 </div>
               </div>
-            </div>
             <div class="panel panel-default">
               <div class="panel-heading" role="tab" id="headingThree">
                 <h4 class="panel-title">
