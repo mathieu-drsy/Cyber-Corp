@@ -235,8 +235,8 @@ function setupRoutes(app, db) {
     const passwordValue = req.body.password;
 
     try {
-      // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
-      const existingUser = await getUserByUsername(usernameValue);
+        // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
+        const existingUser = await getUserByUsername(usernameValue);
 
       if (existingUser) {
         console.log('Utilisateur ' + '"' + usernameValue + '"' + ' existe déjà');
@@ -268,7 +268,8 @@ function setupRoutes(app, db) {
       console.error('Erreur lors de la vérification de l\'utilisateur:', error);
       return res.status(500).json({ success: false, error: 'Erreur lors de la vérification de l\'utilisateur' });
     }
-  });
+});
+
 
 
   app.get("/inscription", (req, res) => {
