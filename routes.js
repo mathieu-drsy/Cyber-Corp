@@ -19,7 +19,7 @@ function setupRoutes(app, db) {
 
   app.post('/setDifficulte', (req, res) => {
     const difficultyValue = req.body.difficulty;
-    //const pseudo = "moi@gmail.com";
+    const pseudo = "moi@gmail.com";
     // Utilisez la valeur de difficulté comme vous le souhaitez
     // Exemple : insérer des données dans la base de données
     const sql = "UPDATE data SET difficulté = ? WHERE pseudo = ?";
@@ -65,37 +65,6 @@ function setupRoutes(app, db) {
     } catch (error) {
     }
   });
-
-  app.post('/inscription', async (req, res) => {
-    const usernameValue = req.body.username;
-    const passwordValue = req.body.password;
-
-    try {
-        // 1. Récupérer l'utilisateur existant par le nom d'utilisateur
-        const existingUser = await getUserByUsername(usernameValue);
-
-        if (existingUser) {
-            console.log('Utilisateur ' + '"' + usernameValue + '"' + ' existe déjà');
-            return res.status(409).json({ status: "success", error: 'Utilisateur déjà existant' });
-        } else {
-            // L'utilisateur n'existe pas, procéder à l'inscription
-            const hashedPassword = await bcrypt.hash(passwordValue, 10);
-            db.run("INSERT INTO data (pseudo, score, difficulté, vie, etage, mdp) VALUES (?, ?, ?, ?, ?, ?)",
-                [usernameValue, 0, 0, 0, 0, hashedPassword], (err) => {
-                    if (err) {
-                        console.error('Erreur lors de l\'insertion de l\'utilisateur dans la base de données:', err);
-                        return res.status(500).json({ success: false, error: 'Erreur lors de l\'insertion de l\'utilisateur dans la base de données' });
-                    }
-
-                    console.log('Utilisateur ajouté avec succès');
-                    return res.status(200).json({ success: true, message: 'Utilisateur ajouté avec succès' });
-                });
-        }
-    } catch (error) {
-        console.error('Erreur lors de la vérification de l\'utilisateur:', error);
-        return res.status(500).json({ success: false, error: 'Erreur lors de la vérification de l\'utilisateur' });
-    }
-});
 
 
   // Fonction pour récupérer un utilisateur par nom d'utilisateur
@@ -143,6 +112,28 @@ function setupRoutes(app, db) {
       if (row) {
         console.log(`Retrieved lives for ${pseudo} - Remaining Lives: ${row.vie}`);
         res.json({ success: true, lives: row.vie });
+      } else {
+        console.log(`User ${pseudo} not found in the database`);
+        res.status(404).json({ success: false, error: 'User not found in the database' });
+      }
+    });
+  });
+
+  app.get('/getDifficulte/:pseudo', (req, res) => {
+    const pseudo = req.params.pseudo;
+
+    // Sélection du nombre de vies depuis la base de données
+    const sql = "SELECT difficulte FROM data WHERE pseudo = ?";
+
+    db.get(sql, [pseudo], (err, row) => {
+      if (err) {
+        console.error('Error getting lives from the database:', err);
+        return res.status(500).json({ success: false, error: 'Error getting lives from the database' });
+      }
+
+      if (row) {
+        console.log(`Retrieved lives for ${pseudo} - Difficulte: ${row.difficulte}`);
+        res.json({ success: true, lives: row.difficulte });
       } else {
         console.log(`User ${pseudo} not found in the database`);
         res.status(404).json({ success: false, error: 'User not found in the database' });
@@ -333,6 +324,121 @@ function setupRoutes(app, db) {
     console.log("Command received:", command);
     res.json({ message: output, correct });
   });
+
+
+
+  app.post('/setMaxVie', (req, res) => {
+    const { pseudo, maxvie } = req.body;
+
+    // Mise à jour de la valeur de la colonne 'vie' dans la base de données
+    const sql = "UPDATE maxData SET max_vie = ? WHERE pseudo = ?";
+
+    db.run(sql, [maxvie, pseudo], (err) => {
+      if (err) {
+        console.error('Error updating MAX lives in the database:', err);
+        return res.status(500).json({ success: false, error: 'Error updating MAX lives in the database' });
+      }
+
+      console.log(`Updated lives for ${pseudo} - Remaining Lives: ${maxvie}`);
+      res.json({ success: true });
+    });
+  });
+
+  app.get('/getMaxVie/:pseudo', (req, res) => {
+    const pseudo = req.params.pseudo;
+
+    // Sélection du nombre de vies depuis la base de données
+    const sql = "SELECT max_vie FROM maxData WHERE pseudo = ?";
+
+    db.get(sql, [pseudo], (err, row) => {
+      if (err) {
+        console.error('Error getting MAX lives from the database:', err);
+        return res.status(500).json({ success: false, error: 'Error getting MAX lives from the database' });
+      }
+
+      if (row) {
+        res.json({ success: true, maxvie: row.max_vie });
+      } else {
+        console.log(`User ${pseudo} not found in the database`);
+        res.status(404).json({ success: false, error: 'User not found in the database' });
+      }
+    });
+  });
+
+  app.get('/getMaxScore/:pseudo', (req, res) => {
+    const pseudo = req.params.pseudo;
+    // Sélection du nombre de vies depuis la base de données
+    const sql = "SELECT max_score FROM maxData WHERE pseudo = ?";
+
+    db.get(sql, [pseudo], (err, row) => {
+      if (err) {
+        console.error('Erreur lors de la mise à jour du score MAX dans la db:', err);
+        return res.status(500).json({ success: false, error: 'Erreur lors de la lecture du score MAX dans la db' });
+      }
+
+      if (row) {
+        res.json({ maxscore: row.max_score });
+      } else {
+        console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
+        res.status(404).json({ success: false, error: 'Utilisateur introuvable dans la db' });
+      }
+    });
+  });
+
+  app.post('/setMaxScore', (req, res) => {
+    const { pseudo, maxscore } = req.body;
+    console.log(maxscore);
+    // Mise à jour de la valeur de la colonne 'vie' dans la base de données
+    const sql = "UPDATE maxData SET max_score = ? WHERE pseudo = ?";
+
+    db.run(sql, [maxscore, pseudo], (err) => {
+      if (err) {
+        console.error('Erreur lors de la mise à jour du score MAX:', err);
+        return res.status(500).json({ success: false, error: 'Erreur de la mise à jour de la db' });
+      }
+
+      console.log(`Mise à jour du Score de ${pseudo} - Score: ${maxscore}`);
+      res.json({ success: true });
+    });
+  });
+
+  app.get('/getMaxEtage/:pseudo', (req, res) => {
+    const pseudo = req.params.pseudo;
+    // Sélection du nombre de vies depuis la base de données
+    const sql = "SELECT max_etage FROM maxData WHERE pseudo = ?";
+
+    db.get(sql, [pseudo], (err, row) => {
+      if (err) {
+        console.error("Erreur lors de la mise à jour de l'étage MAX dans la db:", err);
+        return res.status(500).json({ success: false, error: "Erreur lors de la lecture de l'étage MAX dans la db" });
+      }
+
+      if (row) {
+        res.json({ maxetage: row.max_etage });
+      } else {
+        console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
+        res.status(404).json({ success: false, error: 'Utilisateur introuvable dans la db' });
+      }
+    });
+  });
+
+  app.post('/setMaxEtage', (req, res) => {
+    const { pseudo, maxetage } = req.body;
+    console.log(maxetage);
+    // Mise à jour de la valeur de la colonne 'vie' dans la base de données
+    const sql = "UPDATE maxData SET max_etage = ? WHERE pseudo = ?";
+
+    db.run(sql, [maxetage, pseudo], (err) => {
+      if (err) {
+        console.error('Erreur lors de la mise à jour etage MAX:', err);
+        return res.status(500).json({ success: false, error: 'Erreur de la mise à jour de la db' });
+      }
+
+      console.log(`Mise à jour du Score de ${pseudo} - Score: ${maxetage}`);
+      res.json({ success: true });
+    });
+  });
+
 
 }
 

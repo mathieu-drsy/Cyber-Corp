@@ -264,11 +264,65 @@
                 console.error('Error sending command:', error);
             }
         }
-        
+        /*let userScore = 0;
+        let userEtage = 0;*/
         function updateProgressBar() {
             const progressBarInner = document.getElementById('progress-bar-inner');
             const progress = (correctAnswers / 10) * 100; // Assuming there are 10 questions
             progressBarInner.style.width = `${progress}%`;
+            var pseudo = "a@gmail.com"
+            /*fetch(`/getVie/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => console.log(`Nombre de vies récupéré : ${data.lives}`))
+                .catch(error => console.error('Error getting lives:', error));*/
+            // Appel à la route /getScore pour récupérer le score
+            //var pseudo = "moi@gmail.com"
+            // Appel à la route /getScore pour récupérer le score
+            fetch(`/getMaxScore/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userMaxScore = data.maxscore; // Stockez le score dans la variable userScore
+                    console.log(`Max Score: ${userMaxScore}`);
+                    console.log(`Pseudo: ${pseudo}`);
+                })
+                .catch(error => console.error('Erreur lors de la récupération du score :', error));
+            fetch(`/getMaxEtage/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userMaxEtage = data.maxetage; // Stockez le score dans la variable userScore
+                    console.log(`Max Etage: ${userMaxEtage}`);
+                    console.log(`Pseudo: ${pseudo}`);
+                })
+                .catch(error => console.error('Erreur lors de la récupération du score :', error));
+            fetch(`/getMaxVie/${pseudo}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userMaxVie = data.maxvie; // Stockez le score dans la variable userScore
+                    console.log(`Max Vie: ${userMaxVie}`);
+                    console.log(`Pseudo: ${pseudo}`);
+                })
+                .catch(error => console.error('Erreur lors de la récupération du score :', error));
+
         }
 
         function updateHeartImages() {
@@ -284,16 +338,40 @@
             }
             var pseudo = "moi@gmail.com";
             // Envoi des données vers le serveur via une requête POST
-            fetch('/setVie', {
+            /*let sc = 5000;
+            let et = 6;
+            let mvie = 9;
+            // Envoi des données vers le serveur via une requête POST
+            fetch('/setMaxVie', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ pseudo: pseudo, remainingLives }),
+                body: JSON.stringify({ pseudo: pseudo, maxvie: mvie }),
             })
                 .then(response => response.json())
                 .then(data => console.log(data))
                 .catch(error => console.error('Error updating lives:', error));
+            fetch('/setMaxScore', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo: pseudo, maxscore: sc }),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error updating lives:', error));
+            fetch('/setMaxEtage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo: pseudo, maxetage: et }),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error updating lives:', error));*/
         }
 
         function updateNumberList() {
