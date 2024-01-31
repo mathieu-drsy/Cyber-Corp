@@ -95,7 +95,7 @@ function setupRoutes(app, db) {
             }
 
             console.log('Utilisateur ajouté avec succès dans maxDATA');
-            res.status(200).send('Utilisateur ajouté avec succès maxDATA');
+            //res.status(200).send('Utilisateur ajouté avec succès maxDATA');
           });
 
         //res.status(404).send('Utilisateur non trouvé');
@@ -348,18 +348,18 @@ function setupRoutes(app, db) {
 
 
   app.post('/setMaxVie', (req, res) => {
-    const { pseudo, remainingLives } = req.body;
+    const { pseudo, maxvie } = req.body;
 
     // Mise à jour de la valeur de la colonne 'vie' dans la base de données
     const sql = "UPDATE maxData SET max_vie = ? WHERE pseudo = ?";
 
-    db.run(sql, [remainingLives, pseudo], (err) => {
+    db.run(sql, [maxvie, pseudo], (err) => {
       if (err) {
         console.error('Error updating MAX lives in the database:', err);
         return res.status(500).json({ success: false, error: 'Error updating MAX lives in the database' });
       }
 
-      console.log(`Updated lives for ${pseudo} - Remaining Lives: ${remainingLives}`);
+      console.log(`Updated lives for ${pseudo} - Remaining Lives: ${maxvie}`);
       res.json({ success: true });
     });
   });
@@ -377,8 +377,7 @@ function setupRoutes(app, db) {
       }
 
       if (row) {
-        console.log(`Retrieved lives for ${pseudo} - Remaining Lives: ${row.vie}`);
-        res.json({ success: true, lives: row.vie });
+        res.json({ success: true, maxvie: row.max_vie });
       } else {
         console.log(`User ${pseudo} not found in the database`);
         res.status(404).json({ success: false, error: 'User not found in the database' });
@@ -398,8 +397,7 @@ function setupRoutes(app, db) {
       }
 
       if (row) {
-        //console.log(`Score de ${pseudo} - Score: ${row.score}`);
-        res.json({ score: row.score });
+        res.json({ maxscore: row.max_score });
       } else {
         console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
         res.status(404).json({ success: false, error: 'Utilisateur introuvable dans la db' });
@@ -408,18 +406,18 @@ function setupRoutes(app, db) {
   });
 
   app.post('/setMaxScore', (req, res) => {
-    const { pseudo, userScore } = req.body;
-    console.log(userScore);
+    const { pseudo, maxscore } = req.body;
+    console.log(maxscore);
     // Mise à jour de la valeur de la colonne 'vie' dans la base de données
     const sql = "UPDATE maxData SET max_score = ? WHERE pseudo = ?";
 
-    db.run(sql, [userScore, pseudo], (err) => {
+    db.run(sql, [maxscore, pseudo], (err) => {
       if (err) {
         console.error('Erreur lors de la mise à jour du score MAX:', err);
         return res.status(500).json({ success: false, error: 'Erreur de la mise à jour de la db' });
       }
 
-      console.log(`Mise à jour du Score de ${pseudo} - Score: ${userScore}`);
+      console.log(`Mise à jour du Score de ${pseudo} - Score: ${maxscore}`);
       res.json({ success: true });
     });
   });
@@ -436,7 +434,7 @@ function setupRoutes(app, db) {
       }
 
       if (row) {
-        res.json({ etage: row.etage });
+        res.json({ maxetage: row.max_etage });
       } else {
         console.log(`L'utilisateur ${pseudo} n'est pas dans la db`);
         res.status(404).json({ success: false, error: 'Utilisateur introuvable dans la db' });
@@ -445,18 +443,18 @@ function setupRoutes(app, db) {
   });
 
   app.post('/setMaxEtage', (req, res) => {
-    const { pseudo, userEtage } = req.body;
-    console.log(userEtage);
+    const { pseudo, maxetage } = req.body;
+    console.log(maxetage);
     // Mise à jour de la valeur de la colonne 'vie' dans la base de données
     const sql = "UPDATE maxData SET max_etage = ? WHERE pseudo = ?";
 
-    db.run(sql, [userEtage, pseudo], (err) => {
+    db.run(sql, [maxetage, pseudo], (err) => {
       if (err) {
         console.error('Erreur lors de la mise à jour etage MAX:', err);
         return res.status(500).json({ success: false, error: 'Erreur de la mise à jour de la db' });
       }
 
-      console.log(`Mise à jour du Score de ${pseudo} - Score: ${userEtage}`);
+      console.log(`Mise à jour du Score de ${pseudo} - Score: ${maxetage}`);
       res.json({ success: true });
     });
   });
