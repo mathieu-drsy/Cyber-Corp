@@ -19,7 +19,7 @@ function setupRoutes(app, db) {
 
   app.post('/setDifficulte', (req, res) => {
     const difficultyValue = req.body.difficulty;
-    //const pseudo = "moi@gmail.com";
+    const pseudo = "moi@gmail.com";
     // Utilisez la valeur de difficulté comme vous le souhaitez
     // Exemple : insérer des données dans la base de données
     const sql = "UPDATE data SET difficulte = ? WHERE pseudo = ?";
