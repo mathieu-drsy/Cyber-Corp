@@ -363,10 +363,10 @@
                 terminalBody.innerHTML += '<div>$</div>';
                 correctAnswers++; // Increment correct answers
                 etage++;
+                currentQuestionIndex++;
                 checkModals();
                 updateProgressBar();
                 updateNumberList(); // Call updateNumberList after correct answer
-                currentQuestionIndex++;
                 initializeTerminal();
             } else {
                 terminalBody.innerHTML += '<div>$</div>';
@@ -721,18 +721,16 @@
                     const response = await fetch('/get-questions?difficulty=1'); // Remplacez 1 par la difficulté souhaitée
                     const data = await response.json();
 
-                    // Affichez toutes les questions dans la console
-                    console.log('Questions renvoyées par /get-questions :', data.texte);
-
                     // Stockez les questions dans la variable globale
                     allQuestions = data;
                 }
-                console.log(allQuestions);
+                //console.log(allQuestions[0].texte);
                 // Affichez les questions dans le terminal
                 // Affichez seulement la première question dans le terminal
-                if (allQuestions.length > 0 && allQuestions.length < 9) {
+                if (currentQuestionIndex < 10) {
+                    //console.log("test");
                     terminalBody.innerHTML += '<div>$</div>';
-                    terminalBody.innerHTML += `<div>${allQuestions[currentQuestionIndex].texte}</div>`;
+                    terminalBody.innerHTML += `<div>${allQuestions[0].texte}</div>`;
                     terminalBody.innerHTML += '<div>$</div>';
                     terminalBody.innerHTML += `<div>"1" ${allQuestions[currentQuestionIndex].reponseA}</div>`;
                     terminalBody.innerHTML += `<div>"2" ${allQuestions[currentQuestionIndex].reponseB}</div>`;
